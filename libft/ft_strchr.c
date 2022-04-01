@@ -1,19 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   a.c                                                :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/01 11:45:50 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/04/01 11:46:28 by hyojlee          ###   ########.fr       */
+/*   Created: 2021/05/04 20:09:50 by hyojlee           #+#    #+#             */
+/*   Updated: 2021/05/12 20:39:45 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include "libft.h"
 
-int main(void)
+char	*ft_strchr(const char *str, int c)
 {
-	return 0;
-}
+	char			*s;
+	unsigned char	find;
 
+	s = (char *)str;
+	find = (unsigned char)c;
+	while (*s)
+		if ((unsigned char)*s++ == find)
+			return (s - 1);
+	if ((unsigned char)*s == find)
+		return (s);
+	return (0);
+}
