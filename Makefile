@@ -18,7 +18,7 @@ MAKE = make
 LIB_NAME = libft.a
 LIB_DIR = ./libft
 SRC_DIR = ./sources
-SRCS = a.c
+SRCS = $(SRC_DIR)/a.c
 OBJS = $(SRCS:.c=.o)
 
 
