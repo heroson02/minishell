@@ -12,7 +12,7 @@
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
-LDFLAGS = -lreadline -L/Users/hyojlee/.brew/opt/readline/lib
+LDFLAGS = -lncurses -lreadline -L/Users/hyojlee/.brew/opt/readline/lib
 CPPFLAGS = -I/Users/hyojlee/.brew/opt/readline/include
 INC = ./includes
 NAME = minishell
@@ -20,7 +20,7 @@ MAKE = make
 LIB_NAME = libft.a
 LIB_DIR = ./libft
 SRC_DIR = ./sources
-SRCS = $(SRC_DIR)/readline.c
+SRCS = $(SRC_DIR)/tgetent.c
 OBJS = $(SRCS:.c=.o)
 
 

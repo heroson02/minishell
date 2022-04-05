@@ -13,16 +13,20 @@ int main(void)
 	char *env = getenv("TERM");
 
 	if (!env)
-		printf("$TERM is null!\n");
+	{
+		printf("Before tgetent(): $TERM is null!\n");
+		return (0);
+	}
 	else
-		printf("$TERM is %s\n", env);
-	strcpy(env, "hello");
+		printf("Before tgetent(): $TERM is %s\n", env);
 	
-	tgetent(NULL, env);
+	int ret = tgetent(NULL, env);
 	
-	if (!env)
-		printf("$TERM is null!\n");
+	if (!ret)
+		printf("After tgetent(NULL, %s): $TERM is empty string.\n", env);
+	else if (ret < 0)
+		printf("After tgetent(NULL, %s): Failed\n", env);
 	else
-		printf("$TERM is %s\n", env);	
+		printf("After tgetent(NULL, %s): $TERM is %s\n", env, getenv("TERM"));	
 	return (0);
 }
