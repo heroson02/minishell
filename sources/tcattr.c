@@ -28,6 +28,7 @@ int main(void)
 	struct termios t;
 
 	signal(SIGINT, handler);
+	signal(SIGQUIT, SIG_IGN);
 	tcgetattr(0, &t);
 	t.c_lflag &= ~(ICANON | ECHOCTL); //https://80000coding.oopy.io/13bd7bb7-3a7f-4b51-b84a-905c47368277
 	tcsetattr(0, TCSANOW, &t);
@@ -42,7 +43,7 @@ int main(void)
 			free(line);
 			line = NULL;
 		}
-		else
+		else //ctrl + d -> EOF
 		{
 			printf("exit\n");
 			exit(0);
