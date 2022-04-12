@@ -21,46 +21,43 @@
 # include <signal.h>
 # include "../libft/libft.h"
 
-# define WORD	0
-# define PIPE	1
-# define REDIR	2
-
 # define TRUE	1
 # define FALSE	0
 
 # define REPLACE 1
 
-typedef struct s_data
+typedef enum	e_type
 {
-	int		type;
-	char	*str;
-}	t_data;
+	TOKEN = -1,
+	PIPE = '|',
+	LESS = '<',
+	GREAT = '>',
+	SQUOTE = '\'',
+	DQUOTE = '\"',
+	DLESS = ' ',
+	DGREAT = '\\'
+}	t_type;
 
-typedef struct s_node
+typedef enum	e_state
 {
-	t_data	data;
-	t_node	*prev;
-	t_node	*next;
-}	t_node;
+	STATE_GEN,
+	STATE_SQUO,
+	STATE_DQUO
+}	t_state;
+
+typedef struct s_tok
+{
+	char	*data;
+	t_type	type;
+	struct s_tok *next;
+}	t_tok;
 
 typedef struct s_list
 {
-	int		count;
-	t_node	*head;
-	t_node	*tail;
+	t_tok	*head;
+	int		size;
 }	t_list;
 
-/*
- * check.c
- */
-int	chk_quote(char *line);
-
-/*
- *list.c
- */
-t_list	*create_list(void);
-t_node	*create_node(t_data data);
-void	add_token(t_list *list, t_data data);
 
 
 #endif
