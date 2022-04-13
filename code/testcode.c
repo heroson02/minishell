@@ -62,14 +62,21 @@ char	*ft_strchr(const char *str, int c)
 char	*make_token(char *start, char *end)
 {
 	int len = end - start + 1;
-	printf("{ ");
-	while (len > 0)
+
+	printf("{");
+	while (len > 0 && *start)
 	{
 		printf("%c", *start);
 		start++;
 		len--;
 	}
-	printf(" }\n");
+	// while (start[len])
+	// {
+	// 	printf("%c", start[len]);
+	// 	len--;
+	// }
+	
+	printf("}\n");
 	return (end + 1);
 }
 
@@ -87,26 +94,25 @@ void	tokenize(char *str)
 		if (t == TOKEN)
 		{
 			while (*(end + 1) && !ft_strchr(" |<>", *(end + 1)))
-				end++;
-			if ((*(end + 1) && ft_strchr(" |<>", *(end + 1))) || !*(end + 1))
 			{
-				str = make_token(str, end);
-				continue ;
+				end++;
+				if (ft_strchr("\'\"", *end))
+					end = ft_strchr(end + 1, *end);
 			}
+			if ((*(end + 1) && ft_strchr(" |<>", *(end + 1))) || !*(end + 1))
+				str = make_token(str, end);
 		}
-		if (t == PIPE || t == LESS || t == GREAT)
+		else if (t == PIPE || t == LESS || t == GREAT)
 		{
 			if (*end && *end == *(end + 1) && ft_strchr("<>", *(end + 1)))
 				end++;
 			str = make_token(str, end);
-			continue ;
 		}
-		if (t == SQUOTE || t == DQUOTE)
+		else if (t == SQUOTE || t == DQUOTE)
 		{
 			while (*(end + 1) && !ft_strchr("\'\"", *(end + 1)))
 				end++;
-			str = make_token(str, end + 1);
-			continue ;
+			str = make_token(str, end + 1);\
 		}
 	}
 }
@@ -115,5 +121,12 @@ void	tokenize(char *str)
 
 int main()
 {
+	// tokenize("\"echo\' $HOME is");
 	tokenize("<file1cmd\"hello world!\"|file2>cmd2");
 }
+
+
+
+// 	if (ft_strchr("\'\"", *end))
+// 		end = ft_strchr(end + 1, *end);
+// 	str = make_token(str, end);
