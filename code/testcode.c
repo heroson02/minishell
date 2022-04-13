@@ -112,7 +112,7 @@ void	tokenize(char *str)
 		{
 			while (*(end + 1) && !ft_strchr("\'\"", *(end + 1)))
 				end++;
-			str = make_token(str, end + 1);\
+			str = make_token(str, end + 1);
 		}
 	}
 }
