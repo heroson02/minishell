@@ -59,6 +59,16 @@ char	*ft_strchr(const char *str, int c)
 	return (0);
 }
 
+size_t	ft_strlen(char *str)
+{
+	int idx;
+
+	idx = 0;
+	while (str[idx])
+		idx++;
+	return (idx);
+}
+
 char	*make_token(char *start, char *end)
 {
 	int len = end - start + 1;
@@ -97,7 +107,11 @@ void	tokenize(char *str)
 			{
 				end++;
 				if (ft_strchr("\'\"", *end))
-					end = ft_strchr(end + 1, *end);
+				{
+					// ft_strchr()을 못 찾았을 때 NULL을 반환하는데 이때 위에 while문에서 end + 1에 접근해서 segfault 발생
+					// => syntax_error가 발생해야하는 부분
+					end = ft_strchr(end + 1, *end) == 0 ? end + ft_strlen(end) : ft_strchr(end + 1, *end);
+				}
 			}
 			if ((*(end + 1) && ft_strchr(" |<>", *(end + 1))) || !*(end + 1))
 				str = make_token(str, end);
@@ -113,16 +127,19 @@ void	tokenize(char *str)
 			while (*(end + 1) && !ft_strchr("\'\"", *(end + 1)))
 				end++;
 			str = make_token(str, end + 1);
+			// while (*(end) && !ft_strchr("\'\"", *(end)))
+			// 	end++;
+			// str = make_token(str, end);
 		}
 	}
 }
 
-//일반 문자열과 따옴표가 붙어서 나오는 경우를 처리해줘야합니다.
+//줄 25줄로 맞추기 -> 겹치는 코드들을 합칠 방법을 생각해보아야 할 듯.
 
 int main()
 {
 	// tokenize("\"echo\' $HOME is");
-	tokenize("<file1cmd\"hello world!\"|file2>cmd2");
+	tokenize("<file1cmd\"hello world!\'|file2>cmd2");
 }
 
 
