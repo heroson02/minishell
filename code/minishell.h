@@ -29,35 +29,35 @@
 typedef enum	e_type
 {
 	TOKEN = -1,
+	SPACE = -2,
 	PIPE = '|',
 	LESS = '<',
 	GREAT = '>',
 	SQUOTE = '\'',
 	DQUOTE = '\"',
-	DLESS = ' ',
-	DGREAT = '\\'
+	DLESS = -3,
+	DGREAT = -4
 }	t_type;
 
-typedef enum	e_state
-{
-	STATE_GEN,
-	STATE_SQUO,
-	STATE_DQUO
-}	t_state;
+typedef char	*t_data;
 
 typedef struct s_tok
 {
-	char	*data;
+	t_data	data;
 	t_type	type;
 	struct s_tok *next;
 }	t_tok;
 
-typedef struct s_list
+typedef struct s_tok_list
 {
 	t_tok	*head;
-	int		size;
-}	t_list;
+	int		count;
+}	t_tok_list;
 
+/*
+ * main.c
+ */
+void	print_err(char *str, int exit_status);
 
 
 #endif

@@ -12,32 +12,33 @@
 
 #include "./minishell.h"
 
-t_list *create_list(void)
+t_tok_list *create_list(void)
 {
-	t_list	*list;
+	t_tok_list	*list;
 
-	list = (t_list *)malloc(sizeof(t_list));
+	list = (t_tok_list *)malloc(sizeof(t_tok_list));
 	if (list == 0)
 		return (0);
-	ft_bzero(list, sizeof(t_list));
+	ft_bzero(list, sizeof(t_tok_list));
 	return (list);
 }
 
-t_node *create_node(t_data data)
+t_tok *create_node(t_data data, t_type type)
 {
-	t_node *node;
+	t_tok *node;
 
-	node = (t_node *)malloc(sizeof(t_node));
+	node = (t_tok *)malloc(sizeof(t_tok));
 	if (node == 0)
 		return (0);
-	ft_bzero(node, sizeof(t_node));
+	ft_bzero(node, sizeof(t_tok));
 	node->data = data;
+	node->type = type;
 	return (node);
 }
 
-void	add_token(t_list *list, t_data data)
+void	add_token(t_tok_list *list, t_data data)
 {
-	t_node *node;
+	t_tok *node;
 
 	node = create_node(data);
 	if (list->count == 0)

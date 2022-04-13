@@ -29,16 +29,31 @@ void	print_err(char *str, int exit_status)
 	exit(exit_status);
 }
 
-static char	*get_env_path(char **env)
+// 환경변수 값 가져오는 함수 원본
+// static char	*get_env_path(char **env)
+// {
+// 	while (*env)
+// 	{
+// 		if (ft_strnstr(*env, "PATH=/", ft_strlen(*env)))
+// 			return (*env + 5);
+// 		env++;
+// 	}
+// 	if (!*env)
+// 		print_err("PATH", 1);
+// 	return (0);
+// }
+
+// 환경변수 가져오는 함수 수정본
+static char	*get_env_path(char **env, char *name)
 {
 	while (*env)
 	{
-		if (ft_strnstr(*env, "PATH=/", ft_strlen(*env)))
-			return (*env + 5);
+		if (ft_strnstr(*env, name, ft_strlen(*env)))
+			return (*env + ft_strlen(name));
 		env++;
 	}
 	if (!*env)
-		print_err("PATH", 1);
+		print_err(name, 1);
 	return (0);
 }
 
@@ -46,9 +61,9 @@ int main(int argc, char **argv, char **envp)
 {
 	char	**path;
 	char	*line;
-	t_list	*list;
+	t_tok_list	*list;
 
-	path = ft_split(get_env_path(envp), ':');
+	path = ft_split(get_env_path(envp, "PATH="), ':');
 	signal(SIGINT, handler);
 	signal(SIGQUIT, SIG_IGN);
 	list = create_list();

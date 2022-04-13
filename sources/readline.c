@@ -37,7 +37,10 @@ int main(void)
 			line = NULL;
 		}
 		else
-			printf("ctrl + d\n");
+		{
+			printf("exit\n");
+			exit(0);
+		}
 	}
 	return (0);
 }
