@@ -111,6 +111,8 @@ void	tokenize(char *str)
 	}
 }
 
+//일반 문자열과 따옴표가 붙어서 나오는 경우를 처리해줘야합니다.
+
 int main()
 {
 	tokenize("<file1cmd\"hello world!\"|file2>cmd2");
