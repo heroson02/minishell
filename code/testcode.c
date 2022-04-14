@@ -1,8 +1,5 @@
 # include <stdio.h>
 
-# define TRUE	1
-# define FALSE	0
-
 # define REPLACE 1
 
 typedef enum	e_type
@@ -106,34 +103,22 @@ void	tokenize(char *str)
 			while (*(end + 1) && !ft_strchr(" |<>", *(end + 1)))
 			{
 				end++;
-				if (ft_strchr("\'\"", *end))
-				{
-					// ft_strchr()을 못 찾았을 때 NULL을 반환하는데 이때 위에 while문에서 end + 1에 접근해서 segfault 발생
-					// => syntax_error가 발생해야하는 부분
-					end = ft_strchr(end + 1, *end) == 0 ? end + ft_strlen(end) : ft_strchr(end + 1, *end);
-				}
+				// if (ft_strchr("\'\"", *end))
+				// 	end = ft_strchr(end + 1, *end) == 0 ? end + ft_strlen(end) : ft_strchr(end + 1, *end);
+				while (*(end) && (!ft_strchr("\'\"", *(end)) ||
+						(ft_strchr("\'\"", *end) && *str != *end)))
+					end++;
 			}
 			if (!((*(end + 1) && ft_strchr(" |<>", *(end + 1))) || !*(end + 1)))
 				continue ;
-			// else // if ((*(end + 1) && ft_strchr(" |<>", *(end + 1))) || !*(end + 1))
-			// 	str = make_token(str, end);
 		}
-		else if (t == PIPE || t == LESS || t == GREAT)
+		else if (*end && *end == *(end + 1) && ft_strchr("<>", *(end + 1)))
+			end++;
+		else if (t == SQUOTE || t == DQUOTE)  //else if (ft_strchr("\'\"", *str))
 		{
-			if (*end && *end == *(end + 1) && ft_strchr("<>", *(end + 1)))
-				end++;
-			// str = make_token(str, end);
-		}
-		else if (t == SQUOTE || t == DQUOTE)
-		{
-			// while (*(end + 1) && !ft_strchr("\'\"", *(end + 1)))
-			// 	end++;
-			// printf("%c %c\n", *str, *(end + 1));
-			// str = make_token(str, end + 1);
 			end++;
 			while (*(end) && !ft_strchr("\'\"", *(end)))
 				end++;
-			// str = make_token(str, end);
 		}
 		str = make_token(str, end);
 	}
@@ -144,8 +129,8 @@ void	tokenize(char *str)
 int main()
 {
 	// tokenize("\"echo\" $HOME is");
-	tokenize("\"");
-	// tokenize("<file1cmd\"hello\' world!|file2\">\'cmd2");
+	// tokenize("\"");
+	tokenize("<file1cmd\"hello world!\'||file2>cmd2");
 }
 
 
