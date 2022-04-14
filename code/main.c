@@ -72,9 +72,10 @@ int main(int argc, char **argv, char **envp)
 		line = readline("minishell> ");
 		if (line)
 		{
-			if (chk_quote(line) == FALSE)
-				print_err("Invalid syntax", 1);
-			//어휘 분석 및 파싱 과정
+			if (check_quote(line) == FALSE)	//따옴표 체크
+				print_err("Syntax error", 258);
+			tokenize(&list, line);	// 토큰화
+			//어휘 분석 및 파싱 과정 (AST TREE)
 			//실행 과정
 			add_history(line);
 			free(line);
