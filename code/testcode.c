@@ -113,24 +113,29 @@ void	tokenize(char *str)
 					end = ft_strchr(end + 1, *end) == 0 ? end + ft_strlen(end) : ft_strchr(end + 1, *end);
 				}
 			}
-			if ((*(end + 1) && ft_strchr(" |<>", *(end + 1))) || !*(end + 1))
-				str = make_token(str, end);
+			if (!((*(end + 1) && ft_strchr(" |<>", *(end + 1))) || !*(end + 1)))
+				continue ;
+			// else // if ((*(end + 1) && ft_strchr(" |<>", *(end + 1))) || !*(end + 1))
+			// 	str = make_token(str, end);
 		}
 		else if (t == PIPE || t == LESS || t == GREAT)
 		{
 			if (*end && *end == *(end + 1) && ft_strchr("<>", *(end + 1)))
 				end++;
-			str = make_token(str, end);
+			// str = make_token(str, end);
 		}
 		else if (t == SQUOTE || t == DQUOTE)
 		{
-			while (*(end + 1) && !ft_strchr("\'\"", *(end + 1)))
-				end++;
-			str = make_token(str, end + 1);
-			// while (*(end) && !ft_strchr("\'\"", *(end)))
+			// while (*(end + 1) && !ft_strchr("\'\"", *(end + 1)))
 			// 	end++;
+			// printf("%c %c\n", *str, *(end + 1));
+			// str = make_token(str, end + 1);
+			end++;
+			while (*(end) && !ft_strchr("\'\"", *(end)))
+				end++;
 			// str = make_token(str, end);
 		}
+		str = make_token(str, end);
 	}
 }
 
@@ -138,8 +143,9 @@ void	tokenize(char *str)
 
 int main()
 {
-	// tokenize("\"echo\' $HOME is");
-	tokenize("<file1cmd\"hello world!\'|file2>cmd2");
+	// tokenize("\"echo\" $HOME is");
+	tokenize("\"");
+	// tokenize("<file1cmd\"hello\' world!|file2\">\'cmd2");
 }
 
 
