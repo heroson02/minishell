@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: yson <yson@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:40:18 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/04/06 15:40:20 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/04/14 20:46:53 by yson             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ int main(int argc, char **argv, char **envp)
 			if (check_quote(line) == FALSE)	//따옴표 체크
 				print_err("Syntax error", 258);
 			tokenize(&list, line);	// 토큰화
-			//어휘 분석 및 파싱 과정 (AST TREE)
+			//구문 분석 및 파싱 과정 (AST TREE)
+			//환경변수 치환
 			//실행 과정
 			add_history(line);
 			free(line);
