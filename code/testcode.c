@@ -89,48 +89,34 @@ char	*make_token(char *start, char *end)
 
 void	tokenize(char *str)
 {
-	t_type	t;
 	char *end;
 
 	while (*str)
 	{
 		while (*str == ' ')
 			str++;
-		t = get_type(*str);
 		end = str;
-		if (t == TOKEN)
+		while (*end && !ft_strchr(" |<>", *(end)))
 		{
-			while (*(end + 1) && !ft_strchr(" |<>", *(end + 1)))
-			{
-				end++;
-				// if (ft_strchr("\'\"", *end))
-				// 	end = ft_strchr(end + 1, *end) == 0 ? end + ft_strlen(end) : ft_strchr(end + 1, *end);
-				while (*(end) && (!ft_strchr("\'\"", *(end)) ||
-						(ft_strchr("\'\"", *end) && *str != *end)))
-					end++;
-			}
-			if (!((*(end + 1) && ft_strchr(" |<>", *(end + 1))) || !*(end + 1)))
-				continue ;
-		}
-		else if (*end && *end == *(end + 1) && ft_strchr("<>", *(end + 1)))
+			if (ft_strchr("\'\"", *end))
+				end = ft_strchr(end + 1, *end);
+			if (!*end || ft_strchr(" |<>", *(end + 1)))
+				break ;
 			end++;
-		else if (t == SQUOTE || t == DQUOTE)  //else if (ft_strchr("\'\"", *str))
-		{
-			end++;
-			while (*(end) && !ft_strchr("\'\"", *(end)))
-				end++;
 		}
-		str = make_token(str, end);
+		if (*end && *end == *(end + 1) && ft_strchr("<>", *(end + 1)))
+			end++;
+		if (*str)
+			str = make_token(str, end);
 	}
 }
-
-//줄 25줄로 맞추기 -> 겹치는 코드들을 합칠 방법을 생각해보아야 할 듯.
 
 int main()
 {
 	// tokenize("\"echo\" $HOME is");
 	// tokenize("\"");
-	tokenize("<file1cmd\"hello world!\'||file2>cmd2");
+	tokenize("<file1cmd\"hello world!\"||file2>cmd2   ");
+	// tokenize("");
 }
 
 
