@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: yson <yson@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 17:48:44 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/04/06 17:48:47 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/04/14 19:51:35 by yson             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,33 +23,29 @@ t_tok_list *create_list(void)
 	return (list);
 }
 
-t_tok *create_node(t_data data, t_type type)
+static t_tok	*ft_toklast(t_tok *tok)
 {
-	t_tok *node;
-
-	node = (t_tok *)malloc(sizeof(t_tok));
-	if (node == 0)
-		return (0);
-	ft_bzero(node, sizeof(t_tok));
-	node->data = data;
-	node->type = type;
-	return (node);
+	while (tok)
+	{
+		if (!(tok->next))
+			break ;
+		tok = tok->next;
+	}
+	return (tok);
 }
 
-void	add_token(t_tok_list *list, t_data data)
+void	add_token(t_tok_list **list, t_tok *new_tok)
 {
-	t_tok *node;
+	t_tok	*last;
 
-	node = create_node(data);
-	if (list->count == 0)
-	{
-		list->head = node;
-		list->tail = node;
-	}
+	if (!list || !new_tok)
+		return ;
+	if (!(*list)->head && (*list)->count == 0)
+		(*list)->head = new_tok;
 	else
 	{
-		node->prev = list->tail;
-		list->tail->next = node;
-		list->tail = node;
+		last = ft_toklast((*list)->head);
+		last->next = new_tok;
 	}
+	(*list)->count++;
 }

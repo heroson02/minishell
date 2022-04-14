@@ -56,5 +56,13 @@ typedef struct s_tok_list
  */
 void	print_err(char *str, int exit_status);
 
-
+/*
+** list.c
+*/
+void	add_token(t_tok_list **list, t_tok *new_tok);
+t_tok_list *create_list(void);
+/*
+** check.c
+*/
+void	tokenize(t_tok_list **list, char *str);
 #endif
