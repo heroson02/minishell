@@ -21,9 +21,6 @@
 # include <signal.h>
 # include "../libft/libft.h"
 
-# define TRUE	1
-# define FALSE	0
-
 # define REPLACE 1
 
 typedef enum	e_type

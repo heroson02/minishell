@@ -66,39 +66,6 @@ t_tok	*init_token(char *line, int start, int end, t_type type)
 	return (new_tok);
 }
 
-int	chk_quote(char *line)
-{
-	int		start;
-	int		end;
-	t_type	cur;
-
-	start = 0;
-	end = 0;
-	while (line[start])
-	{
-		while (ft_isblank(line[end])) //들어온 공백은 날림
-			end++;
-		start = end;
-		while (line[end] && ft_strchr("\'\"", line[start]))
-		{
-			if (ft_strchr("\'\"", line[end]) &&
-				line[end] == line[start])
-				break ;
-			end++;
-		}
-		while (line[end] && !ft_strchr("\'\"><| ", line[end]))
-			end++;
-		if (line[end] && ft_strchr("><|", line[end]))
-		{
-			if (start != end)
-				end--;
-		}
-		init_token(line, start, end, get_type(line[start]));
-		end++;
-	}
-}
-
-
 void	tokenize(char *str)
 {
 	t_type	t;
