@@ -20,7 +20,11 @@ MAKE = make
 LIB_NAME = libft.a
 LIB_DIR = ./libft
 SRC_DIR = ./sources
-SRCS = $(SRC_DIR)/readline.c
+SRCS = $(SRC_DIR)/main.c \
+		$(SRC_DIR)/list.c \
+		$(SRC_DIR)/check.c	\
+		$(SRC_DIR)/quotecheck.c	\
+		# $(SRC_DIR)/syntax.c
 OBJS = $(SRCS:.c=.o)
 
 

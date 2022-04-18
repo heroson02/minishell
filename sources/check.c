@@ -39,8 +39,6 @@ t_type	get_type(char *str, int len)
 		return (SQUOTE);
 	else if (c == DQUOTE)
 		return (DQUOTE);
-	else if (ft_isblank(c))
-		return (SPACE);
 	else
 		return (TOKEN);
 }

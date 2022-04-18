@@ -26,14 +26,16 @@
 typedef enum	e_type
 {
 	TOKEN = -1,
-	SPACE = -2,
+	BLANK = -2,
 	PIPE = '|',
 	LESS = '<',
 	GREAT = '>',
 	SQUOTE = '\'',
 	DQUOTE = '\"',
 	DLESS = -3,
-	DGREAT = -4
+	DGREAT = -4,
+	REDIR = -5,
+	CMD = -6
 }	t_type;
 
 typedef char	*t_data;
@@ -51,6 +53,14 @@ typedef struct s_tok_list
 	int		count;
 }	t_tok_list;
 
+typedef struct s_node
+{
+	t_data	data;
+	t_type	type;
+	struct *s_node	left;
+	struct *s_node	right;
+}	t_node;
+
 /*
  * main.c
  */
@@ -61,8 +71,13 @@ void	print_err(char *str, int exit_status);
 */
 void	add_token(t_tok_list **list, t_tok *new_tok);
 t_tok_list *create_list(void);
+t_tok	*get_token(t_tok_list *list, int pos);
 /*
 ** check.c
 */
 void	tokenize(t_tok_list **list, char *str);
+/*
+** quotecheck.c
+*/
+int	check_quote(char *str);
 #endif

@@ -63,6 +63,8 @@ int main(int argc, char **argv, char **envp)
 	char	*line;
 	t_tok_list	*list;
 
+	(void)argc;
+	(void)argv;
 	path = ft_split(get_env_path(envp, "PATH="), ':');
 	signal(SIGINT, handler);
 	signal(SIGQUIT, SIG_IGN);
@@ -89,5 +91,6 @@ int main(int argc, char **argv, char **envp)
 		}
 	}
 	
+
 	return (0);
 }

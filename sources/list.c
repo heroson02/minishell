@@ -49,3 +49,17 @@ void	add_token(t_tok_list **list, t_tok *new_tok)
 	}
 	(*list)->count++;
 }
+
+t_tok	*get_token(t_tok_list *list, int pos)
+{
+	t_tok	*token;
+	int		idx;
+
+	idx = -1;
+	if (!list || pos >= list->count)
+		return (NULL);
+	token = list->head;
+	while (++idx < pos)
+		token = token->next;
+	return (token);
+}
