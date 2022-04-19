@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 11:49:46 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/04/18 11:49:49 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/04/19 17:50:27 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,69 +117,114 @@
 
 // }
 
-void pipe()
+int	syntax(t_tok_list *list)
 {
-	if (첫번째 토큰 == '|')
-		error;
-	cmd(idx);
-	if (현재토큰 == '|')
-		pipe(다음토큰);
-}
-void cmd()
-{
-	simple_cmd(idx);
-	if (현재토큰 == REDIR)
-		redirs();	
-}
-void simple_cmd()
-{
-	if (현재토큰 == REDIR || 현재토큰 == PIPE)	//현재 토큰과 문자열을 받는 함수 strchr처럼 비교하는 함수
-		return ;
-	path();
-	if (현재토큰)
-		args();
-}
-
-void redirs()
-{
-	if (현재토큰 == PIPE)
-		return ;
-	if (현재토큰 == REDIR)
-		redir(다음토큰);
-	if (현재토큰)
-		redirs();
-}
-
-void redir()
-{
-	if (현재토큰 == PIPE)
-		return ;
-	if (현재토큰 == REDIR)
+	int	idx;
+	
+	idx = 0;
+	if (!list)
+		return (FALSE);
+	pipeline(list, &idx);
+	if (get_token(list, idx))
 	{
-		현재 토큰과 <, <<, >>, >와 비교
-		if (다음토큰)
-			filename(다음토큰);
-		else
-			error;
+		printf("what token? %s\n", get_token(list, idx)->data);
+		return (FALSE);
+	}
+	return (TRUE);
+}
+
+void pipeline(t_tok_list *list, int *idx)
+{	
+	t_tok	*token;
+
+	cmd(list, idx);
+	token = get_token(list, *idx);
+	if (token && token->type == PIPE && ++(*idx))
+	{
+		if (token->next && token->next->type == PIPE)
+		{
+			printf("error\n");
+			exit(258);
+		}
+		pipeline(list, idx);
 	}
 }
 
-void args()
+void cmd(t_tok_list *list, int *idx)
 {
-	if (현재토큰 == REDIR || 현재토큰 PIPE)
-		return ;
-	if (다음토큰)
-		args();
-	else
-		return ;
+	t_tok	*token;
+
+	simple_cmd(list, idx);
+	token = get_token(list, *idx);
+	if (token && token->type == REDIR)
+		redirs(list, idx);
 }
 
-void path()
+void simple_cmd(t_tok_list *list, int *idx)
 {
-	idx++;
+	t_tok	*token;
+
+	token = get_token(list, *idx);
+	if (!token || token->type == REDIR || token->type == PIPE)
+		return ;
+	path(list, idx);
+	token = get_token(list, *idx);
+	if (token)
+		args(list, idx);
 }
 
-void filename()
+void	redirs(t_tok_list *list, int *idx)
 {
-	idx++;
+	t_tok	*token;
+	
+	token = get_token(list, *idx);
+	if (token && token->type == PIPE)
+		return ;
+	if (token && token->type == REDIR)
+	{
+		redir(list, idx);
+		redirs(list, idx);
+	}
+}
+
+void redir(t_tok_list *list, int *idx)
+{
+	t_tok	*token;
+
+	token = get_token(list, *idx);
+	if (token->next && token->next->type == REDIR)
+	{ 
+		printf("error\n"); 
+		exit(1);
+	}
+
+		// error();
+	(*idx)++;
+	filename(list, idx);
+}
+
+void args(t_tok_list *list, int *idx)
+{
+	t_tok	*token;
+
+	token = get_token(list, *idx);
+	if (token->type == REDIR || token->type == PIPE)
+		return ;
+	(*idx)++;
+	if (token->next)
+		args(list, idx);
+}
+
+void path(t_tok_list *list, int *idx)
+{
+	(void)list;
+	(*idx)++;
+}
+
+void filename(t_tok_list *list, int *idx)
+{
+	if (get_token(list, *idx)->type == PIPE)
+		return ;
+	(void)list;
+	(*idx)++;
 }
