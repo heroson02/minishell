@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 19:17:26 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/04/19 21:02:32 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/04/19 21:16:30 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,11 @@ int	insert_token(t_astree *tree, t_node *node)
 	cur = tree->root;
 	while (cur->right)
 		cur = cur->right;
+	if (cur->type == PIPE || cur->type == REDIR)
+	{
+		cur->right = node;
+		return (TRUE);
+	}
 	while (cur->left)
 		cur = cur->left;
 	cur->left = node;
