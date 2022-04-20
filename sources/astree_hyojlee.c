@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   astree.c                                           :+:      :+:    :+:   */
+/*   astree copy.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 19:17:26 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/04/20 12:22:42 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/04/20 16:58:53 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,24 +38,11 @@ t_node	*create_node(t_tok	*token)
 
 int	insert_pipe(t_astree *tree, t_node	*node)
 {
-	t_node	*cur;
-	t_node	*pre;
-
-	if (!tree || !(tree->root))
+	if (!tree)
 		return (FALSE);
-	cur = tree->root;
-	pre = cur;
-	while (cur && cur->type == PIPE)
-	{
-		pre = cur;
-		cur = cur->right;
-	}
-	node->left = cur;
-	if (pre == cur) // 루트 노드
-		tree->root = node;
-	else // 루트 노드가 아닌 경우
-		pre->right = node;
-	return (TRUE);
+	node->left = tree->root;
+	tree->root = node;
+	return (TRUE);	
 }
 
 int	insert_redir(t_astree *tree, t_node *node)
@@ -63,7 +50,7 @@ int	insert_redir(t_astree *tree, t_node *node)
 	t_node	*cur;
 	t_node	*pre;
 
-	if (!tree || !(tree->root))
+	if (!tree)
 		return (FALSE);
 	cur = tree->root;
 	pre = cur;
