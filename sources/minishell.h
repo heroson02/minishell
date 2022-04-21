@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:39:28 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/04/19 20:01:59 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/04/21 21:40:22 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ typedef enum	e_type
 	DLESS = -3,
 	DGREAT = -4,
 	REDIR = -5,
-	CMD = -6
+	CMD = -6,
+	HEREDOC = -7
 }	t_type;
 
 typedef char	*t_data;
