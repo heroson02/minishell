@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 11:49:46 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/04/26 12:37:31 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/04/26 16:09:11 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,6 @@ int	syntax(t_info *info)
 	if (!info || !info->list || !info->tree)
 		return (FALSE);
 	pipeline(info, &idx);
-	if (get_token(info->list, idx))
-	{
-		printf("what token? %s\n", get_token(info->list, idx)->data);
-		return (FALSE);
-	}
 	return (TRUE);
 }
 
@@ -65,14 +60,16 @@ void pipeline(t_info *info, int *idx)
 	{
 		node = create_node(token);
 		insert_pipe_heredoc(info->tree, node);
-		if (token->next && token->next->type == PIPE)
-		{
-			printf("error\n");
-			exit(258);
-			//error();
-		}
+		// if (token->next && token->next->type == PIPE)
+		// {
+		// 	printf("error\n");
+		// 	exit(258);
+		// 	//error();
+		// }
 		pipeline(info, idx);
 	}
+	else if (token)
+		pipeline(info, idx);
 }
 
 void cmd(t_info *info, int *idx)
@@ -120,11 +117,11 @@ void redir(t_info *info, int *idx)
 	token = get_token(info->list, *idx);
 	if (!token)
 		return ;
-	if (token->next && (token->next->type == REDIR || token->next->type == HEREDOC))
-	{ 
-		printf("error\n"); 
-		exit(1);
-	}
+	// if (token->next && (token->next->type == REDIR || token->next->type == HEREDOC))
+	// { 
+	// 	printf("error\n"); 
+	// 	exit(1);
+	// }
 	// error();
 	node = create_node(token);
 	if (token->type == REDIR)
