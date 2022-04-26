@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:39:28 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/04/26 16:44:05 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/04/26 18:22:26 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <curses.h>
 # include <term.h>
 # include <signal.h>
+# include <string.h>
+# include <sys/errno.h>
 # include "../libft/libft.h"
 
 # define REPLACE 1
@@ -78,12 +80,13 @@ typedef struct s_info
 {
 	t_tok_list	*list;
 	t_astree	*tree;
+	int			exitcode;
 }	t_info;
 
 /*
  * main.c
  */
-void	print_err(char *str, int exit_status);
+void	print_err(int err);
 
 /*
 ** list.c

@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 16:32:20 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/04/21 21:41:15 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/04/26 18:22:09 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,10 @@ char	*init_token(t_tok_list **list, char *start, char *end)
 	len = end - start + 1;
 	new_tok = (t_tok *)malloc(sizeof(t_tok));
 	if (!new_tok)
-		print_err("malloc error", 1);
+	{
+		print_err(errno);
+		exit(1);
+	}
 	ft_bzero(new_tok, sizeof(t_tok));
 	new_tok->data = ft_substr(start, 0, len);
 	new_tok->type = get_type(start, len);

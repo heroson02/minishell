@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:40:18 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/04/26 16:48:28 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/04/26 18:23:03 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,12 @@ void handler(int signo)
 	}	
 }
 
-void	print_err(char *str, int exit_status)
+void	print_err(int err)
 {
-	printf("%s\n", str);
-	exit(exit_status);
+	if (err > 0)
+		printf("\033[31m%s\033[0m\n", strerror(errno));
+	else
+		printf("\033[31mSyntax Error\033[0m\n");
 }
 
 // 환경변수 값 가져오는 함수 원본
@@ -44,6 +46,9 @@ void	print_err(char *str, int exit_status)
 // }
 
 // 환경변수 가져오는 함수 수정본
+// 환경변수($HOME와 같은 애들) 값을 치환하기 위해 만들어둔 함수
+// 환경변수가 존재하지 않으면 그냥 빈 문자열을 출력하므로 (echo $HELLO)
+// name에 해당하는 환경변수가 존재하지 않으면 빈 문자열을 출력한다.
 static char	*get_env_path(char **env, char *name)
 {
 	while (*env)
@@ -52,9 +57,10 @@ static char	*get_env_path(char **env, char *name)
 			return (*env + ft_strlen(name));
 		env++;
 	}
-	if (!*env)
-		print_err(name, 1);
-	return (0);
+	return (ft_strdup(""));
+	// if (!*env) //환경변수가 존재하지 않는다.
+	// 	print_err(errno, 1);
+	// return (0);
 }
 
 void	astree_print(t_node *node);
@@ -79,14 +85,14 @@ int main(int argc, char **argv, char **envp)
 		if (line)
 		{
 			if (check_quote(line) == FALSE)	//따옴표 체크
-				print_err("Syntax error", 258);
+				print_err(0); //syntax error 258
 			tokenize(&(info.list), line);	// 토큰화
 			print_token(info.list);
 			//구문 분석 및 파싱 과정 (AST TREE)
 			if (syntax(&info) == FALSE)
-				print_err("Syntax analysis error", 258);
+				print_err(0); //syntax error 258
 			if (chk_syntax(info.tree->root) == FALSE)
-				printf("\033[0;31msemantic syntax error\033[0;0m\n");
+				print_err(0); //syntax error 258
 			print_tree(info.tree->root);
 			//환경변수 치환
 			//실행 과정 (이후에 tok list 비우기)
