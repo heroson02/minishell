@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:40:18 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/04/26 15:05:37 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/04/26 16:48:28 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ int main(int argc, char **argv, char **envp)
 			//구문 분석 및 파싱 과정 (AST TREE)
 			if (syntax(&info) == FALSE)
 				print_err("Syntax analysis error", 258);
+			if (chk_syntax(info.tree->root) == FALSE)
+				printf("\033[0;31msemantic syntax error\033[0;0m\n");
 			print_tree(info.tree->root);
 			//환경변수 치환
 			//실행 과정 (이후에 tok list 비우기)
@@ -95,6 +97,8 @@ int main(int argc, char **argv, char **envp)
 		}
 		else //ctrl + d
 		{
+			ft_putstr_fd("\x1b[1A", STDOUT);
+			ft_putstr_fd("\033[12C", STDOUT);
 			printf("exit\n");
 			exit(0); //마지막 종료 상태 값 exit 인자로 넣기
 		}

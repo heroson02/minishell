@@ -6,7 +6,7 @@
 #    By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/03 10:49:43 by hyojlee           #+#    #+#              #
-#    Updated: 2022/04/26 13:10:05 by hyojlee          ###   ########.fr        #
+#    Updated: 2022/04/26 16:43:45 by hyojlee          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ SRCS = $(SRC_DIR)/main.c \
 		$(SRC_DIR)/quotecheck.c	\
 		$(SRC_DIR)/syntax.c	\
 		$(SRC_DIR)/astree.c	\
+		$(SRC_DIR)/semantic.c	\
 		$(SRC_DIR)/util.c
 OBJS = $(SRCS:.c=.o)
 

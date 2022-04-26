@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:39:28 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/04/26 13:00:14 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/04/26 16:44:05 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,13 @@
 # include "../libft/libft.h"
 
 # define REPLACE 1
+
+typedef enum	e_std
+{
+	STDIN = 0,
+	STDOUT,
+	STDERR
+}	t_std;
 
 typedef enum	e_type
 {
@@ -127,4 +134,9 @@ void		insert_redir(t_astree *tree, t_node *node);
 void 		insert_path(t_astree *tree, t_node *node);
 void		insert_filename(t_astree *tree, t_node *node);
 void	tree_clear(t_astree *tree);
+
+/*
+** semantic.c
+*/
+int			chk_syntax(t_node *node);
 #endif
