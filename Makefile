@@ -6,12 +6,13 @@
 #    By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/03 10:49:43 by hyojlee           #+#    #+#              #
-#    Updated: 2021/07/04 22:25:47 by lhj-unix         ###   ########.fr        #
+#    Updated: 2022/04/26 13:10:05 by hyojlee          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -g3 -fsanitize=address
+# CFLAGS = -Wall -Wextra -Werror
 LDFLAGS = -lncurses -lreadline -L/Users/hyojlee/.brew/opt/readline/lib
 CPPFLAGS = -I/Users/hyojlee/.brew/opt/readline/include
 INC = ./includes
@@ -20,7 +21,13 @@ MAKE = make
 LIB_NAME = libft.a
 LIB_DIR = ./libft
 SRC_DIR = ./sources
-SRCS = $(SRC_DIR)/readline.c
+SRCS = $(SRC_DIR)/main.c \
+		$(SRC_DIR)/list.c \
+		$(SRC_DIR)/check.c	\
+		$(SRC_DIR)/quotecheck.c	\
+		$(SRC_DIR)/syntax.c	\
+		$(SRC_DIR)/astree.c	\
+		$(SRC_DIR)/util.c
 OBJS = $(SRCS:.c=.o)
 
 

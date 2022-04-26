@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yson <yson@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 16:32:20 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/04/14 20:24:00 by yson             ###   ########.fr       */
+/*   Updated: 2022/04/21 21:41:15 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,29 @@ static int	ft_isblank(char c)
 	return (0);
 }
 
+// t_type	get_type(char *str, int len)
+// {
+// 	char	c;
+
+// 	c = *str;
+// 	if (c == PIPE)
+// 		return (PIPE);
+// 	else if (c == LESS && len > 1)
+// 		return (DLESS);
+// 	else if (c == GREAT && len > 1)
+// 		return (DGREAT);
+// 	else if (c == LESS)
+// 		return (LESS);
+// 	else if (c == GREAT)
+// 		return (GREAT);
+// 	else if (c == SQUOTE)
+// 		return (SQUOTE);
+// 	else if (c == DQUOTE)
+// 		return (DQUOTE);
+// 	else
+// 		return (TOKEN);
+// }
+
 t_type	get_type(char *str, int len)
 {
 	char	c;
@@ -28,19 +51,13 @@ t_type	get_type(char *str, int len)
 	if (c == PIPE)
 		return (PIPE);
 	else if (c == LESS && len > 1)
-		return (DLESS);
-	else if (c == GREAT && len > 1)
-		return (DGREAT);
-	else if (c == LESS)
-		return (LESS);
-	else if (c == GREAT)
-		return (GREAT);
+		return (HEREDOC);
+	else if (c == LESS || c == GREAT)
+		return (REDIR);
 	else if (c == SQUOTE)
 		return (SQUOTE);
 	else if (c == DQUOTE)
 		return (DQUOTE);
-	else if (ft_isblank(c))
-		return (SPACE);
 	else
 		return (TOKEN);
 }

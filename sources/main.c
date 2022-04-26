@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yson <yson@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:40:18 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/04/14 20:46:53 by yson             ###   ########.fr       */
+/*   Updated: 2022/04/26 15:05:37 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,16 +57,22 @@ static char	*get_env_path(char **env, char *name)
 	return (0);
 }
 
+void	astree_print(t_node *node);
+
+
 int main(int argc, char **argv, char **envp)
 {
 	char	**path;
 	char	*line;
-	t_tok_list	*list;
-
+	t_info	info;
+	
+	(void)argc;
+	(void)argv;
 	path = ft_split(get_env_path(envp, "PATH="), ':');
 	signal(SIGINT, handler);
 	signal(SIGQUIT, SIG_IGN);
-	list = create_list();
+	info.list = create_list();
+	info.tree = create_tree();
 	while (1)
 	{
 		line = readline("minishell> ");
@@ -74,10 +80,15 @@ int main(int argc, char **argv, char **envp)
 		{
 			if (check_quote(line) == FALSE)	//따옴표 체크
 				print_err("Syntax error", 258);
-			tokenize(&list, line);	// 토큰화
+			tokenize(&(info.list), line);	// 토큰화
+			print_token(info.list);
 			//구문 분석 및 파싱 과정 (AST TREE)
+			if (syntax(&info) == FALSE)
+				print_err("Syntax analysis error", 258);
+			print_tree(info.tree->root);
 			//환경변수 치환
-			//실행 과정
+			//실행 과정 (이후에 tok list 비우기)
+			ft_clear(&info);
 			add_history(line);
 			free(line);
 			line = NULL;
@@ -89,5 +100,6 @@ int main(int argc, char **argv, char **envp)
 		}
 	}
 	
+
 	return (0);
 }
