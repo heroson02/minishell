@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:39:28 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/04/21 21:40:22 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/04/26 13:00:14 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,11 @@ typedef struct s_astree
 	t_node	*root;
 } t_astree;
 
-
+typedef struct s_info
+{
+	t_tok_list	*list;
+	t_astree	*tree;
+}	t_info;
 
 /*
  * main.c
@@ -94,19 +98,33 @@ int	check_quote(char *str);
 /*
 ** syntax.c
 */
-int		syntax(t_tok_list *list);
-void	pipeline(t_tok_list *list, int *idx);
-void	cmd(t_tok_list *list, int *idx);
-void	simple_cmd(t_tok_list *list, int *idx);
-void	redir(t_tok_list *list, int *idx);
-void	redirs(t_tok_list *list, int *idx);
-void	args(t_tok_list *list, int *idx);
-void	path(t_tok_list *list, int *idx);
-void	filename(t_tok_list *list, int *idx);
+int		syntax(t_info *info);
+void	pipeline(t_info *info, int *idx);
+void	cmd(t_info *info, int *idx);
+void	simple_cmd(t_info *info, int *idx);
+void	redir(t_info *info, int *idx);
+void	redirs(t_info *info, int *idx);
+void	args(t_info *info, int *idx);
+void	path(t_info *info, int *idx);
+void	filename(t_info *info, int *idx);
 
 /*
 ** util.c
 */
 void	print_token(t_tok_list *list);
+void print_tree(t_node* root);
+void	as_print(t_node *syntax);
+void	ft_clear(t_info *info);
 
+/*
+** astree.c
+*/
+
+void		insert_pipe_heredoc(t_astree *tree, t_node *node);
+t_node		*create_node(t_tok	*token);
+t_astree	*create_tree(void);
+void		insert_redir(t_astree *tree, t_node *node);
+void 		insert_path(t_astree *tree, t_node *node);
+void		insert_filename(t_astree *tree, t_node *node);
+void	tree_clear(t_astree *tree);
 #endif

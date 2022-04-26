@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 19:17:26 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/04/21 21:39:59 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/04/26 13:54:48 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,11 @@ t_node	*create_node(t_tok	*token)
 	return (node);
 }
 
-int	insert_pipe_heredoc(t_astree *tree, t_node *node)
+void	insert_pipe_heredoc(t_astree *tree, t_node *node)
 {
 	t_node	*cur;
 	t_node	*pre;
 
-	if (!tree)
-		return (FALSE);
 	cur = tree->root;
 	pre = cur;
 	while (cur && cur->type == HEREDOC)
@@ -50,41 +48,55 @@ int	insert_pipe_heredoc(t_astree *tree, t_node *node)
 		pre = cur;
 		cur = cur->left;
 	}
-	if (!pre)
+	if (!pre || pre == cur)
 		tree->root = node;
 	else
 		pre->left = node;
 	node->left = cur;
-	return (TRUE);	
 }
 
-int	insert_redir(t_astree *tree, t_node *node)
+void	delete_node(t_node	*node)
+{
+	if (!node)
+		return;
+	delete_node(node->left);
+	delete_node(node->right);
+	free(node);
+	ft_bzero(node, sizeof(t_node));
+}
+
+void	tree_clear(t_astree *tree)
+{
+	if (!tree)
+		return;
+	delete_node(tree->root);
+	ft_bzero(tree, sizeof(t_astree));
+}
+
+void	insert_redir(t_astree *tree, t_node *node)
 {
 	t_node	*cur;
 	t_node	*pre;
 
-	if (!tree)
-		return (FALSE);
 	cur = tree->root;
 	pre = cur;
 	while (cur)
 	{
-		pre = cur;
 		if (cur->type == TOKEN || cur->type == SQUOTE || cur->type == DQUOTE)
 			break ;
-		else if (cur->type == PIPE)
+		pre = cur;
+		if (cur->type == PIPE)
 			cur = cur->right;
 		else
 			cur = cur->left;
 	}
-	if (!pre)
+	if (!pre || pre == cur)
 		tree->root = node;
 	else if (pre->type == PIPE)
 		pre->right = node; //파이프일 떄
 	else
 		pre->left = node;
 	node->left = cur;
-	return (TRUE);
 }
 
 /*
@@ -96,13 +108,11 @@ int	insert_redir(t_astree *tree, t_node *node)
 **	  -> 마지막 리다이렉션까지 이동 후 왼쪽이 비워져 있으면 거기에 insert, 채워져 있으면 왼쪽 끝까지 이동 후 insert
 ** 3. heredoc인 경우, pipe와 마찬가지
  */ 
-int insert_path(t_astree *tree, t_node *node)	//path와 args에 들어갈 insert 함수
+void	insert_path(t_astree *tree, t_node *node)	//path와 args에 들어갈 insert 함수
 {
 	t_node	*cur;
 	t_node	*pre;
 
-	if (!tree)
-		return (FALSE);
 	cur = tree->root;
 	pre = cur;
 	while (cur)
@@ -119,24 +129,21 @@ int insert_path(t_astree *tree, t_node *node)	//path와 args에 들어갈 insert
 		pre->right = node;
 	else
 		pre->left = node;
-	return (TRUE);
 }
 
 // 반드시 리다이렉션이 나오고 호출되기 때문에 루트가 비어있는지 확안헐 필요는 없음
-int	insert_filename(t_astree *tree, t_node *node)
+void	insert_filename(t_astree *tree, t_node *node)
 {
 	t_node	*cur;
 	t_node	*pre;
 
-	if (!tree)
-		return (FALSE);
 	cur = tree->root;
 	while (cur) //root는 반드시 채워져 있어야하므로 pre = cur가 while 전에 있을 필요는 없음
 	{
 		pre = cur;
 		if (cur->type == PIPE)
 			cur = cur->right;
-		else if (cur->type == REDIR)
+		else if (cur->type == REDIR || cur->type == HEREDOC)
 		{
 			if (cur->right)
 				cur = cur->left;
@@ -146,9 +153,8 @@ int	insert_filename(t_astree *tree, t_node *node)
 		else
 			cur = cur->left;
 	}
-	if (pre->type == PIPE)
+	if (pre->type == PIPE || !pre->right)
 		pre->right = node;
 	else
 		pre->left = node;
-	return (TRUE);
 }
