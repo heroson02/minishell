@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:37:13 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/04/27 20:43:31 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/04/27 21:38:05 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@ char	*get_env(char **env, char *name)
 		if (ft_strnstr(*env, env_name, ft_strlen(*env)))
 		{
 			free(env_name);
-			env_name = 0;
+			ft_bzero(env_name, sizeof(char));
 			return (*env + len);
 		}
 		env++;
 	}
 	free(env_name);
-	env_name = 0;
+	ft_bzero(env_name, sizeof(char));
 	return (ft_strdup(""));
 	// if (!*env) //환경변수가 존재하지 않는다.
 	// 	print_err(errno, 1);
@@ -49,10 +49,10 @@ static void	free_split(char **split)
 	while (split[++idx])
 	{
 		free(split[idx]);
-		split[idx] = 0;
+		ft_bzero(split[idx], sizeof(char));
 	}
 	free(split);
-	split = 0;
+	ft_bzero(split, sizeof(char *));
 }
 
 /*
@@ -77,11 +77,11 @@ char	*replace_env(t_info *info, char *str)
 	else
 		ret = ft_strjoin(rpl, str + idx);
 	free(env);
-	env = 0;
+	ft_bzero(env, sizeof(char));
 	// free(rpl);
 	// rpl = 0;
 	free(str);
-	str = 0;
+	ft_bzero(str, sizeof(char));
 	return (ret);
 }
 
@@ -97,16 +97,17 @@ void	replace(t_info *info, t_node *node)
 		return ;
 	newstr = ft_substr(node->data, 0, ft_strlen(node->data) - ft_strlen(data));
 	split = ft_split(data, '$');
-	free(data);
-	data = 0;
 	idx = -1;
+	free(node->data);
+	ft_bzero(node->data, sizeof(char));
 	while (split[++idx])
 	{
 		split[idx] = replace_env(info, split[idx]);
 		data = newstr;
 		newstr = ft_strjoin(newstr, split[idx]);
+		printf("\n\ndata: %s\n\n", data);
 		free(data);
-		data = 0;
+		ft_bzero(data, sizeof(char));
 	}
 	free_split(split);
 	node->data = newstr;
@@ -114,9 +115,19 @@ void	replace(t_info *info, t_node *node)
 
 void	replace_recur(t_info *info, t_node *node)
 {
+	char	*tmp;
+
 	if (!node)
 		return ;
-	replace(info, node);
+	if (node->type == SQUOTE || node->type == DQUOTE)
+	{
+		tmp = node->data;
+		node->data = ft_substr(node->data, 1, ft_strlen(tmp) - 2);
+		free(tmp);
+		ft_bzero(tmp, sizeof(char));
+	}
+	if (node->type == DQUOTE || node->type == TOKEN)
+		replace(info, node);
 	replace_recur(info, node->left);
 	replace_recur(info, node->right);
 }

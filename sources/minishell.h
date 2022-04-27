@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:39:28 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/04/26 18:22:26 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/04/27 21:26:30 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ typedef struct s_info
 {
 	t_tok_list	*list;
 	t_astree	*tree;
+	char		**env;
+	t_list		*env_list;
 	int			exitcode;
 }	t_info;
 
@@ -97,9 +99,10 @@ t_tok	*get_token(t_tok_list *list, int pos);
 void	list_clear(t_tok_list *list);
 
 /*
-** check.c
+** tokenize.c
 */
 void	tokenize(t_tok_list **list, char *str);
+int		ft_isblank(char c);
 /*
 ** quotecheck.c
 */
@@ -136,10 +139,17 @@ t_astree	*create_tree(void);
 void		insert_redir(t_astree *tree, t_node *node);
 void 		insert_path(t_astree *tree, t_node *node);
 void		insert_filename(t_astree *tree, t_node *node);
-void	tree_clear(t_astree *tree);
+void		tree_clear(t_astree *tree);
 
 /*
 ** semantic.c
 */
 int			chk_syntax(t_node *node);
+
+/*
+** replace_env.c
+*/
+char	*get_env(char **env, char *name);
+void	replace_recur(t_info *info, t_node *node);
+
 #endif
