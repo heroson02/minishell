@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 16:55:42 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/04/26 13:35:21 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/04/28 11:35:58 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,62 +91,3 @@ void print_tree(t_node* root)
 	}
 }
 
-// 
-
-static inline void	padding(char c, int n)
-{
-	int		i;
-
-	i = -1;
-	while (++i < n)
-	{
-		ft_putchar_fd(c, STDOUT_FILENO);
-		ft_putchar_fd(c, STDOUT_FILENO);
-	}
-}
-
-void	jputendl(char *s, int fd)
-{
-	if (!s)
-		return ;
-	ft_putstr_fd(s, fd);
-	ft_putchar_fd('\n', fd);
-}
-
-
-/*
-** as_syntax ()			- Print the Information of Syntax Node on the Screen
-**
-** return				- void
-** syntax				- Specific Syntax Node
-** level				- Depth of the Syntax Node for Padding
-*/
-
-void	as_syntax(t_node *syntax, int level)
-{
-	if (syntax == NULL)
-	{
-		padding('\t', level);
-		jputendl("NIL", STDOUT_FILENO);
-	}
-	else
-	{
-		as_syntax(syntax->right, level + 1);
-		padding('\t', level);
-		jputendl(syntax->data, STDOUT_FILENO);
-		as_syntax(syntax->left, level + 1);
-	}
-}
-
-/*
-** as_print ()			- Print the Total Syntax Nodes of AS Tree
-**
-** return				- void
-** syntax				- AS Tree
-*/
-
-void	as_print(t_node *syntax)
-{
-	as_syntax(syntax, 0);
-	jputendl("-------------------------------------------", STDOUT_FILENO);
-}
