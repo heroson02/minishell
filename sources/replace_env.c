@@ -6,40 +6,11 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:37:13 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/04/27 21:38:05 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/04/28 12:14:34 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./minishell.h"
-
-// 환경변수 가져오는 함수 수정본
-// 환경변수($HOME와 같은 애들) 값을 치환하기 위해 만들어둔 함수
-// 환경변수가 존재하지 않으면 그냥 빈 문자열을 출력하므로 (echo $HELLO)
-// name에 해당하는 환경변수가 존재하지 않으면 빈 문자열을 출력한다.
-char	*get_env(char **env, char *name)
-{
-	char	*env_name;
-	size_t	len;
-
-	env_name = ft_strjoin(name, "=");
-	len = ft_strlen(env_name);
-	while (*env)
-	{
-		if (ft_strnstr(*env, env_name, ft_strlen(*env)))
-		{
-			free(env_name);
-			ft_bzero(env_name, sizeof(char));
-			return (*env + len);
-		}
-		env++;
-	}
-	free(env_name);
-	ft_bzero(env_name, sizeof(char));
-	return (ft_strdup(""));
-	// if (!*env) //환경변수가 존재하지 않는다.
-	// 	print_err(errno, 1);
-	// return (0);
-}
 
 static void	free_split(char **split)
 {
@@ -71,7 +42,7 @@ char	*replace_env(t_info *info, char *str)
 	while (str[idx] && !ft_isblank(str[idx]))
 		idx++;
 	env = ft_substr(str, 0, idx);
-	rpl = get_env(info->env, env);
+	rpl = get_env(info, env);
 	if (!str[idx])
 		ret = ft_strdup(rpl);
 	else
@@ -105,7 +76,6 @@ void	replace(t_info *info, t_node *node)
 		split[idx] = replace_env(info, split[idx]);
 		data = newstr;
 		newstr = ft_strjoin(newstr, split[idx]);
-		printf("\n\ndata: %s\n\n", data);
 		free(data);
 		ft_bzero(data, sizeof(char));
 	}

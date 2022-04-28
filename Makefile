@@ -6,7 +6,7 @@
 #    By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/03 10:49:43 by hyojlee           #+#    #+#              #
-#    Updated: 2022/04/27 21:36:29 by hyojlee          ###   ########.fr        #
+#    Updated: 2022/04/28 12:06:13 by hyojlee          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ SRCS = $(SRC_DIR)/main.c \
 		$(SRC_DIR)/astree.c	\
 		$(SRC_DIR)/semantic.c	\
 		$(SRC_DIR)/replace_env.c	\
+		$(SRC_DIR)/env_list.c	\
 		$(SRC_DIR)/util.c
 OBJS = $(SRCS:.c=.o)
 

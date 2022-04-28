@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 16:55:42 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/04/27 21:34:21 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/04/28 11:35:58 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,17 +91,3 @@ void print_tree(t_node* root)
 	}
 }
 
-void	env_preprocess(t_info *info, char **envp)
-{
-	t_list	*head;
-	int		i;
-
-	i = 1;
-	head = ft_lstnew(envp[0]);
-	info->env_list = head;
-	while (envp[i])
-	{
-		ft_lstadd_back(&head, ft_lstnew(envp[i]));
-		i++;
-	}
-}

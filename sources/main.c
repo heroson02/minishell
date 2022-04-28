@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:40:18 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/04/27 20:56:33 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/04/28 12:12:11 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,18 +50,19 @@ void	astree_print(t_node *node);
 
 int main(int argc, char **argv, char **envp)
 {
-	char	**path;
+	// char	**path;
 	char	*line;
 	t_info	info;
 	
 	(void)argc;
 	(void)argv;
-	path = ft_split(get_env(envp, "PATH"), ':');
+	// path = ft_split(get_env(envp, "PATH"), ':');
 	signal(SIGINT, handler);
 	signal(SIGQUIT, SIG_IGN);
 	info.list = create_list();
 	info.tree = create_tree();
-	info.env = envp;
+	env_preprocess(&info, envp);
+	// info.env = envp;
 	while (1)
 	{
 		line = readline("minishell> ");
@@ -88,7 +89,7 @@ int main(int argc, char **argv, char **envp)
 			add_history(line);
 			free(line);
 			line = NULL;
-			system("leaks minishell");
+			// system("leaks minishell");
 		}
 		else //ctrl + d
 		{
