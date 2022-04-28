@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:39:28 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/04/28 12:20:15 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/04/28 18:53:10 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ void	print_token(t_tok_list *list);
 void	print_tree(t_node* root);
 void	as_print(t_node *syntax);
 void	ft_clear(t_info *info);
+int		ft_strcmp(char *s1, char *s2);
 
 /*
 ** semantic.c
@@ -100,6 +101,20 @@ void	replace_recur(t_info *info, t_node *node);
 */
 void	env_preprocess(t_info *info, char **envp);
 char	*get_env(t_info *info, char *name);
+t_enode	*new_enode(char *env);
+void	free_enode(void *node);
 
+void	builtin_exit(t_info *info, t_node *cmd);
+void	builtin_pwd(t_info *info, t_node *cmd);
+void	builtin_cd(t_info *info, t_node *cmd);
+void	builtin_echo(t_info *info, t_node *cmd);
+void	builtin_export(t_info *info, t_node *cmd);
+void	builtin_env(t_info *info);
+void	builtin_unset(t_info *info, t_node *cmd);
+
+/*
+** exec.c
+*/
+void	read_tree(t_info *info);
 
 #endif
