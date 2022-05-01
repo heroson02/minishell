@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:39:28 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/04/28 18:53:10 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/01 16:05:04 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <signal.h>
 # include <string.h>
 # include <sys/errno.h>
+# include <fcntl.h>
 # include "../libft/libft.h"
 # include "./astree.h"
 
@@ -31,6 +32,8 @@ typedef struct s_info
 	t_tok_list	*list;
 	t_astree	*tree;
 	t_list		*env_list;
+	int			stdin_fd;
+	int			stdout_fd;
 	int			exitcode;
 }	t_info;
 
@@ -116,5 +119,11 @@ void	builtin_unset(t_info *info, t_node *cmd);
 ** exec.c
 */
 void	read_tree(t_info *info);
+
+/*
+** redir.c
+*/
+t_file	*new_file(t_node *redir);
+
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 20:41:29 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/04/28 17:34:30 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/01 16:11:58 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,25 @@ void	command_check(t_info *info, t_node *node)
 
 void	execute_code(t_info *info, t_node *node)
 {
+	if (!node)
+		return ;
 	// if (node->type == HEREDOC)
 	// 	//heredoc 실행
 	// if (node->type == PIPE)
 	// 	//pipe
-	// if (node->type == REDIR)
-	// 	//redir
+	if (node->type == REDIR)
+	{
+		dup2(STDIN, info->stdin_fd);
+		dup2(STDOUT, info->stdout_fd);
+		new_file(node);
+		if (!node->file->in_out)
+			dup2(node->file->fd, info->stdin_fd);
+		else
+			dup2(node->file->fd, info->stdout_fd);
+	}
 	if (node->type == TOKEN)
 		command_check(info, node);
+	execute_code(info, node->left);
 }
 
 void	read_tree(t_info *info)
