@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 11:35:39 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/04/28 18:54:46 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/01 16:16:52 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	free_enode(void *node)
 	free(enode->value);
 	enode->value = 0;
 	free(enode);
-	ft_bzero(enode, sizeof(t_enode));
+	enode = 0; // ft_bzero(enode, sizeof(t_enode));
 }
 
 t_enode	*new_enode(char *env)

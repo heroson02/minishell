@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:37:13 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/04/28 12:14:34 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/01 16:17:59 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ static void	free_split(char **split)
 	while (split[++idx])
 	{
 		free(split[idx]);
-		ft_bzero(split[idx], sizeof(char));
+		split[idx] = 0; //ft_bzero(split[idx], sizeof(char));
 	}
 	free(split);
-	ft_bzero(split, sizeof(char *));
+	split = 0; //ft_bzero(split, sizeof(char *));
 }
 
 /*
@@ -48,11 +48,11 @@ char	*replace_env(t_info *info, char *str)
 	else
 		ret = ft_strjoin(rpl, str + idx);
 	free(env);
-	ft_bzero(env, sizeof(char));
+	env = 0; // ft_bzero(env, sizeof(char));
 	// free(rpl);
 	// rpl = 0;
 	free(str);
-	ft_bzero(str, sizeof(char));
+	str = 0; // ft_bzero(str, sizeof(char));
 	return (ret);
 }
 
@@ -70,14 +70,14 @@ void	replace(t_info *info, t_node *node)
 	split = ft_split(data, '$');
 	idx = -1;
 	free(node->data);
-	ft_bzero(node->data, sizeof(char));
+	node->data = 0; // ft_bzero(node->data, sizeof(char));
 	while (split[++idx])
 	{
 		split[idx] = replace_env(info, split[idx]);
 		data = newstr;
 		newstr = ft_strjoin(newstr, split[idx]);
 		free(data);
-		ft_bzero(data, sizeof(char));
+		data = 0; // ft_bzero(data, sizeof(char));
 	}
 	free_split(split);
 	node->data = newstr;
@@ -94,7 +94,7 @@ void	replace_recur(t_info *info, t_node *node)
 		tmp = node->data;
 		node->data = ft_substr(node->data, 1, ft_strlen(tmp) - 2);
 		free(tmp);
-		ft_bzero(tmp, sizeof(char));
+		tmp = 0; // ft_bzero(tmp, sizeof(char));
 	}
 	if (node->type == DQUOTE || node->type == TOKEN)
 		replace(info, node);
