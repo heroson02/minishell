@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:39:28 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/01 16:05:04 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/01 23:23:13 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <string.h>
 # include <sys/errno.h>
 # include <fcntl.h>
+# include <unistd.h>
 # include "../libft/libft.h"
 # include "./astree.h"
 
