@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:40:18 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/02 18:11:55 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/02 21:58:10 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int main(int argc, char **argv, char **envp)
 				continue ; // 다시 명령줄 출력해야하므로
 			}
 			tokenize(&(info.list), line);	// 토큰화
-			// print_token(info.list);
+			print_token(info.list);
 			//구문 분석 및 파싱 과정 (AST TREE)
 			if (syntax(&info) == FALSE)
 				print_err(0); //syntax error 258

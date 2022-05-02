@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   replace_env.c                                      :+:      :+:    :+:   */
+/*   replace.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:37:13 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/02 22:07:29 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/02 21:54:09 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,6 @@ void	replace_envp(t_info *info, char **before, char *start, char *end)
 	else
 		origin = ft_strdup(start);
 	env = replace_env(info, ++origin);
-	printf("\033[33m%s\033[0m\n", env);
 	free(origin);
 	origin = *before;
 	*before = ft_strjoin(*before, env);
@@ -134,14 +133,13 @@ char	*replace_token(t_info *info, char *data)
 			dquote = TRUE;
 		else if (*data == SQUOTE && dquote == FALSE && squote == FALSE)
 			squote = TRUE;
-		else if (squote == FALSE && *data == '$')
+		else if (squote == FALSE && dquote == TRUE && *data == '$')
 		{
 			join_str(&ret, cur, data);
 			cur = data++;
 			while (*data && *data != '\"' && *data != '$' && !ft_isblank(*data) && *data != '\'')
 				data++;
 			replace_envp(info, &ret, cur, data);
-			cur = data;
 		}
 		else if (squote == FALSE && dquote == TRUE && *data == DQUOTE)
 			dquote = FALSE;
@@ -160,7 +158,6 @@ void	replace_recur(t_info *info, t_node *node)
 		return ;
 	tmp = node->data;
 	node->data = replace_token(info, node->data);
-	printf("\033[31m%s\033[0m\n", node->data);
 	free(tmp);
 	tmp = 0;	
 	// if (node->type == SQUOTE || node->type == DQUOTE)

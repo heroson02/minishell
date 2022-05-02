@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:37:13 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/02 22:07:29 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/02 19:35:17 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,95 +83,22 @@ void	replace(t_info *info, t_node *node)
 	node->data = newstr;
 }
 
-void	join_str(char **before, char *start, char *end)
-{
-	char	*ret;
-	char	*tmp;
-
-	tmp = ft_substr(start, 0, ft_strlen(start) - ft_strlen(end));
-	ret = *before;
-	*before = ft_strjoin(*before, tmp);
-	free(tmp);
-	tmp = 0;
-	free(ret);
-	ret = 0;
-}
-
-void	replace_envp(t_info *info, char **before, char *start, char *end)
-{
-	char	*origin;
-	char	*env;
-
-	if (end)
-		origin = ft_substr(start, 0, ft_strlen(start) - ft_strlen(end));
-	else
-		origin = ft_strdup(start);
-	env = replace_env(info, ++origin);
-	printf("\033[33m%s\033[0m\n", env);
-	free(origin);
-	origin = *before;
-	*before = ft_strjoin(*before, env);
-	free(env);
-	env = 0;
-	free(origin);
-	origin = 0;
-}
-
-char	*replace_token(t_info *info, char *data)
-{
-	char	*ret;
-	char	*cur;
-	int		dquote;
-	int		squote;
-
-	cur = data;
-	dquote = FALSE;
-	squote = FALSE;
-	ret = ft_strdup("");
-	while (*data)
-	{
-		if (*data == DQUOTE && dquote == FALSE && squote == FALSE)
-			dquote = TRUE;
-		else if (*data == SQUOTE && dquote == FALSE && squote == FALSE)
-			squote = TRUE;
-		else if (squote == FALSE && *data == '$')
-		{
-			join_str(&ret, cur, data);
-			cur = data++;
-			while (*data && *data != '\"' && *data != '$' && !ft_isblank(*data) && *data != '\'')
-				data++;
-			replace_envp(info, &ret, cur, data);
-			cur = data;
-		}
-		else if (squote == FALSE && dquote == TRUE && *data == DQUOTE)
-			dquote = FALSE;
-		else if (squote == TRUE && dquote == FALSE && *data == SQUOTE)
-			squote = FALSE;
-		data++;
-	}
-	return (ret);
-}
-
 void	replace_recur(t_info *info, t_node *node)
 {
 	char	*tmp;
 
 	if (!node)
 		return ;
-	tmp = node->data;
-	node->data = replace_token(info, node->data);
-	printf("\033[31m%s\033[0m\n", node->data);
-	free(tmp);
-	tmp = 0;	
-	// if (node->type == SQUOTE || node->type == DQUOTE)
-	// {
-	// 	tmp = node->data;
-	// 	node->data = ft_substr(node->data, 1, ft_strlen(tmp) - 2);
-	// 	free(tmp);
-	// 	tmp = 0; // ft_bzero(tmp, sizeof(char));
-	// }
-	// if (node->type == DQUOTE || node->type == TOKEN)
-	// 	replace(info, node);
+	
+	if (node->type == SQUOTE || node->type == DQUOTE)
+	{
+		tmp = node->data;
+		node->data = ft_substr(node->data, 1, ft_strlen(tmp) - 2);
+		free(tmp);
+		tmp = 0; // ft_bzero(tmp, sizeof(char));
+	}
+	if (node->type == DQUOTE || node->type == TOKEN)
+		replace(info, node);
 	replace_recur(info, node->left);
 	replace_recur(info, node->right);
 }
