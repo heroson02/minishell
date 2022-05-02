@@ -6,7 +6,7 @@
 #    By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/03 10:49:43 by hyojlee           #+#    #+#              #
-#    Updated: 2022/05/02 17:43:08 by hyojlee          ###   ########.fr        #
+#    Updated: 2022/05/03 01:12:55 by hyojlee          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,10 +14,10 @@ CC = gcc
 # CFLAGS = -g3 -fsanitize=address
 CFLAGS = -fsanitize=thread -g
 # CFLAGS = -Wall -Wextra -Werror
-LDFLAGS = -lncurses -lreadline -L/Users/hyojlee/.brew/opt/readline/lib
-CPPFLAGS = -I/Users/hyojlee/.brew/opt/readline/include
-# LDFLAGS = -lncurses -lreadline -L/usr/local/opt/readline/lib
-# CPPFLAGS = -I/usr/local/opt/readline/include
+# LDFLAGS = -lncurses -lreadline -L/Users/hyojlee/.brew/opt/readline/lib
+# CPPFLAGS = -I/Users/hyojlee/.brew/opt/readline/include
+LDFLAGS = -lncurses -lreadline -L/usr/local/opt/readline/lib
+CPPFLAGS = -I/usr/local/opt/readline/include
 INC = ./includes
 NAME = minishell
 MAKE = make

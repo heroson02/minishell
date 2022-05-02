@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:40:18 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/02 21:58:10 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/03 01:15:09 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int main(int argc, char **argv, char **envp)
 			// printf("\n\n");
 			//환경변수 치환
 			replace_recur(&info, info.tree->root);
-			// print_tree(info.tree->root);
+			print_tree(info.tree->root);
 			//실행 과정 (이후에 tok list 비우기)
 			read_tree(&info);
 			ft_clear(&info);
