@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 20:41:29 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/02 17:40:36 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/02 19:34:37 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	execute_code(t_info *info, t_node *node)
 	}
 	if (node->type == TOKEN)
 		command_check(info, node);
-	execute_code(info, node->left);
+	// execute_code(info, node->left);
 }
 
 void	read_tree(t_info *info)

@@ -6,13 +6,13 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:37:13 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/02 19:19:19 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/02 19:35:17 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./minishell.h"
 
-static void	free_split(char **split)
+void	free_split(char **split)
 {
 	int	idx;
 
@@ -89,6 +89,7 @@ void	replace_recur(t_info *info, t_node *node)
 
 	if (!node)
 		return ;
+	
 	if (node->type == SQUOTE || node->type == DQUOTE)
 	{
 		tmp = node->data;
