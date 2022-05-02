@@ -6,13 +6,26 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 11:35:39 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/04/28 12:04:24 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/04/28 18:54:46 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./minishell.h"
 
 //환경변수를 이름과 값을 구분해서 t_enode 구조체에 저장
+void	free_enode(void *node)
+{
+	t_enode	*enode;
+	
+	enode = (t_enode *)node;
+	free(enode->key);
+	enode->key = 0;
+	free(enode->value);
+	enode->value = 0;
+	free(enode);
+	ft_bzero(enode, sizeof(t_enode));
+}
+
 t_enode	*new_enode(char *env)
 {
 	t_enode	*result;
@@ -53,7 +66,7 @@ char	*get_env(t_info *info, char *name)
 	cur = info->env_list;
 	while (cur)
 	{
-		if (!ft_memcmp(((t_enode *)cur->content)->key, name, ft_strlen(name)))
+		if (!ft_strcmp(((t_enode *)cur->content)->key, name))
 			return (((t_enode *)cur->content)->value);
 		cur = cur->next;
 	}

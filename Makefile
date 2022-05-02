@@ -6,13 +6,13 @@
 #    By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/03 10:49:43 by hyojlee           #+#    #+#              #
-#    Updated: 2022/04/28 12:06:13 by hyojlee          ###   ########.fr        #
+#    Updated: 2022/04/28 17:31:22 by hyojlee          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
-# CFLAGS = -g3 -fsanitize=address
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -g3 -fsanitize=address
+# CFLAGS = -Wall -Wextra -Werror
 LDFLAGS = -lncurses -lreadline -L/Users/hyojlee/.brew/opt/readline/lib
 CPPFLAGS = -I/Users/hyojlee/.brew/opt/readline/include
 INC = ./includes
@@ -30,7 +30,15 @@ SRCS = $(SRC_DIR)/main.c \
 		$(SRC_DIR)/semantic.c	\
 		$(SRC_DIR)/replace_env.c	\
 		$(SRC_DIR)/env_list.c	\
-		$(SRC_DIR)/util.c
+		$(SRC_DIR)/builtin/exit.c	\
+		$(SRC_DIR)/builtin/echo.c	\
+		$(SRC_DIR)/builtin/env.c	\
+		$(SRC_DIR)/builtin/cd.c	\
+		$(SRC_DIR)/builtin/export.c	\
+		$(SRC_DIR)/builtin/pwd.c	\
+		$(SRC_DIR)/builtin/unset.c	\
+		$(SRC_DIR)/util.c	\
+		$(SRC_DIR)/exec.c
 OBJS = $(SRCS:.c=.o)
 
 
