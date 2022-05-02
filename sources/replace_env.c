@@ -1,18 +1,18 @@
-// /* ************************************************************************** */
-// /*                                                                            */
-// /*                                                        :::      ::::::::   */
-// /*   replace_env.c                                      :+:      :+:    :+:   */
-// /*                                                    +:+ +:+         +:+     */
-// /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
-// /*                                                +#+#+#+#+#+   +#+           */
-// /*   Created: 2022/04/27 15:37:13 by hyojlee           #+#    #+#             */
-// /*   Updated: 2022/05/02 16:58:45 by hyojlee          ###   ########.fr       */
-// /*                                                                            */
-// /* ************************************************************************** */
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   replace_env.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/27 15:37:13 by hyojlee           #+#    #+#             */
+/*   Updated: 2022/05/02 19:19:19 by hyojlee          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "./minishell.h"
 
-void	free_split(char **split)
+static void	free_split(char **split)
 {
 	int	idx;
 
@@ -56,21 +56,21 @@ char	*replace_env(t_info *info, char *str)
 	return (ret);
 }
 
-void	replace(t_info *info, char **ndata)
+void	replace(t_info *info, t_node *node)
 {
 	char	*newstr;
 	char	*data;
 	char	**split;
 	int		idx;
 
-	data = ft_strchr(*ndata, '$');
+	data = ft_strchr(node->data, '$');
 	if (!data)
 		return ;
-	newstr = ft_substr(*ndata, 0, ft_strlen(*ndata) - ft_strlen(data));
+	newstr = ft_substr(node->data, 0, ft_strlen(node->data) - ft_strlen(data));
 	split = ft_split(data, '$');
 	idx = -1;
-	free(*ndata);
-	*ndata = 0; // ft_bzero(*ndata, sizeof(char));
+	free(node->data);
+	node->data = 0; // ft_bzero(node->data, sizeof(char));
 	while (split[++idx])
 	{
 		split[idx] = replace_env(info, split[idx]);
@@ -80,52 +80,7 @@ void	replace(t_info *info, char **ndata)
 		data = 0; // ft_bzero(data, sizeof(char));
 	}
 	free_split(split);
-	*ndata = newstr;
-}
-
-char	*join_split(char **split)
-{
-	char	*join;
-	char	*tmp;
-	int		idx;
-
-	idx = 0;
-	join = ft_strdup("");
-	while (split[idx])
-	{
-		tmp = join;
-		join = ft_strjoin(join, split[idx++]);
-		free(tmp);
-		tmp = 0;
-	}
-	return (join);
-}
-
-void	separate_quote(t_info *info, t_node *node)
-{
-	char	*join;
-	char	**split;
-	int		idx;
-
-	idx = 0;
-	if (!ft_strchr(node->data, '\'') && !ft_strchr(node->data, '\"'))
-	{
-		replace(info, &(node->data));
-		return ;
-	}
-	split = ft_split(node->data, '\'');
-	join = join_split(split);
-	free_split(split);
-	split = ft_split(join, '\"');
-	while (split[idx])
-		replace(info, &(split[idx++]));
-	free(node->data);
-	free(join);
-	join = join_split(split);
-	node->data = ft_strdup(join);
-	free(join);
-	join = 0;
-	free_split(split);
+	node->data = newstr;
 }
 
 void	replace_recur(t_info *info, t_node *node)
@@ -134,7 +89,15 @@ void	replace_recur(t_info *info, t_node *node)
 
 	if (!node)
 		return ;
-	separate_quote(info, node);
+	if (node->type == SQUOTE || node->type == DQUOTE)
+	{
+		tmp = node->data;
+		node->data = ft_substr(node->data, 1, ft_strlen(tmp) - 2);
+		free(tmp);
+		tmp = 0; // ft_bzero(tmp, sizeof(char));
+	}
+	if (node->type == DQUOTE || node->type == TOKEN)
+		replace(info, node);
 	replace_recur(info, node->left);
 	replace_recur(info, node->right);
 }
