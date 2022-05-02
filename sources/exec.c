@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 20:41:29 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/01 16:11:58 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/02 17:40:36 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,22 @@
 
 void	command_check(t_info *info, t_node *node)
 {
-	if (!ft_memcmp(node->data, "cd", ft_strlen(node->data)))
+	if (!ft_strcmp(node->data, "cd"))
 		builtin_cd(info, node);
-	else if (!ft_memcmp(node->data, "echo", ft_strlen(node->data)))
+	else if (!ft_strcmp(node->data, "echo"))
 		builtin_echo(info, node);
-	else if (!ft_memcmp(node->data, "env", ft_strlen(node->data)))
+	else if (!ft_strcmp(node->data, "env"))
 		builtin_env(info);
-	else if (!ft_memcmp(node->data, "exit", ft_strlen(node->data)))
+	else if (!ft_strcmp(node->data, "exit"))
 		builtin_exit(info, node);
-	else if (!ft_memcmp(node->data, "export", ft_strlen(node->data)))
+	else if (!ft_strcmp(node->data, "export"))
 		builtin_export(info, node);
-	else if (!ft_memcmp(node->data, "pwd", ft_strlen(node->data)))
+	else if (!ft_strcmp(node->data, "pwd"))
 		builtin_pwd(info, node);
-	else if (!ft_memcmp(node->data, "unset", ft_strlen(node->data)))
+	else if (!ft_strcmp(node->data, "unset"))
 		builtin_unset(info, node);
+	else
+		exec(info, node);
 }
 
 void	execute_code(t_info *info, t_node *node)

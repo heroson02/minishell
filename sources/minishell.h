@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:39:28 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/01 23:23:13 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/02 17:40:23 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ int		chk_syntax(t_node *node);
 ** replace_env.c
 */
 void	replace_recur(t_info *info, t_node *node);
+void	free_split(char **split);
 
 /*
 ** env_list.c
@@ -126,5 +127,8 @@ void	read_tree(t_info *info);
 */
 t_file	*new_file(t_node *redir);
 
-
+/*
+** exec.c
+*/
+void	exec(t_info *info, t_node *node);
 #endif
