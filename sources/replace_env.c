@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:37:13 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/03 18:33:04 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/03 19:00:08 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ char	*replace_env(t_info *info, char *data, int start, int end)
 	while (str[idx] && !ft_isblank(str[idx]))
 		idx++;
 	env = ft_substr(str, 0, idx);
-	// rpl = get_env(info, env);
 	rpl = get_env_or_status(info, env);
 	if (!str[idx])
 		ret = ft_strdup(rpl);
