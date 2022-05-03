@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:37:13 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/03 18:04:43 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/03 18:14:22 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,28 +17,6 @@
 ** split 호출 전에 strchr('$')을 하기 때문에 무조건 환경변수이름으로 시작하는 문자열(str)이 들어옴
 ** get_env한 결과(rpl에 들어가는 값)는 항상 동적할당되어있다. 빈 문자열인 경우 ""을 strdup해주기 때문.
 */
-// char	*replace_env(t_info *info, char *str)
-// {
-// 	int		idx;
-// 	char	*env;
-// 	char	*rpl;
-// 	char	*ret;
-
-// 	idx = 0;
-// 	while (str[idx] && !ft_isblank(str[idx]))
-// 		idx++;
-// 	env = ft_substr(str, 0, idx);
-// 	rpl = get_env(info, env);
-// 	if (!str[idx])
-// 		ret = ft_strdup(rpl);
-// 	else
-// 		ret = ft_strjoin(rpl, str + idx);
-// 	free(env);
-// 	env = 0;
-// 	free(str);
-// 	str = 0;
-// 	return (ret);
-// }
 
 char	*replace_env(t_info *info, char *data, int start, int end)
 {
@@ -67,28 +45,18 @@ char	*replace_env(t_info *info, char *data, int start, int end)
 	return (ret);
 }
 
-void	join_envp(char **before, char *env, int *start, int *end)
-{
-	char	*origin;
-
-	if (*end - *start > 0)
-	{
-		origin = *before;
-		*before = ft_strjoin(*before, env);
-		free(env);
-		env = 0;
-		free(origin);
-		origin = 0;
-	}
-	*start = *end;
-	*end -= 1;
-}
-
 static void	init_variable(int *dquote, int *front, int *end)
 {
 	*dquote = FALSE;
 	*end = -1;
 	*front = *end + 1;
+}
+
+static void	join_squote(char **res, char *data, int *front, int *end)
+{
+	join_str(res, data, front, *end);
+	*end = ft_strlen(data) - ft_strlen(ft_strchr(data + *front, SQUOTE));
+	join_str(res, data, front, *end);
 }
 
 void	replace_token(t_info *info, char **res, char *data)
@@ -101,11 +69,7 @@ void	replace_token(t_info *info, char **res, char *data)
 	while (data[++end])
 	{
 		if (data[end] == SQUOTE && dquote == FALSE)
-		{
-			join_str(res, data, &front, end);
-			end = ft_strlen(data) - ft_strlen(ft_strchr(data + front, SQUOTE));
-			join_str(res, data, &front, end);
-		}
+			join_squote(res, data, &front, &end);
 		else if (data[end] == DQUOTE)
 		{
 			dquote = !dquote;

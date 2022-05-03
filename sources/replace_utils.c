@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:37:13 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/03 17:30:04 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/03 18:14:20 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,23 @@ void	join_str(char **before, char *data, int *start, int end)
 		origin = 0;
 	}
 	*start = end + 1;
+}
+
+void	join_envp(char **before, char *env, int *start, int *end)
+{
+	char	*origin;
+
+	if (*end - *start > 0)
+	{
+		origin = *before;
+		*before = ft_strjoin(*before, env);
+		free(env);
+		env = 0;
+		free(origin);
+		origin = 0;
+	}
+	*start = *end;
+	*end -= 1;
 }
 
 void	find_end_pos(char *data, int *end)

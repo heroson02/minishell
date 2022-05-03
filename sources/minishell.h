@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:39:28 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/03 17:55:44 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/03 18:14:30 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ void	replace_recur(t_info *info, t_node *node);
 ** replace_utils.c
 */
 void	join_str(char **before, char *data, int *start, int end);
+void	join_envp(char **before, char *env, int *start, int *end);
 void	find_end_pos(char *data, int *end);
 
 /*
