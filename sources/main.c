@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:40:18 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/03 01:15:09 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/03 17:57:47 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,12 @@ void	print_err(int err)
 // 	return (0);
 // }
 
+void	init(t_info *info)
+{
+	info->list = create_list();
+	info->tree = create_tree();
+}
+
 void	astree_print(t_node *node);
 
 
@@ -59,8 +65,7 @@ int main(int argc, char **argv, char **envp)
 	// path = ft_split(get_env(envp, "PATH"), ':');
 	signal(SIGINT, handler);
 	signal(SIGQUIT, SIG_IGN);
-	info.list = create_list();
-	info.tree = create_tree();
+	init(&info);
 	env_preprocess(&info, envp);
 	// info.env = envp;
 	while (1)

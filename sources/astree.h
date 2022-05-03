@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 11:39:54 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/01 15:54:18 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/03 17:38:01 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ typedef struct s_tok_list
 
 typedef struct s_file
 {
-	char	*name;
-	int		fd;
-	int		exist;
-	int		in_out;
+	int	open_stdin;
+	int open_stdout;
+	int origin_stdin;
+	int origin_stdout;
 }	t_file;
 
 typedef struct s_node

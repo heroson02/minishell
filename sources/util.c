@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 16:55:42 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/04/28 18:52:58 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/03 17:55:32 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,3 +101,16 @@ void print_tree(t_node* root)
 	}
 }
 
+void	free_split(char **split)
+{
+	int	idx;
+
+	idx = -1;
+	while (split[++idx])
+	{
+		free(split[idx]);
+		split[idx] = 0; //ft_bzero(split[idx], sizeof(char));
+	}
+	free(split);
+	split = 0; //ft_bzero(split, sizeof(char *));
+}

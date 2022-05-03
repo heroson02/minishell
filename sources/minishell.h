@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:39:28 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/02 17:40:23 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/03 17:55:44 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ void	print_tree(t_node* root);
 void	as_print(t_node *syntax);
 void	ft_clear(t_info *info);
 int		ft_strcmp(char *s1, char *s2);
+void	free_split(char **split);
 
 /*
 ** semantic.c
@@ -99,7 +100,12 @@ int		chk_syntax(t_node *node);
 ** replace_env.c
 */
 void	replace_recur(t_info *info, t_node *node);
-void	free_split(char **split);
+
+/*
+** replace_utils.c
+*/
+void	join_str(char **before, char *data, int *start, int end);
+void	find_end_pos(char *data, int *end);
 
 /*
 ** env_list.c
@@ -131,4 +137,9 @@ t_file	*new_file(t_node *redir);
 ** exec.c
 */
 void	exec(t_info *info, t_node *node);
+
+/*
+** get_argv.c
+*/
+char	**get_argv(t_node *node);
 #endif
