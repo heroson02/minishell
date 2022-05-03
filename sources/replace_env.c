@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:37:13 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/02 22:07:29 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/03 13:23:55 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,67 +48,40 @@ char	*replace_env(t_info *info, char *str)
 	else
 		ret = ft_strjoin(rpl, str + idx);
 	free(env);
-	env = 0; // ft_bzero(env, sizeof(char));
-	// free(rpl);
-	// rpl = 0;
+	env = 0;
 	free(str);
-	str = 0; // ft_bzero(str, sizeof(char));
+	str = 0;
 	return (ret);
 }
 
-void	replace(t_info *info, t_node *node)
-{
-	char	*newstr;
-	char	*data;
-	char	**split;
-	int		idx;
-
-	data = ft_strchr(node->data, '$');
-	if (!data)
-		return ;
-	newstr = ft_substr(node->data, 0, ft_strlen(node->data) - ft_strlen(data));
-	split = ft_split(data, '$');
-	idx = -1;
-	free(node->data);
-	node->data = 0; // ft_bzero(node->data, sizeof(char));
-	while (split[++idx])
-	{
-		split[idx] = replace_env(info, split[idx]);
-		data = newstr;
-		newstr = ft_strjoin(newstr, split[idx]);
-		free(data);
-		data = 0; // ft_bzero(data, sizeof(char));
-	}
-	free_split(split);
-	node->data = newstr;
-}
-
-void	join_str(char **before, char *start, char *end)
+void	join_str(char **before, char *data, int *start, int end)
 {
 	char	*ret;
 	char	*tmp;
 
-	tmp = ft_substr(start, 0, ft_strlen(start) - ft_strlen(end));
-	ret = *before;
-	*before = ft_strjoin(*before, tmp);
-	free(tmp);
-	tmp = 0;
-	free(ret);
-	ret = 0;
+	if (end - *start > 0)
+		{
+		tmp = ft_substr(data, *start, end - *start);
+		ret = *before;
+		*before = ft_strjoin(*before, tmp);
+		free(tmp);
+		tmp = 0;
+		free(ret);
+		ret = 0;
+	}
+	*start = end + 1;
 }
 
-void	replace_envp(t_info *info, char **before, char *start, char *end)
+void	replace_envp(t_info *info, char **before, char *data, int start, int end)
 {
 	char	*origin;
 	char	*env;
 
-	if (end)
-		origin = ft_substr(start, 0, ft_strlen(start) - ft_strlen(end));
-	else
-		origin = ft_strdup(start);
-	env = replace_env(info, ++origin);
-	printf("\033[33m%s\033[0m\n", env);
-	free(origin);
+	if (end - start < 1)
+		return ;
+	origin = ft_substr(data, start, end - start);
+	env = replace_env(info, origin);
+	// free(origin); //replace_env 안에서 free()해줌
 	origin = *before;
 	*before = ft_strjoin(*before, env);
 	free(env);
@@ -120,34 +93,42 @@ void	replace_envp(t_info *info, char **before, char *start, char *end)
 char	*replace_token(t_info *info, char *data)
 {
 	char	*ret;
-	char	*cur;
 	int		dquote;
-	int		squote;
+	int		front;
+	int		end;
 
-	cur = data;
 	dquote = FALSE;
-	squote = FALSE;
 	ret = ft_strdup("");
-	while (*data)
+	end = 0;
+	front = end;
+	while (data[end])
 	{
-		if (*data == DQUOTE && dquote == FALSE && squote == FALSE)
-			dquote = TRUE;
-		else if (*data == SQUOTE && dquote == FALSE && squote == FALSE)
-			squote = TRUE;
-		else if (squote == FALSE && *data == '$')
+		if (data[end] == SQUOTE && dquote == FALSE)
 		{
-			join_str(&ret, cur, data);
-			cur = data++;
-			while (*data && *data != '\"' && *data != '$' && !ft_isblank(*data) && *data != '\'')
-				data++;
-			replace_envp(info, &ret, cur, data);
-			cur = data;
+			join_str(&ret, data, &front, end);
+			end = ft_strlen(data) - ft_strlen(ft_strchr(data + front, SQUOTE));
+			join_str(&ret, data, &front, end);
 		}
-		else if (squote == FALSE && dquote == TRUE && *data == DQUOTE)
+		else if (data[end] == DQUOTE && dquote == FALSE)
+		{
+			dquote = TRUE;
+			join_str(&ret, data, &front, end);
+		}
+		else if (data[end] == DQUOTE && dquote == TRUE)
+		{
 			dquote = FALSE;
-		else if (squote == TRUE && dquote == FALSE && *data == SQUOTE)
-			squote = FALSE;
-		data++;
+			join_str(&ret, data, &front, end);
+		}
+		else if (data[end] == '$')
+		{
+			join_str(&ret, data, &front, end++);
+			while (data[end] && data[end] != '\'' && data[end] != '\"' && !ft_isblank(data[end]) &&
+					data[end] != '$')
+				end++;
+			replace_envp(info, &ret, data, front, end);
+			front = end--;
+		}
+		end++;
 	}
 	return (ret);
 }
@@ -158,20 +139,14 @@ void	replace_recur(t_info *info, t_node *node)
 
 	if (!node)
 		return ;
-	tmp = node->data;
-	node->data = replace_token(info, node->data);
-	printf("\033[31m%s\033[0m\n", node->data);
-	free(tmp);
-	tmp = 0;	
-	// if (node->type == SQUOTE || node->type == DQUOTE)
-	// {
-	// 	tmp = node->data;
-	// 	node->data = ft_substr(node->data, 1, ft_strlen(tmp) - 2);
-	// 	free(tmp);
-	// 	tmp = 0; // ft_bzero(tmp, sizeof(char));
-	// }
-	// if (node->type == DQUOTE || node->type == TOKEN)
-	// 	replace(info, node);
+	if (ft_strchr(node->data, '$'))
+	{
+		tmp = node->data;
+		node->data = replace_token(info, node->data);
+		printf("\033[31m%s\033[0m\n", node->data);
+		free(tmp);
+		tmp = 0;
+	}
 	replace_recur(info, node->left);
 	replace_recur(info, node->right);
 }

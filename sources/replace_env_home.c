@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   replace_env.c                                      :+:      :+:    :+:   */
+/*   replace_env_home.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:37:13 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/03 01:49:34 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/03 14:42:28 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,6 @@ void	replace_envp(t_info *info, char **before, char *start, char *end)
 		origin = ft_strdup(start);
 	env = replace_env(info, ++origin);
 	printf("\033[33m%s\033[0m\n", env);
-	free(origin);
 	origin = *before;
 	*before = ft_strjoin(*before, env);
 	free(env);
