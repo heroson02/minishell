@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 20:41:29 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/03 17:53:26 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/03 18:38:59 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,28 +40,19 @@ void	execute_code(t_info *info, t_node *node)
 	// 	//heredoc 실행
 	// if (node->type == PIPE)
 	// 	//pipe
-	// if (node->type == REDIR)
-	// {
-	// 	dup2(STDIN, info->stdin_fd);
-	// 	dup2(STDOUT, info->stdout_fd);
-	// 	new_file(node);
-	// 	if (!node->file->in_out)
-	// 		dup2(node->file->fd, info->stdin_fd);
-	// 	else
-	// 		dup2(node->file->fd, info->stdout_fd);
-	// }
+	if (node->type == REDIR)
+		redirection(info, node);
 	if (node->type == TOKEN)
 		command_check(info, node);
 }
 
-void	read_tree(t_info *info)
+void	read_tree(t_info *info, t_node *node)
 {
-	t_node *node;
-
-	node = info->tree->root;
+	info->file->origin_stdin = dup(STDIN);
+	info->file->origin_stdout = dup(STDOUT);
+	if (info->file->origin_stdin < 0 || info->file->origin_stdout < 0)
+		printf("dup error\n");
 	if (!node)
 		return ;
 	execute_code(info, node);
-// 	node = node->left;
-// 	node = node->right;
 }

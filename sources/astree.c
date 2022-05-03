@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 19:17:26 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/01 16:19:26 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/03 18:31:11 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,6 @@ void	delete_node(t_node	*node)
 	delete_node(node->right);
 	free(node->data);
 	node->data = 0; //ft_bzero(node->data, sizeof(char));
-	free(node->file);
-	node->file = 0;
 	free(node);
 	node = 0; //ft_bzero(node, sizeof(t_node));
 }

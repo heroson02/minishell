@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:40:18 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/03 17:57:47 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/03 18:44:15 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,11 @@ void	print_err(int err)
 
 void	init(t_info *info)
 {
+	ft_bzero(info, sizeof(t_info));
 	info->list = create_list();
 	info->tree = create_tree();
+	info->file = (t_file *)malloc(sizeof(t_file));
+	ft_bzero(info->file, sizeof(t_file));
 }
 
 void	astree_print(t_node *node);
@@ -94,7 +97,7 @@ int main(int argc, char **argv, char **envp)
 			replace_recur(&info, info.tree->root);
 			print_tree(info.tree->root);
 			//실행 과정 (이후에 tok list 비우기)
-			read_tree(&info);
+			read_tree(&info, info.tree->root);
 			ft_clear(&info);
 			// add_history(line); 위치 변경 73번째로 - 77번째때문에 add_history()가 안됨
 			free(line);

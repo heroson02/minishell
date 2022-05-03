@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 11:39:54 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/03 17:38:01 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/03 18:30:47 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,19 +51,10 @@ typedef struct s_tok_list
 	int		count;
 }	t_tok_list;
 
-typedef struct s_file
-{
-	int	open_stdin;
-	int open_stdout;
-	int origin_stdin;
-	int origin_stdout;
-}	t_file;
-
 typedef struct s_node
 {
 	t_data	data;
 	t_type	type;
-	t_file	*file;
 	struct s_node	*left;
 	struct s_node	*right;
 }	t_node;

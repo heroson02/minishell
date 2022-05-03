@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:39:28 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/03 18:14:30 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/03 18:38:14 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,20 @@
 
 # define REPLACE 1
 
+typedef struct s_file
+{
+	int	open_stdin;
+	int open_stdout;
+	int origin_stdin;
+	int origin_stdout;
+}	t_file;
+
 typedef struct s_info
 {
 	t_tok_list	*list;
 	t_astree	*tree;
 	t_list		*env_list;
-	int			stdin_fd;
-	int			stdout_fd;
+	t_file		*file;
 	int			exitcode;
 }	t_info;
 
@@ -107,6 +114,7 @@ void	replace_recur(t_info *info, t_node *node);
 void	join_str(char **before, char *data, int *start, int end);
 void	join_envp(char **before, char *env, int *start, int *end);
 void	find_end_pos(char *data, int *end);
+char	*get_env_or_status(t_info *info, char *env);
 
 /*
 ** env_list.c
@@ -127,12 +135,14 @@ void	builtin_unset(t_info *info, t_node *cmd);
 /*
 ** exec.c
 */
-void	read_tree(t_info *info);
+void	read_tree(t_info *info, t_node *node);
 
 /*
 ** redir.c
 */
-t_file	*new_file(t_node *redir);
+int	redirection(t_info *info, t_node *node);
+int	connect_redir(t_info *info);
+int	disconnect_redir(t_info *info);
 
 /*
 ** exec.c

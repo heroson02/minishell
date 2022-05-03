@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/01 23:22:20 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/03 18:04:08 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/03 18:48:29 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,11 +130,12 @@ void	exec(t_info *info, t_node *node)
 		printf("fork error\n");
 	else if (pid == 0)
 	{
-		// connect_redir(info);
+		connect_redir(info);
 		status = ft_execve(info, node);
 		exit(status);
 	}
 	waitpid(pid, 0, 0);
-	// disconnect_redir(info);
+	info->exitcode = status;
+	disconnect_redir(info);
 	//pipe나 redir이 있을 경우에는 또 달라질 듯. 
 }
