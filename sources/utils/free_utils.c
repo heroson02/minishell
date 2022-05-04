@@ -6,11 +6,11 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 20:39:35 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/04 20:40:07 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/04 21:38:39 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./minishell.h"
+#include "../minishell.h"
 
 void	free_split(char **split)
 {

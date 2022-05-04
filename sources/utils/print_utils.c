@@ -6,11 +6,11 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 16:55:42 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/04 20:58:23 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/04 21:38:43 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./minishell.h"
+#include "../minishell.h"
 	
 static char	*ft_strcat(char *dest, char *src)
 {

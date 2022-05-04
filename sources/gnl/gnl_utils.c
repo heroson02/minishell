@@ -6,21 +6,11 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 17:55:57 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/04 18:42:52 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/04 21:38:24 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./gnl.h"
-
-size_t	ft_strlen(char *str)
-{
-	int idx;
-
-	idx = 0;
-	while (*str++)
-		idx++;
-	return (idx);
-}
 
 static void	gnl_strlcat(char *ret, char *s1, char *s2)
 {

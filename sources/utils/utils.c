@@ -6,11 +6,11 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 20:48:28 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/04 21:19:35 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/04 21:38:52 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./minishell.h"
+#include "../minishell.h"
 
 int	ft_strcmp(char *s1, char *s2)
 {

@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/01 23:22:20 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/04 21:24:21 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/04 21:38:00 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ static int	ft_execve(t_info *info, t_node *cmd)
 		info->exitcode = 127;
 		return (info->exitcode);
 	}
-	opt = get_argv(cmd);
+	opt = get_cmd_opt(cmd);
 	// for (int i = 0; opt[i]; i++)
 	// {
 	// 	printf("opt[%d] : %s\n", i, opt[i]);
