@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 16:55:42 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/03 17:55:32 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/04 20:37:12 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,3 +114,5 @@ void	free_split(char **split)
 	free(split);
 	split = 0; //ft_bzero(split, sizeof(char *));
 }
+
+

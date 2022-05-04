@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 17:48:44 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/04/26 13:12:15 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/04 20:40:15 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,22 +64,3 @@ t_tok	*get_token(t_tok_list *list, int pos)
 	return (token);
 }
 
-void	list_clear(t_tok_list *list)
-{
-	t_tok	*curr;
-	t_tok	*next;
-
-	if (!list || !(list->count))
-		return ;
-	curr = list->head;
-	while (curr)
-	{
-		next = curr->next;
-		free(curr->data);
-		curr->data = NULL;
-		free(curr);
-		ft_bzero(curr, sizeof(t_tok));
-		curr = next;
-	}
-	ft_bzero(list, sizeof(t_tok_list));
-}

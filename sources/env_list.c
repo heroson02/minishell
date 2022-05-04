@@ -6,25 +6,11 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 11:35:39 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/01 16:16:52 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/04 20:39:00 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./minishell.h"
-
-//환경변수를 이름과 값을 구분해서 t_enode 구조체에 저장
-void	free_enode(void *node)
-{
-	t_enode	*enode;
-	
-	enode = (t_enode *)node;
-	free(enode->key);
-	enode->key = 0;
-	free(enode->value);
-	enode->value = 0;
-	free(enode);
-	enode = 0; // ft_bzero(enode, sizeof(t_enode));
-}
 
 t_enode	*new_enode(char *env)
 {

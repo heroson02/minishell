@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:39:28 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/04 16:45:46 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/04 20:33:20 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,8 @@
 # include <string.h>
 # include <sys/errno.h>
 # include <fcntl.h>
-# include <unistd.h>
-# include "../libft/libft.h"
 # include "./astree.h"
+# include "./gnl/gnl.h"
 
 # define REPLACE 1
 

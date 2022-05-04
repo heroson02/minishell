@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 19:17:26 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/03 18:31:11 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/04 20:38:08 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,25 +55,6 @@ void	insert_pipe_heredoc(t_astree *tree, t_node *node)
 	node->left = cur;
 }
 
-void	delete_node(t_node	*node)
-{
-	if (!node)
-		return;
-	delete_node(node->left);
-	delete_node(node->right);
-	free(node->data);
-	node->data = 0; //ft_bzero(node->data, sizeof(char));
-	free(node);
-	node = 0; //ft_bzero(node, sizeof(t_node));
-}
-
-void	tree_clear(t_astree *tree)
-{
-	if (!tree)
-		return;
-	delete_node(tree->root);
-	ft_bzero(tree, sizeof(t_astree));
-}
 
 void	insert_redir(t_astree *tree, t_node *node)
 {
