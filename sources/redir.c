@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/01 14:50:14 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/04 16:58:35 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/04 17:22:56 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,11 @@ void	redirection(t_info *info, t_node *node)
 	else if (!ft_strcmp(node->data, "<"))
 		info->file->open_stdin = open(path, O_RDONLY, 0644);
 	else if (!ft_strcmp(node->data, "<<"))
-		// heredoc
-	// printf("\033[32mopen_out : %d\n\nopen_in : %d\033[0m\n\n", info->file->open_stdout, info->file->open_stdin);
-
-	if (info->file->open_stdout > -1 && info->file->open_stdin > -1)
-		read_tree(info, node->left);
-	else
+		printf("heredoc\n"); //heredoc
+	if (info->file->open_stdout < 0 || info->file->open_stdin < 0)
+	{
 		printf("\033[34mminishell: %s: %s\033[0m\n", path, strerror(errno));
+		return ;
+	}
+	read_tree(info, node->left);
 }
