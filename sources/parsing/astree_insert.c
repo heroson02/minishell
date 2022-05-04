@@ -1,40 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   astree.c                                           :+:      :+:    :+:   */
+/*   astree_insert.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/19 19:17:26 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/04/27 21:40:46 by hyojlee          ###   ########.fr       */
+/*   Created: 2022/05/04 21:07:48 by hyojlee           #+#    #+#             */
+/*   Updated: 2022/05/04 21:11:51 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./minishell.h"
-
-t_astree	*create_tree(void)
-{
-	t_astree	*tree;
-
-	tree = (t_astree *)malloc((sizeof(t_astree)));
-	if (tree == 0)
-		return (0);
-	ft_bzero(tree, sizeof(t_astree));
-	return (tree);
-}
-
-t_node	*create_node(t_tok	*token)
-{
-	t_node	*node;
-
-	node = (t_node *)malloc(sizeof(t_node));
-	if (node == 0)
-		return (0);
-	ft_bzero(node, sizeof(t_node));
-	node->data = ft_strdup(token->data);
-	node->type = token->type;
-	return (node);
-}
+#include "../minishell.h"
 
 void	insert_pipe_heredoc(t_astree *tree, t_node *node)
 {
@@ -55,25 +31,6 @@ void	insert_pipe_heredoc(t_astree *tree, t_node *node)
 	node->left = cur;
 }
 
-void	delete_node(t_node	*node)
-{
-	if (!node)
-		return;
-	delete_node(node->left);
-	delete_node(node->right);
-	free(node->data);
-	ft_bzero(node->data, sizeof(char));
-	free(node);
-	ft_bzero(node, sizeof(t_node));
-}
-
-void	tree_clear(t_astree *tree)
-{
-	if (!tree)
-		return;
-	delete_node(tree->root);
-	ft_bzero(tree, sizeof(t_astree));
-}
 
 void	insert_redir(t_astree *tree, t_node *node)
 {

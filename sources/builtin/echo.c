@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 16:51:05 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/04/28 18:55:27 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/04 15:25:56 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	builtin_echo(t_info *info, t_node *cmd)
 	nflag = FALSE;
 	if (!cmd->left)
 	{
-		printf("\n");
+		ft_putchar_fd('\n', STDOUT);
 		return ;
 	}
 	cur = cmd->left;
@@ -31,12 +31,13 @@ void	builtin_echo(t_info *info, t_node *cmd)
 	}
 	while (cur)
 	{
-		printf("%s", cur->data);
+		ft_putstr_fd(cur->data, STDOUT);
 		if (ft_strcmp(cur->data, "") && cur->left)
-			printf(" ");
+			ft_putchar_fd(' ', STDOUT); // printf(" ");
 		cur = cur->left;
 	}
 	if (nflag == FALSE)
-		printf("\n");
+		ft_putchar_fd('\n', STDOUT);
+		// printf("\n");
 	info->exitcode = 0;
 }

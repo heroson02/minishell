@@ -1,55 +1,60 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec.c                                             :+:      :+:    :+:   */
+/*   read_tree.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 20:41:29 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/04/28 17:34:30 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/04 21:28:38 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-void	command_check(t_info *info, t_node *node)
+static void	chk_command(t_info *info, t_node *node)
 {
-	if (!ft_memcmp(node->data, "cd", ft_strlen(node->data)))
+	connect_redir(info);
+	if (!ft_strcmp(node->data, "cd"))
 		builtin_cd(info, node);
-	else if (!ft_memcmp(node->data, "echo", ft_strlen(node->data)))
+	else if (!ft_strcmp(node->data, "echo"))
 		builtin_echo(info, node);
-	else if (!ft_memcmp(node->data, "env", ft_strlen(node->data)))
+	else if (!ft_strcmp(node->data, "env"))
 		builtin_env(info);
-	else if (!ft_memcmp(node->data, "exit", ft_strlen(node->data)))
+	else if (!ft_strcmp(node->data, "exit"))
 		builtin_exit(info, node);
-	else if (!ft_memcmp(node->data, "export", ft_strlen(node->data)))
+	else if (!ft_strcmp(node->data, "export"))
 		builtin_export(info, node);
-	else if (!ft_memcmp(node->data, "pwd", ft_strlen(node->data)))
+	else if (!ft_strcmp(node->data, "pwd"))
 		builtin_pwd(info, node);
-	else if (!ft_memcmp(node->data, "unset", ft_strlen(node->data)))
+	else if (!ft_strcmp(node->data, "unset"))
 		builtin_unset(info, node);
+	else
+		exec(info, node);
+	disconnect_redir(info);
 }
 
-void	execute_code(t_info *info, t_node *node)
+static void	execute_code(t_info *info, t_node *node)
 {
+	if (!node)
+		return ;
 	// if (node->type == HEREDOC)
 	// 	//heredoc 실행
 	// if (node->type == PIPE)
 	// 	//pipe
-	// if (node->type == REDIR)
-	// 	//redir
+	if (node->type == REDIR)
+		redirection(info, node);
 	if (node->type == TOKEN)
-		command_check(info, node);
+		chk_command(info, node);
 }
 
-void	read_tree(t_info *info)
+void	read_tree(t_info *info, t_node *node)
 {
-	t_node *node;
-
-	node = info->tree->root;
+	info->file->origin_stdin = dup(STDIN);
+	info->file->origin_stdout = dup(STDOUT);
+	if (info->file->origin_stdin < 0 || info->file->origin_stdout < 0)
+		printf("dup error\n");
 	if (!node)
 		return ;
 	execute_code(info, node);
-// 	node = node->left;
-// 	node = node->right;
 }

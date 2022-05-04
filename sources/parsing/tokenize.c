@@ -6,44 +6,13 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 16:32:20 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/04/27 16:12:12 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/04 21:17:57 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./minishell.h"
+#include "../minishell.h"
 
-int	ft_isblank(char c)
-{
-	if (c == ' ' || c == '\n' || c == '\r'
-		|| c == '\v' || c == '\f' || c == '\t')
-		return (1);
-	return (0);
-}
-
-// t_type	get_type(char *str, int len)
-// {
-// 	char	c;
-
-// 	c = *str;
-// 	if (c == PIPE)
-// 		return (PIPE);
-// 	else if (c == LESS && len > 1)
-// 		return (DLESS);
-// 	else if (c == GREAT && len > 1)
-// 		return (DGREAT);
-// 	else if (c == LESS)
-// 		return (LESS);
-// 	else if (c == GREAT)
-// 		return (GREAT);
-// 	else if (c == SQUOTE)
-// 		return (SQUOTE);
-// 	else if (c == DQUOTE)
-// 		return (DQUOTE);
-// 	else
-// 		return (TOKEN);
-// }
-
-t_type	get_type(char *str, int len)
+static t_type	get_type(char *str, int len)
 {
 	char	c;
 
@@ -62,7 +31,7 @@ t_type	get_type(char *str, int len)
 		return (TOKEN);
 }
 
-char	*init_token(t_tok_list **list, char *start, char *end)
+static char	*init_token(t_tok_list **list, char *start, char *end)
 {
 	t_tok	*new_tok;
 	int		len;
@@ -71,7 +40,11 @@ char	*init_token(t_tok_list **list, char *start, char *end)
 	new_tok = (t_tok *)malloc(sizeof(t_tok));
 	if (!new_tok)
 	{
-		print_err(errno);
+		// print_err(errno);
+		if (errno > 0)
+			printf("\033[31m%s\033[0m\n", strerror(errno));
+		else
+			printf("\033[31mSyntax Error in tokenize.c\033[0m\n");
 		exit(1);
 	}
 	ft_bzero(new_tok, sizeof(t_tok));
@@ -104,18 +77,3 @@ void	tokenize(t_tok_list **list, char *str)
 			str = init_token(list, str, end);
 	}
 }
-// int main()
-// {
-// 	t_tok_list	*list;
-// 	t_tok		*curr;
-
-// 	list = create_list();
-// 	tokenize(&list, "<file1cmd\"hello world!\"||file2>cmd2   ");
-// 	curr = list->head;
-// 	while (curr)
-// 	{
-// 		printf("%s\n", curr->data);
-// 		curr = curr->next;
-// 	}
-	
-// }

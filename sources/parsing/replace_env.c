@@ -6,81 +6,84 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:37:13 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/04/28 12:14:34 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/04 21:16:27 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./minishell.h"
-
-static void	free_split(char **split)
-{
-	int	idx;
-
-	idx = -1;
-	while (split[++idx])
-	{
-		free(split[idx]);
-		ft_bzero(split[idx], sizeof(char));
-	}
-	free(split);
-	ft_bzero(split, sizeof(char *));
-}
+#include "../minishell.h"
 
 /*
 ** split('$')의 결과임
 ** split 호출 전에 strchr('$')을 하기 때문에 무조건 환경변수이름으로 시작하는 문자열(str)이 들어옴
 ** get_env한 결과(rpl에 들어가는 값)는 항상 동적할당되어있다. 빈 문자열인 경우 ""을 strdup해주기 때문.
 */
-char	*replace_env(t_info *info, char *str)
+
+static char	*replace_env(t_info *info, char *data, int start, int end)
 {
 	int		idx;
 	char	*env;
 	char	*rpl;
 	char	*ret;
+	char	*str;
 
 	idx = 0;
+	if (end - start < 1)
+		return (0);
+	str = ft_substr(data, start, end - start);
 	while (str[idx] && !ft_isblank(str[idx]))
 		idx++;
 	env = ft_substr(str, 0, idx);
-	rpl = get_env(info, env);
+	rpl = get_env_or_status(info, env);
 	if (!str[idx])
 		ret = ft_strdup(rpl);
 	else
 		ret = ft_strjoin(rpl, str + idx);
 	free(env);
-	ft_bzero(env, sizeof(char));
-	// free(rpl);
-	// rpl = 0;
+	env = 0;
 	free(str);
-	ft_bzero(str, sizeof(char));
+	str = 0;
 	return (ret);
 }
 
-void	replace(t_info *info, t_node *node)
+static void	init_variable(int *dquote, int *front, int *end)
 {
-	char	*newstr;
-	char	*data;
-	char	**split;
-	int		idx;
+	*dquote = FALSE;
+	*end = -1;
+	*front = *end + 1;
+}
 
-	data = ft_strchr(node->data, '$');
-	if (!data)
-		return ;
-	newstr = ft_substr(node->data, 0, ft_strlen(node->data) - ft_strlen(data));
-	split = ft_split(data, '$');
-	idx = -1;
-	free(node->data);
-	ft_bzero(node->data, sizeof(char));
-	while (split[++idx])
+static void	join_squote(char **res, char *data, int *front, int *end)
+{
+	join_str(res, data, front, *end);
+	*end = ft_strlen(data) - ft_strlen(ft_strchr(data + *front, SQUOTE));
+	join_str(res, data, front, *end);
+}
+
+static void	replace_token(t_info *info, char **res, char *data)
+{
+	int		dquote;
+	int		front;
+	int		end;
+
+	init_variable(&dquote, &front, &end);
+	while (data[++end])
 	{
-		split[idx] = replace_env(info, split[idx]);
-		data = newstr;
-		newstr = ft_strjoin(newstr, split[idx]);
-		free(data);
-		ft_bzero(data, sizeof(char));
+		if (data[end] == SQUOTE && dquote == FALSE)
+			join_squote(res, data, &front, &end);
+		else if (data[end] == DQUOTE)
+		{
+			dquote = !dquote;
+			join_str(res, data, &front, end);
+		}
+		else if (data[end] == '$')
+		{
+			join_str(res, data, &front, end++);
+			find_end_pos(data, &end);
+			join_envp(res, replace_env(info, data, front, end), &front, &end);
+		}
+		else if (!data[end + 1])
+			join_str(res, data, &front, end + 1);
 	}
-	free_split(split);
-	node->data = newstr;
 }
 
 void	replace_recur(t_info *info, t_node *node)
@@ -89,15 +92,15 @@ void	replace_recur(t_info *info, t_node *node)
 
 	if (!node)
 		return ;
-	if (node->type == SQUOTE || node->type == DQUOTE)
+	if (ft_strchr(node->data, '$'))
 	{
 		tmp = node->data;
-		node->data = ft_substr(node->data, 1, ft_strlen(tmp) - 2);
+		node->data = ft_strdup("");
+		replace_token(info, &(node->data), tmp);
+		printf("\033[31m%s\033[0m\n", node->data);
 		free(tmp);
-		ft_bzero(tmp, sizeof(char));
+		tmp = 0;
 	}
-	if (node->type == DQUOTE || node->type == TOKEN)
-		replace(info, node);
 	replace_recur(info, node->left);
 	replace_recur(info, node->right);
 }

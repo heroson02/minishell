@@ -1,48 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   util.c                                             :+:      :+:    :+:   */
+/*   print_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 16:55:42 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/04/28 18:52:58 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/04 21:38:43 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./minishell.h"
-
-int		ft_strcmp(char *s1, char *s2)
-{
-	size_t	len;
-
-	len = ft_strlen(s1);
-	if (len < ft_strlen(s2))
-		len = ft_strlen(s2);
-	return (ft_memcmp(s1, s2, len));
-}
-
-void	print_token(t_tok_list *list)
-{
-	t_tok *curr;
-	int idx = 0;
-
-	curr = list->head;
-	while (curr)
-	{
-		printf("(%d/%d): %d\t| %s\n", idx, list->count, curr->type, curr->data);
-		idx++;
-		curr = curr->next;
-	}
-}
-
-void	ft_clear(t_info *info)
-{
-	list_clear(info->list);
-	tree_clear(info->tree);
-}
-
-char *ft_strcat(char *dest, char *src)
+#include "../minishell.h"
+	
+static char	*ft_strcat(char *dest, char *src)
 {
 	char* p_dest;
 	char* p_src;
@@ -61,10 +31,11 @@ char *ft_strcat(char *dest, char *src)
 	return dest;
 }
 
-void print_tree_node(t_node* node, bool is_right, char *indent)
+static void print_tree_node(t_node* node, bool is_right, char *indent)
 {
 	char r_indent[512];
 	char l_indent[512];
+	
 	ft_strlcpy(r_indent, indent , 512);
 	ft_strlcpy(l_indent, indent , 512);
 	if (node->right != NULL)
@@ -88,7 +59,21 @@ void print_tree_node(t_node* node, bool is_right, char *indent)
 	}
 }
 
-void print_tree(t_node* root)
+void	print_token(t_tok_list *list)
+{
+	t_tok *curr;
+	int idx = 0;
+
+	curr = list->head;
+	while (curr)
+	{
+		printf("(%d/%d): %d\t| %s\n", idx, list->count, curr->type, curr->data);
+		idx++;
+		curr = curr->next;
+	}
+}
+
+void	print_tree(t_node* root)
 {
 	if (root->right != NULL)
 	{
@@ -101,3 +86,13 @@ void print_tree(t_node* root)
 	}
 }
 
+void	print_err(t_info *info, char *line, int err)
+{				
+	ft_clear(info);
+	free(line);
+	line = NULL;
+	if (err > 0)
+		printf("\033[31m%s\033[0m\n", strerror(errno));
+	else
+		printf("\033[31mSyntax Error\033[0m\n");
+}

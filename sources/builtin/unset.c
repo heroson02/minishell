@@ -6,13 +6,13 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 14:55:18 by yson              #+#    #+#             */
-/*   Updated: 2022/04/28 18:55:51 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/04 21:31:41 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_unset(t_info *info, char *target)
+static void	ft_unset(t_info *info, char *target)
 {
 	t_list	*pre;
 	t_list	*cur;
