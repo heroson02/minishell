@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:39:28 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/03 18:38:14 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/04 16:45:46 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ typedef struct s_enode
 /*
  * main.c
  */
-void	print_err(int err);
+void	print_err(t_info *info, char *line, int err);
 
 /*
 ** list.c
@@ -140,7 +140,7 @@ void	read_tree(t_info *info, t_node *node);
 /*
 ** redir.c
 */
-int	redirection(t_info *info, t_node *node);
+void	redirection(t_info *info, t_node *node);
 int	connect_redir(t_info *info);
 int	disconnect_redir(t_info *info);
 

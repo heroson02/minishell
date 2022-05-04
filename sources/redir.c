@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yson <yson@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/01 14:50:14 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/04 00:24:15 by yson             ###   ########.fr       */
+/*   Updated: 2022/05/04 16:58:35 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	connect_redir(t_info *info)
 
 int	disconnect_redir(t_info *info)
 {
-	int status;
+	int	status;
 
 	status = 0;
 	if (info->file->open_stdin > 0)
@@ -47,29 +47,47 @@ int	disconnect_redir(t_info *info)
 	return (TRUE);
 }
 
-static void	init_redir(t_info *info)
+static void	init_redir(t_info *info, int is_stdin)
 {
-	if (info->file->open_stdout > 0)
+	// printf("\033[31mopen_out : %d\n\nopen_in : %d\033[0m\n\n", info->file->open_stdout, info->file->open_stdin);
+	if (is_stdin == FALSE && info->file->open_stdout > 0)
+	{
+		// printf("\033[32mopen_out : %d\n\nopen_in : %d\033[0m\n\n", info->file->open_stdout, info->file->open_stdin);
 		close(info->file->open_stdout);
-	if (info->file->open_stdin > 0)
+		info->file->open_stdout = 0;
+	}
+	if (is_stdin == TRUE && info->file->open_stdin > 0)
+	{
+		// printf("\033[32mopen_out : %d\n\nopen_in : %d\033[0m\n\n", info->file->open_stdout, info->file->open_stdin);
 		close(info->file->open_stdin);
+		info->file->open_stdin = 0;
+	}
 }
 
-int	redirection(t_info *info, t_node *node)
+void	redirection(t_info *info, t_node *node)
 {
 	char	*path;
+	int		is_stdin;
 
 	path = node->right->data;
-	init_redir(info);
+	is_stdin = TRUE;
+	if (node->data[0] == '>')
+		is_stdin = FALSE;
+	init_redir(info, is_stdin);
 	if (!ft_strcmp(node->data, ">"))
-		info->file->open_stdout = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		info->file->open_stdout = open(path, O_WRONLY
+				| O_CREAT | O_TRUNC, 0644);
 	else if (!ft_strcmp(node->data, ">>"))
-		info->file->open_stdout = open(path, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		info->file->open_stdout = open(path, O_WRONLY
+				| O_CREAT | O_APPEND, 0644);
 	else if (!ft_strcmp(node->data, "<"))
 		info->file->open_stdin = open(path, O_RDONLY, 0644);
 	else if (!ft_strcmp(node->data, "<<"))
 		// heredoc
-	if (info->file->open_stdout < 0 || info->file->open_stdin < 0)
-		return (printf("minishell: %s: No such file or directory\n", path));
-	read_tree(info, node->left);
+	// printf("\033[32mopen_out : %d\n\nopen_in : %d\033[0m\n\n", info->file->open_stdout, info->file->open_stdin);
+
+	if (info->file->open_stdout > -1 && info->file->open_stdin > -1)
+		read_tree(info, node->left);
+	else
+		printf("\033[34mminishell: %s: %s\033[0m\n", path, strerror(errno));
 }

@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 20:41:29 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/03 18:38:59 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/04 15:33:07 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	command_check(t_info *info, t_node *node)
 {
+	connect_redir(info);
 	if (!ft_strcmp(node->data, "cd"))
 		builtin_cd(info, node);
 	else if (!ft_strcmp(node->data, "echo"))
@@ -30,6 +31,7 @@ void	command_check(t_info *info, t_node *node)
 		builtin_unset(info, node);
 	else
 		exec(info, node);
+	disconnect_redir(info);
 }
 
 void	execute_code(t_info *info, t_node *node)

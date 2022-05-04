@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:40:18 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/03 18:44:15 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/04 17:03:38 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,11 @@ void handler(int signo)
 	}	
 }
 
-void	print_err(int err)
-{
+void	print_err(t_info *info, char *line, int err)
+{				
+	ft_clear(info);
+	free(line);
+	line = NULL;
 	if (err > 0)
 		printf("\033[31m%s\033[0m\n", strerror(errno));
 	else
@@ -47,11 +50,16 @@ void	print_err(int err)
 
 void	init(t_info *info)
 {
+	struct termios t;
+
 	ft_bzero(info, sizeof(t_info));
 	info->list = create_list();
 	info->tree = create_tree();
 	info->file = (t_file *)malloc(sizeof(t_file));
 	ft_bzero(info->file, sizeof(t_file));
+	tcgetattr(0, &t);
+	t.c_lflag &= ~(ICANON | ECHOCTL);
+	tcsetattr(0, TCSANOW, &t);
 }
 
 void	astree_print(t_node *node);
@@ -81,16 +89,22 @@ int main(int argc, char **argv, char **envp)
 			add_history(line);
 			if (check_quote(line) == FALSE)	//따옴표 체크
 			{
-				print_err(0); //syntax error 258
+				print_err(&info, line, 0); //syntax error 258
 				continue ; // 다시 명령줄 출력해야하므로
 			}
 			tokenize(&(info.list), line);	// 토큰화
 			print_token(info.list);
 			//구문 분석 및 파싱 과정 (AST TREE)
 			if (syntax(&info) == FALSE)
-				print_err(0); //syntax error 258
+			{
+				print_err(&info, line, 0); //syntax error 258
+				continue ;
+			}
 			if (chk_syntax(info.tree->root) == FALSE)
-				print_err(0); //syntax error 258
+			{
+				print_err(&info, line, 0); //syntax error 258
+				continue ;
+			}
 			// print_tree(info.tree->root);
 			// printf("\n\n");
 			//환경변수 치환

@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/01 23:22:20 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/03 18:48:29 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/04 15:32:45 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,12 +125,12 @@ void	exec(t_info *info, t_node *node)
 	pid_t	pid;
 	int		status;
 
+	connect_redir(info);
 	pid = fork();
 	if (pid < 0)
 		printf("fork error\n");
 	else if (pid == 0)
 	{
-		connect_redir(info);
 		status = ft_execve(info, node);
 		exit(status);
 	}
