@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec.c                                             :+:      :+:    :+:   */
+/*   read_tree.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 20:41:29 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/04 15:33:07 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/04 21:28:38 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-void	command_check(t_info *info, t_node *node)
+static void	chk_command(t_info *info, t_node *node)
 {
 	connect_redir(info);
 	if (!ft_strcmp(node->data, "cd"))
@@ -34,7 +34,7 @@ void	command_check(t_info *info, t_node *node)
 	disconnect_redir(info);
 }
 
-void	execute_code(t_info *info, t_node *node)
+static void	execute_code(t_info *info, t_node *node)
 {
 	if (!node)
 		return ;
@@ -45,7 +45,7 @@ void	execute_code(t_info *info, t_node *node)
 	if (node->type == REDIR)
 		redirection(info, node);
 	if (node->type == TOKEN)
-		command_check(info, node);
+		chk_command(info, node);
 }
 
 void	read_tree(t_info *info, t_node *node)

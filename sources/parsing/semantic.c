@@ -6,11 +6,34 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 16:32:08 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/04/26 16:59:48 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/04 21:19:33 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./minishell.h"
+#include "../minishell.h"
+
+int	check_quote(char *str)
+{
+	while (*str)
+	{
+		if (*str == '\'')
+		{
+			if (ft_strchr(str + 1, '\''))
+				str = ft_strchr(str + 1, '\'');
+			else
+				return (FALSE);
+		}
+		else if (*str == '\"')
+		{
+			if (ft_strchr(str + 1, '\"'))
+				str = ft_strchr(str + 1, '\"');
+			else
+				return (FALSE);
+		}
+		str++;
+	}
+	return (TRUE);
+}
 
 int	chk_syntax(t_node *node)
 {

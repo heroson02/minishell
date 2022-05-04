@@ -6,13 +6,13 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/01 23:22:20 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/04 15:32:45 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/04 21:24:21 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./minishell.h"
+#include "../minishell.h"
 
-char	*get_cmd_path(t_info *info, char *cmd, int fd, int idx)
+static char	*get_cmd_path(t_info *info, char *cmd, int fd, int idx)
 {
 	char	*path;
 	char	**paths;
@@ -39,24 +39,10 @@ char	*get_cmd_path(t_info *info, char *cmd, int fd, int idx)
 	return (path);
 }
 
-void	replace_home_dir(char **cmd)
-{
-	char *home;
-	char *result;
-	char *target;
-
-	target = *cmd;
-	home = getenv("HOME");
-	result = ft_strjoin(home, ++target);
-	free(*cmd);
-	*cmd = 0;
-	*cmd = result;
-}
-
 /*
 **	./ : PATH 외의 명령어, / : 루트 디렉토리에 있는 명령어, ~/ : 홈 디렉토리, 그 외에는 PATH에서 검색
 */
-void	get_path(t_info *info, char *cmd, char **path)
+static void	get_path(t_info *info, char *cmd, char **path)
 {
 	if (!ft_memcmp("./", cmd, 2) || !ft_memcmp("/", cmd, 2))
 		*path = ft_strdup(cmd);
@@ -69,7 +55,7 @@ void	get_path(t_info *info, char *cmd, char **path)
 		*path = get_cmd_path(info, cmd, 0, 0);
 }
 
-char	**list_to_array(t_list *head)
+static char	**list_to_array(t_list *head)
 {
 	char	**result;
 	t_list	*curr;
@@ -93,7 +79,7 @@ char	**list_to_array(t_list *head)
 	return (result);
 }
 
-int	ft_execve(t_info *info, t_node *cmd)
+static int	ft_execve(t_info *info, t_node *cmd)
 {
 	char	*path;
 	char	**opt;

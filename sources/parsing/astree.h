@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 11:39:54 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/03 18:30:47 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/04 21:11:59 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,15 @@ typedef struct s_astree
 /*
 ** astree.c
 */
-void		insert_pipe_heredoc(t_astree *tree, t_node *node);
 t_node		*create_node(t_tok	*token);
 t_astree	*create_tree(void);
+
+/*
+** astree_insert.c
+*/
+void		insert_pipe_heredoc(t_astree *tree, t_node *node);
 void		insert_redir(t_astree *tree, t_node *node);
 void 		insert_path(t_astree *tree, t_node *node);
 void		insert_filename(t_astree *tree, t_node *node);
-void		tree_clear(t_astree *tree);
 
 #endif

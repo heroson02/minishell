@@ -6,11 +6,11 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:37:13 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/03 19:00:08 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/04 21:16:27 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./minishell.h"
+#include "../minishell.h"
 
 /*
 ** split('$')의 결과임
@@ -18,7 +18,7 @@
 ** get_env한 결과(rpl에 들어가는 값)는 항상 동적할당되어있다. 빈 문자열인 경우 ""을 strdup해주기 때문.
 */
 
-char	*replace_env(t_info *info, char *data, int start, int end)
+static char	*replace_env(t_info *info, char *data, int start, int end)
 {
 	int		idx;
 	char	*env;
@@ -59,7 +59,7 @@ static void	join_squote(char **res, char *data, int *front, int *end)
 	join_str(res, data, front, *end);
 }
 
-void	replace_token(t_info *info, char **res, char *data)
+static void	replace_token(t_info *info, char **res, char *data)
 {
 	int		dquote;
 	int		front;

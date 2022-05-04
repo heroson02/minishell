@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:37:13 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/03 18:31:35 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/04 20:53:45 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,18 @@ char	*get_env_or_status(t_info *info, char *env)
 	if (!ret)
 		ret = ft_strdup("");
 	return (ret);
+}
+
+void	replace_home_dir(char **cmd)
+{
+	char *home;
+	char *result;
+	char *target;
+
+	target = *cmd;
+	home = getenv("HOME");
+	result = ft_strjoin(home, ++target);
+	free(*cmd);
+	*cmd = 0;
+	*cmd = result;
 }

@@ -6,13 +6,13 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:40:18 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/04 17:03:38 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/04 21:00:01 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./minishell.h"
 
-void handler(int signo)
+static void handler(int signo)
 {
 	if (signo == SIGINT)
 	{
@@ -23,32 +23,7 @@ void handler(int signo)
 	}	
 }
 
-void	print_err(t_info *info, char *line, int err)
-{				
-	ft_clear(info);
-	free(line);
-	line = NULL;
-	if (err > 0)
-		printf("\033[31m%s\033[0m\n", strerror(errno));
-	else
-		printf("\033[31mSyntax Error\033[0m\n");
-}
-
-// 환경변수 값 가져오는 함수 원본
-// static char	*get_env_path(char **env)
-// {
-// 	while (*env)
-// 	{
-// 		if (ft_strnstr(*env, "PATH=/", ft_strlen(*env)))
-// 			return (*env + 5);
-// 		env++;
-// 	}
-// 	if (!*env)
-// 		print_err("PATH", 1);
-// 	return (0);
-// }
-
-void	init(t_info *info)
+static void	init(t_info *info)
 {
 	struct termios t;
 
@@ -62,23 +37,17 @@ void	init(t_info *info)
 	tcsetattr(0, TCSANOW, &t);
 }
 
-void	astree_print(t_node *node);
-
-
 int main(int argc, char **argv, char **envp)
 {
-	// char	**path;
 	char	*line;
 	t_info	info;
 	
 	(void)argc;
 	(void)argv;
-	// path = ft_split(get_env(envp, "PATH"), ':');
 	signal(SIGINT, handler);
 	signal(SIGQUIT, SIG_IGN);
 	init(&info);
 	env_preprocess(&info, envp);
-	// info.env = envp;
 	while (1)
 	{
 		line = readline("minishell> ");

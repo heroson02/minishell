@@ -6,11 +6,28 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/01 14:50:14 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/04 17:22:56 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/04 21:27:25 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./minishell.h"
+#include "../minishell.h"
+
+static void	init_redir(t_info *info, int is_stdin)
+{
+	// printf("\033[31mopen_out : %d\n\nopen_in : %d\033[0m\n\n", info->file->open_stdout, info->file->open_stdin);
+	if (is_stdin == FALSE && info->file->open_stdout > 0)
+	{
+		// printf("\033[32mopen_out : %d\n\nopen_in : %d\033[0m\n\n", info->file->open_stdout, info->file->open_stdin);
+		close(info->file->open_stdout);
+		info->file->open_stdout = 0;
+	}
+	if (is_stdin == TRUE && info->file->open_stdin > 0)
+	{
+		// printf("\033[32mopen_out : %d\n\nopen_in : %d\033[0m\n\n", info->file->open_stdout, info->file->open_stdin);
+		close(info->file->open_stdin);
+		info->file->open_stdin = 0;
+	}
+}
 
 int	connect_redir(t_info *info)
 {
@@ -45,23 +62,6 @@ int	disconnect_redir(t_info *info)
 			return (FALSE);
 	}
 	return (TRUE);
-}
-
-static void	init_redir(t_info *info, int is_stdin)
-{
-	// printf("\033[31mopen_out : %d\n\nopen_in : %d\033[0m\n\n", info->file->open_stdout, info->file->open_stdin);
-	if (is_stdin == FALSE && info->file->open_stdout > 0)
-	{
-		// printf("\033[32mopen_out : %d\n\nopen_in : %d\033[0m\n\n", info->file->open_stdout, info->file->open_stdin);
-		close(info->file->open_stdout);
-		info->file->open_stdout = 0;
-	}
-	if (is_stdin == TRUE && info->file->open_stdin > 0)
-	{
-		// printf("\033[32mopen_out : %d\n\nopen_in : %d\033[0m\n\n", info->file->open_stdout, info->file->open_stdin);
-		close(info->file->open_stdin);
-		info->file->open_stdin = 0;
-	}
 }
 
 void	redirection(t_info *info, t_node *node)
