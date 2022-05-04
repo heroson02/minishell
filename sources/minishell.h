@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:39:28 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/04 21:32:10 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/04 21:43:59 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,6 +190,10 @@ char	**get_cmd_opt(t_node *node);
 int		connect_redir(t_info *info);
 int		disconnect_redir(t_info *info);
 void	redirection(t_info *info, t_node *node);
+
+/*
+** heredoc.c
+*/
 
 /*
 **	builtin
