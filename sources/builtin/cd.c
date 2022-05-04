@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 15:37:30 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/04/28 18:20:47 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/04 22:04:06 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,7 @@ void	builtin_cd(t_info *info, t_node *cmd)
 	}	
 	if (!cmd->left)
 		chdir(home);
-	else if (chdir(cmd->left->data) == 0)
-		chdir(cmd->left->data);
-	else 
+	else if (chdir(cmd->left->data) < 0)
 	{
 		ft_putstr_fd("bash: cd: ", STDERR);
 		ft_putstr_fd(cmd->left->data, STDERR);
