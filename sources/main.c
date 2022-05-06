@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:40:18 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/04 21:00:01 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/06 18:40:57 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ static void	init(t_info *info)
 	info->tree = create_tree();
 	info->file = (t_file *)malloc(sizeof(t_file));
 	ft_bzero(info->file, sizeof(t_file));
-	tcgetattr(0, &t);
+	tcgetattr(STDIN, &t);
 	t.c_lflag &= ~(ICANON | ECHOCTL);
-	tcsetattr(0, TCSANOW, &t);
+	tcsetattr(STDIN, TCSANOW, &t);
 }
 
 int main(int argc, char **argv, char **envp)
