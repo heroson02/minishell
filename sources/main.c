@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:40:18 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/06 18:40:57 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/10 12:34:23 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,12 @@ static void handler(int signo)
 
 static void	init(t_info *info)
 {
-	struct termios t;
-
 	ft_bzero(info, sizeof(t_info));
 	info->list = create_list();
 	info->tree = create_tree();
 	info->file = (t_file *)malloc(sizeof(t_file));
 	ft_bzero(info->file, sizeof(t_file));
-	tcgetattr(STDIN, &t);
-	t.c_lflag &= ~(ICANON | ECHOCTL);
-	tcsetattr(STDIN, TCSANOW, &t);
+	get_org_term(info);
 }
 
 int main(int argc, char **argv, char **envp)
@@ -51,6 +47,7 @@ int main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		line = readline("minishell> ");
+		set_new_term(&info, FALSE);
 		if (line)
 		{
 			if (line[0] == '\0')
@@ -86,12 +83,14 @@ int main(int argc, char **argv, char **envp)
 			free(line);
 			line = NULL;
 			// system("leaks minishell");
+			set_org_term(&info);
 		}
 		else //ctrl + d
 		{
 			ft_putstr_fd("\x1b[1A", STDOUT);
 			ft_putstr_fd("\033[12C", STDOUT);
 			printf("exit\n");
+			set_org_term(&info);
 			exit(0); //마지막 종료 상태 값 exit 인자로 넣기
 		}
 	}

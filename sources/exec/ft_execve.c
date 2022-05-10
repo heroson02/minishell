@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/01 23:22:20 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/04 21:38:00 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/10 12:51:26 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,6 @@ void	exec(t_info *info, t_node *node)
 	pid_t	pid;
 	int		status;
 
-	connect_redir(info);
 	pid = fork();
 	if (pid < 0)
 		printf("fork error\n");
@@ -122,6 +121,5 @@ void	exec(t_info *info, t_node *node)
 	}
 	waitpid(pid, 0, 0);
 	info->exitcode = status;
-	disconnect_redir(info);
 	//pipe나 redir이 있을 경우에는 또 달라질 듯. 
 }

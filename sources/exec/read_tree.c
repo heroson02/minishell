@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 20:41:29 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/04 21:28:38 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/10 12:58:46 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ static void	execute_code(t_info *info, t_node *node)
 
 void	read_tree(t_info *info, t_node *node)
 {
-	info->file->origin_stdin = dup(STDIN);
-	info->file->origin_stdout = dup(STDOUT);
+	info->file->origin_stdin = dup(STDIN); //원래의 STDIN
+	info->file->origin_stdout = dup(STDOUT); //원래의 STDOUT
 	if (info->file->origin_stdin < 0 || info->file->origin_stdout < 0)
 		printf("dup error\n");
 	if (!node)

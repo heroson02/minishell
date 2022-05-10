@@ -6,7 +6,7 @@
 #    By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/03 10:49:43 by hyojlee           #+#    #+#              #
-#    Updated: 2022/05/04 21:36:16 by hyojlee          ###   ########.fr        #
+#    Updated: 2022/05/10 12:35:01 by hyojlee          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,6 +53,7 @@ SRCS = $(SRC_DIR)/main.c 					\
 		$(SRC_DIR)/utils/free_utils.c		\
 		$(SRC_DIR)/utils/print_utils.c		\
 		$(SRC_DIR)/utils/replace_utils.c	\
+		$(SRC_DIR)/utils/termios_utils.c	\
 		$(SRC_DIR)/utils/utils.c
 
 OBJS = $(SRCS:.c=.o)

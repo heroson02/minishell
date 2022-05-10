@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:39:28 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/04 21:43:59 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/10 12:32:16 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,26 @@ typedef struct s_file
 	int origin_stdout;
 }	t_file;
 
+typedef struct s_heredoc
+{
+	int		fd;
+	int		row;
+	int		col;
+	char	line[BUFSIZ];
+	char	*eof;
+
+}	t_heredoc;
+
+
 typedef struct s_info
 {
-	t_tok_list	*list;
-	t_astree	*tree;
-	t_list		*env_list;
-	t_file		*file;
-	int			exitcode;
+	t_tok_list		*list;
+	t_astree		*tree;
+	t_list			*env_list;
+	t_file			*file;
+	int				exitcode;
+	struct termios	org_term;
+	struct termios	new_term;
 }	t_info;
 
 typedef struct s_enode
@@ -81,6 +94,13 @@ void	join_envp(char **before, char *env, int *start, int *end);
 void	find_end_pos(char *data, int *end);
 char	*get_env_or_status(t_info *info, char *env);
 void	replace_home_dir(char **cmd);
+
+/*
+** termios_utils.c
+*/
+void	get_org_term(t_info *info);
+void	set_org_term(t_info *info);
+void	set_new_term(t_info *info, int is_heredoc);
 
 /*
 ** utils.c
