@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: yson <yson@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 11:35:22 by yson              #+#    #+#             */
-/*   Updated: 2022/05/10 15:17:36 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/10 15:57:48 by yson             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static pid_t	pipe_output(int *fd, t_node *node)
 	return (pid);
 }
 
-int exec_pipe(t_node *node)
+void	exec_pipe(t_node *node)
 {
 	int		pipe_fd[2];
 	int		pid_left;
@@ -62,5 +62,4 @@ int exec_pipe(t_node *node)
 	pid_right = pipe_output(pipe_fd, node->right);
 	close(pipe_fd[0]);
 	waitpid(pid_right, NULL, 0);
-	return (1);
 }
