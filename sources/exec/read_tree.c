@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_tree.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yson <yson@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 20:41:29 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/10 14:27:55 by yson             ###   ########.fr       */
+/*   Updated: 2022/05/10 15:17:47 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	execute_code(t_node *node)
 	// if (node->type == HEREDOC)
 	// 	//heredoc 실행
 	if (node->type == PIPE)
-		exec_pipe(info, node);
+		exec_pipe(node);
 	if (node->type == REDIR)
 		redirection(node);
 	if (node->type == TOKEN)

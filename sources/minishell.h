@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yson <yson@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:39:28 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/10 14:47:44 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/10 15:17:40 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,7 +215,8 @@ void	redirection(t_node *node);
 /*
 ** pipe.c
 */
-int exec_pipe(t_info *info, t_node *node);
+int exec_pipe(t_node *node);
+
 /*
 **	builtin
 **	- builtin commands in minishell
