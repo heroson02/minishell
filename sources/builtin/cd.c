@@ -6,18 +6,20 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 15:37:30 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/04 22:04:06 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/10 14:37:03 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	builtin_cd(t_info *info, t_node *cmd)
+void	builtin_cd(t_node *cmd)
 {
 	char	*path;
 	char	*origin;
 	char	*home;
+	t_info	*info;
 
+	info = get_info();
 	home = getenv("HOME");
 	if (cmd->left && cmd->left->data[0] == '~')
 	{

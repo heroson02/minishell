@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 16:55:42 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/04 21:38:43 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/10 14:26:14 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,12 @@ void	print_tree(t_node* root)
 	}
 }
 
-void	print_err(t_info *info, char *line, int err)
-{				
-	ft_clear(info);
+void	print_err(char *line, int err)
+{
+	t_info	*info;
+	
+	info = get_info();
+	ft_clear();
 	free(line);
 	line = NULL;
 	if (err > 0)

@@ -6,16 +6,18 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 14:45:16 by yson              #+#    #+#             */
-/*   Updated: 2022/04/28 17:31:24 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/10 14:38:16 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	builtin_env(t_info *info)
+void	builtin_env(void)
 {
 	t_list	*curr;
+	t_info	*info;
 
+	info = get_info();
 	curr = info->env_list;
 	while (curr)
 	{

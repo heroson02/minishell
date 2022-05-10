@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 20:37:26 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/04 21:38:35 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/10 14:26:02 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,11 @@ static void	list_clear(t_tok_list *list)
 	ft_bzero(list, sizeof(t_tok_list));
 }
 
-void	ft_clear(t_info *info)
+void	ft_clear(void)
 {
+	t_info	*info;
+
+	info = get_info();
 	list_clear(info->list);
 	tree_clear(info->tree);
 }

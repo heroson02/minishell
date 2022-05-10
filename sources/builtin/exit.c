@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 14:50:30 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/04/28 18:21:12 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/10 14:38:37 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,11 @@ static int ft_atoi_(const char *str)
 	return (ret * flag);
 }
 
-void	builtin_exit(t_info *info, t_node *cmd)
+void	builtin_exit(t_node *cmd)
 {
+	t_info	*info;
+
+	info = get_info();
 	info->exitcode = 0;
 	printf("exit\n");
 	if (cmd->left)

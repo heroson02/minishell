@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:39:28 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/10 12:32:16 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/10 14:47:44 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_info
 	int				exitcode;
 	struct termios	org_term;
 	struct termios	new_term;
+	t_heredoc		*heredoc;
 }	t_info;
 
 typedef struct s_enode
@@ -71,7 +72,7 @@ typedef struct s_enode
 /*
 ** clear_utils.c
 */
-void	ft_clear(t_info *info);
+void	ft_clear(void);
 
 /*
 ** free_utils.c
@@ -84,7 +85,7 @@ void	free_enode(void *node);
 */
 void	print_token(t_tok_list *list);
 void	print_tree(t_node* root);
-void	print_err(t_info *info, char *line, int err);
+void	print_err(char *line, int err);
 
 /*
 ** replace_utils.c
@@ -92,22 +93,23 @@ void	print_err(t_info *info, char *line, int err);
 void	join_str(char **before, char *data, int *start, int end);
 void	join_envp(char **before, char *env, int *start, int *end);
 void	find_end_pos(char *data, int *end);
-char	*get_env_or_status(t_info *info, char *env);
+char	*get_env_or_status(char *env);
 void	replace_home_dir(char **cmd);
 
 /*
 ** termios_utils.c
 */
-void	get_org_term(t_info *info);
-void	set_org_term(t_info *info);
-void	set_new_term(t_info *info, int is_heredoc);
+void	get_org_term(void);
+void	set_org_term(void);
+void	set_new_term(int is_heredoc);
 
 /*
 ** utils.c
 */
+t_info	*get_info(void);
 int		ft_strcmp(char *s1, char *s2);
 int		ft_isblank(char c);
-char	*get_env(t_info *info, char *name);
+char	*get_env(char *name);
 
 /*
 **	parsing
@@ -118,7 +120,7 @@ char	*get_env(t_info *info, char *name);
 ** env_list.c
 */
 t_enode	*new_enode(char *env);
-void	env_preprocess(t_info *info, char **envp);
+void	env_preprocess(char **envp);
 
 /*
 ** list.c
@@ -130,15 +132,15 @@ t_tok		*get_token(t_tok_list *list, int pos);
 /*
 ** syntax.c
 */
-void	pipeline(t_info *info, int *idx);
-void	cmd(t_info *info, int *idx);
-void	simple_cmd(t_info *info, int *idx);
-void	redirs(t_info *info, int *idx);
-void	redir(t_info *info, int *idx);
-void	args(t_info *info, int *idx);
-void	path(t_info *info, int *idx);
-void	filename(t_info *info, int *idx);
-int		syntax(t_info *info);
+void	pipeline(int *idx);
+void	cmd(int *idx);
+void	simple_cmd(int *idx);
+void	redirs(int *idx);
+void	redir(int *idx);
+void	args(int *idx);
+void	path(int *idx);
+void	filename(int *idx);
+int		syntax(void);
 
 /*
 ** tokenize.c
@@ -154,7 +156,7 @@ int		chk_syntax(t_node *node);
 /*
 **	replace_env.c
 */
-void	replace_recur(t_info *info, t_node *node);
+void	replace_recur(t_node *node);
 
 /*
 **	list.c
@@ -163,11 +165,6 @@ t_tok_list	*create_list(void);
 void		add_token(t_tok_list **list, t_tok *new_tok);
 t_tok		*get_token(t_tok_list *list, int pos);
 
-/*
-**	list.c
-*/
-t_enode		*new_enode(char *env);
-void		env_preprocess(t_info *info, char **envp);
 
 /*
 **	astree.c
@@ -192,12 +189,12 @@ void	insert_filename(t_astree *tree, t_node *node);
 /*
 ** read_tree.c
 */
-void	read_tree(t_info *info, t_node *node);
+void	read_tree(t_node *node);
 
 /*
 ** ft_execve.c
 */
-void	exec(t_info *info, t_node *node);
+void	exec(t_node *node);
 
 /*
 ** get_cmd_opt.c
@@ -207,9 +204,9 @@ char	**get_cmd_opt(t_node *node);
 /*
 ** redir.c
 */
-int		connect_redir(t_info *info);
-int		disconnect_redir(t_info *info);
-void	redirection(t_info *info, t_node *node);
+int		connect_redir(void);
+int		disconnect_redir(void);
+void	redirection(t_node *node);
 
 /*
 ** heredoc.c
@@ -219,12 +216,12 @@ void	redirection(t_info *info, t_node *node);
 **	builtin
 **	- builtin commands in minishell
 */
-void	builtin_cd(t_info *info, t_node *cmd);
-void	builtin_echo(t_info *info, t_node *cmd);
-void	builtin_env(t_info *info);
-void	builtin_exit(t_info *info, t_node *cmd);
-void	builtin_export(t_info *info, t_node *cmd);
-void	builtin_pwd(t_info *info, t_node *cmd);
-void	builtin_unset(t_info *info, t_node *cmd);
+void	builtin_cd(t_node *cmd);
+void	builtin_echo(t_node *cmd);
+void	builtin_env(void);
+void	builtin_exit(t_node *cmd);
+void	builtin_export(t_node *cmd);
+void	builtin_pwd(t_node *cmd);
+void	builtin_unset(t_node *cmd);
 
 #endif

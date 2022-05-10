@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 11:49:46 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/04 21:18:00 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/10 14:28:16 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,14 @@
 **	<FILENAME> := WORD
 */
 
-void pipeline(t_info *info, int *idx)
+void pipeline(int *idx)
 {	
 	t_tok	*token;
 	t_node	*node;
+	t_info	*info;
 
-	cmd(info, idx);
+	info = get_info();
+	cmd(idx);
 	token = get_token(info->list, *idx);
 	if (token && token->type == PIPE && ++(*idx))
 	{
@@ -55,54 +57,62 @@ void pipeline(t_info *info, int *idx)
 		// 	exit(258);
 		// 	//error();
 		// }
-		pipeline(info, idx);
+		pipeline(idx);
 	}
 	else if (token)
-		pipeline(info, idx);
+		pipeline(idx);
 }
 
-void cmd(t_info *info, int *idx)
+void cmd(int *idx)
 {
 	t_tok	*token;
+	t_info	*info;
 
-	simple_cmd(info, idx);
+	info = get_info();
+	simple_cmd(idx);
 	token = get_token(info->list, *idx);
 	if (token && (token->type == REDIR || token->type == HEREDOC))
-		redirs(info, idx);
+		redirs(idx);
 }
 
-void simple_cmd(t_info *info, int *idx)
+void simple_cmd(int *idx)
 {
 	t_tok	*token;
+	t_info	*info;
 
+	info = get_info();
 	token = get_token(info->list, *idx);
 	if (!token || token->type == REDIR || token->type == PIPE || token->type == HEREDOC)
 		return ;
-	path(info, idx);
+	path(idx);
 	token = get_token(info->list, *idx);
 	if (token)
-		args(info, idx);
+		args(idx);
 }
 
-void	redirs(t_info *info, int *idx)
+void	redirs(int *idx)
 {
 	t_tok	*token;
-	
+	t_info	*info;
+
+	info = get_info();
 	token = get_token(info->list, *idx);
 	if (token && token->type == PIPE)
 		return ;
 	if (token && (token->type == REDIR || token->type == HEREDOC))
 	{
-		redir(info, idx);
-		redirs(info, idx);
+		redir(idx);
+		redirs(idx);
 	}
 }
 
-void redir(t_info *info, int *idx)
+void redir(int *idx)
 {
 	t_tok	*token;
 	t_node	*node;
+	t_info	*info;
 
+	info = get_info();
 	token = get_token(info->list, *idx);
 	if (!token)
 		return ;
@@ -118,5 +128,5 @@ void redir(t_info *info, int *idx)
 	else
 		insert_pipe_heredoc(info->tree, node);
 	(*idx)++;
-	filename(info, idx);
+	filename(idx);
 }

@@ -6,14 +6,17 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/01 14:50:14 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/10 12:47:56 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/10 14:50:29 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	init_redir(t_info *info, int is_stdin)
+static void	init_redir(int is_stdin)
 {
+	t_info	*info;
+
+	info = get_info();
 	if (is_stdin == FALSE && info->file->open_stdout > 0)
 	{
 		close(info->file->open_stdout);
@@ -26,8 +29,11 @@ static void	init_redir(t_info *info, int is_stdin)
 	}
 }
 
-int	connect_redir(t_info *info)
+int	connect_redir(void)
 {
+	t_info	*info;
+
+	info = get_info();
 	if (info->file->open_stdin > 0)
 	{
 		if (dup2(info->file->open_stdin, STDIN) < 0)
@@ -41,10 +47,12 @@ int	connect_redir(t_info *info)
 	return (TRUE);
 }
 
-int	disconnect_redir(t_info *info)
+int	disconnect_redir(void)
 {
-	int	status;
+	int		status;
+	t_info	*info;
 
+	info = get_info();
 	status = 0;
 	if (info->file->open_stdin > 0)
 	{
@@ -61,16 +69,18 @@ int	disconnect_redir(t_info *info)
 	return (TRUE);
 }
 
-void	redirection(t_info *info, t_node *node)
+void	redirection(t_node *node)
 {
 	char	*path;
 	int		is_stdin;
+	t_info	*info;
 
+	info = get_info();
 	path = node->right->data;
 	is_stdin = TRUE;
 	if (node->data[0] == '>')
 		is_stdin = FALSE;
-	init_redir(info, is_stdin);
+	init_redir(is_stdin);
 	if (!ft_strcmp(node->data, ">"))
 		info->file->open_stdout = open(path, O_WRONLY
 				| O_CREAT | O_TRUNC, 0644);
@@ -86,5 +96,5 @@ void	redirection(t_info *info, t_node *node)
 		printf("\033[34mminishell: %s: %s\033[0m\n", path, strerror(errno));
 		return ;
 	}
-	read_tree(info, node->left);
+	read_tree(node->left);
 }

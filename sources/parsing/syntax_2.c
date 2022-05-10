@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 11:49:46 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/04 21:18:03 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/10 14:29:48 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,13 @@
 
 // 명령어의 인자(또는 옵션)
 // 명령어의 자식에 붙임
-void args(t_info *info, int *idx)
+void args(int *idx)
 {
 	t_tok	*token;
 	t_node	*node;
+	t_info	*info;
 
+	info = get_info();
 	token = get_token(info->list, *idx);
 	if (!token)
 		return ;
@@ -54,17 +56,19 @@ void args(t_info *info, int *idx)
 	insert_path(info->tree, node);
 	(*idx)++;
 	if (token->next)
-		args(info, idx);
+		args(idx);
 }
 
 // 명령어, 실행파일 이름
 // 파이프 뒤에 나오면 오른쪽에,
 // 리다이렉션 뒤에 나오면 왼쪽에 붙어야함.
-void path(t_info *info, int *idx)
+void path(int *idx)
 {
 	t_tok	*token;
 	t_node	*node;
+	t_info	*info;
 
+	info = get_info();
 	token = get_token(info->list, *idx);
 	if (!token)
 		return ;
@@ -75,11 +79,13 @@ void path(t_info *info, int *idx)
 
 // 진짜 파일 이름
 // 항상 리다이렉션 뒤에 나오므로 마지막 리다이렉션을 찾아서 리다이렉션 노드 오른쪽에 붙임.
-void filename(t_info *info, int *idx)
+void filename(int *idx)
 {
 	t_tok	*token;
 	t_node	*node;
+	t_info	*info;
 
+	info = get_info();
 	token = get_token(info->list, *idx);
 	if (!token || token->type == PIPE)
 		return ;
@@ -88,13 +94,15 @@ void filename(t_info *info, int *idx)
 	(*idx)++;
 }
 
-int	syntax(t_info *info)
+int	syntax(void)
 {
 	int	idx;
-	
+	t_info	*info;
+
+	info = get_info();
 	idx = 0;
 	if (!info || !info->list || !info->tree)
 		return (FALSE);
-	pipeline(info, &idx);
+	pipeline(&idx);
 	return (TRUE);
 }

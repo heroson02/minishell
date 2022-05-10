@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:37:13 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/04 21:16:27 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/10 14:33:38 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 ** get_env한 결과(rpl에 들어가는 값)는 항상 동적할당되어있다. 빈 문자열인 경우 ""을 strdup해주기 때문.
 */
 
-static char	*replace_env(t_info *info, char *data, int start, int end)
+static char	*replace_env(char *data, int start, int end)
 {
 	int		idx;
 	char	*env;
@@ -33,7 +33,7 @@ static char	*replace_env(t_info *info, char *data, int start, int end)
 	while (str[idx] && !ft_isblank(str[idx]))
 		idx++;
 	env = ft_substr(str, 0, idx);
-	rpl = get_env_or_status(info, env);
+	rpl = get_env_or_status(env);
 	if (!str[idx])
 		ret = ft_strdup(rpl);
 	else
@@ -59,12 +59,12 @@ static void	join_squote(char **res, char *data, int *front, int *end)
 	join_str(res, data, front, *end);
 }
 
-static void	replace_token(t_info *info, char **res, char *data)
+static void	replace_token(char **res, char *data)
 {
 	int		dquote;
 	int		front;
 	int		end;
-
+	
 	init_variable(&dquote, &front, &end);
 	while (data[++end])
 	{
@@ -79,14 +79,14 @@ static void	replace_token(t_info *info, char **res, char *data)
 		{
 			join_str(res, data, &front, end++);
 			find_end_pos(data, &end);
-			join_envp(res, replace_env(info, data, front, end), &front, &end);
+			join_envp(res, replace_env(data, front, end), &front, &end);
 		}
 		else if (!data[end + 1])
 			join_str(res, data, &front, end + 1);
 	}
 }
 
-void	replace_recur(t_info *info, t_node *node)
+void	replace_recur(t_node *node)
 {
 	char	*tmp;
 
@@ -96,11 +96,11 @@ void	replace_recur(t_info *info, t_node *node)
 	{
 		tmp = node->data;
 		node->data = ft_strdup("");
-		replace_token(info, &(node->data), tmp);
+		replace_token(&(node->data), tmp);
 		printf("\033[31m%s\033[0m\n", node->data);
 		free(tmp);
 		tmp = 0;
 	}
-	replace_recur(info, node->left);
-	replace_recur(info, node->right);
+	replace_recur(node->left);
+	replace_recur(node->right);
 }

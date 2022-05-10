@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 15:11:53 by yson              #+#    #+#             */
-/*   Updated: 2022/05/04 21:31:57 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/10 14:39:17 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,12 @@ static void	ft_export(t_info *info, char *data)
 	}
 }
 
-void	builtin_export(t_info *info, t_node *cmd)
+void	builtin_export(t_node *cmd)
 {
 	t_node	*node;
+	t_info	*info;
 
+	info = get_info();
 	node = cmd->left;
 	while (node)
 	{

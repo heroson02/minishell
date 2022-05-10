@@ -6,11 +6,18 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 20:48:28 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/04 21:38:52 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/10 14:22:17 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+t_info	*get_info(void)
+{
+	static	t_info info;
+
+	return (&info);
+}
 
 int	ft_strcmp(char *s1, char *s2)
 {
@@ -36,10 +43,12 @@ int	ft_isblank(char c)
 ** 환경변수가 존재하지 않으면 그냥 빈 문자열을 출력하므로 (echo $HELLO)
 ** name에 해당하는 환경변수가 존재하지 않으면 빈 문자열을 출력한다.
 */
-char	*get_env(t_info *info, char *name)
+char	*get_env(char *name)
 {
 	t_list	*cur;
+	t_info	*info;
 
+	info = get_info();
 	cur = info->env_list;
 	while (cur)
 	{
@@ -49,4 +58,3 @@ char	*get_env(t_info *info, char *name)
 	}
 	return ("");
 }
-

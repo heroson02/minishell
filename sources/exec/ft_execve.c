@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/01 23:22:20 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/10 12:51:26 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/10 14:43:32 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static char	*get_cmd_path(t_info *info, char *cmd, int fd, int idx)
 	char	**paths;
 	char	*temp;
 
-	paths = ft_split(get_env(info, "PATH"), ':');
+	paths = ft_split(get_env("PATH"), ':');
 	path = 0;
 	while (paths[idx])
 	{
@@ -106,11 +106,13 @@ static int	ft_execve(t_info *info, t_node *cmd)
 	return (num);
 }
 
-void	exec(t_info *info, t_node *node)
+void	exec(t_node *node)
 {
 	pid_t	pid;
 	int		status;
+	t_info	*info;
 
+	info = get_info();
 	pid = fork();
 	if (pid < 0)
 		printf("fork error\n");

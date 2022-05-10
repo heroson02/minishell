@@ -6,16 +6,18 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 15:01:08 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/04/28 18:21:35 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/10 14:40:02 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	builtin_pwd(t_info *info, t_node *cmd)
+void	builtin_pwd(t_node *cmd)
 {
 	char	*pwd;
+	t_info	*info;
 
+	info = get_info();
 	pwd = (char *)malloc(sizeof(char) * (BUFSIZ + 1));
 	if (!pwd)
 		return ;

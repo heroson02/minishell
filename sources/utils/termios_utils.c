@@ -6,24 +6,33 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 12:20:02 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/10 12:31:19 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/10 14:23:22 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../minishell.h"
 
-void	get_org_term(t_info *info)
+void	get_org_term(void)
 {
+	t_info	*info;
+
+	info = get_info();
 	tcgetattr(STDIN, &(info->org_term));
 }
 
-void	set_org_term(t_info *info)
+void	set_org_term(void)
 {
+	t_info	*info;
+
+	info = get_info();
 	tcsetattr(STDIN, TCSANOW, &(info->org_term));
 }
 
-void	set_new_term(t_info *info, int is_heredoc)
+void	set_new_term(int is_heredoc)
 {
+	t_info	*info;
+
+	info = get_info();
 	tcgetattr(STDIN, &(info->new_term));
 	if (is_heredoc == FALSE)
 		info->new_term.c_lflag &= ~ECHOCTL;
