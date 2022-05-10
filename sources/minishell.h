@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:39:28 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/10 15:17:40 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/10 17:11:13 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,13 @@
 # include <signal.h>
 # include <string.h>
 # include <sys/errno.h>
+# include <sys/wait.h>
+# include <sys/types.h>
 # include <fcntl.h>
+# include <termios.h>
+# include <termcap.h>
 # include "./parsing/astree.h"
-# include "./gnl/gnl.h"
+# include "../libft/libft.h"
 
 # define REPLACE 1
 
@@ -42,7 +46,6 @@ typedef struct s_heredoc
 	int		col;
 	char	line[BUFSIZ];
 	char	*eof;
-
 }	t_heredoc;
 
 
@@ -107,6 +110,7 @@ void	set_new_term(int is_heredoc);
 ** utils.c
 */
 t_info	*get_info(void);
+void	handler(int signo);
 int		ft_strcmp(char *s1, char *s2);
 int		ft_isblank(char c);
 char	*get_env(char *name);
@@ -209,13 +213,25 @@ int		disconnect_redir(void);
 void	redirection(t_node *node);
 
 /*
+** pipe.c
+*/
+void	exec_pipe(t_node *node);
+
+/*
+** exec/heredoc
+** - the functions used by heredoc
+*/
+
+/*
 ** heredoc.c
 */
 
 /*
-** pipe.c
+** heredoc_utils.c
 */
-int exec_pipe(t_node *node);
+void	init_heredoc(t_node *eof);
+void	clear_heredoc(void);
+void	sig_heredoc_handler(int signo);
 
 /*
 **	builtin

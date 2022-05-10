@@ -6,22 +6,12 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:40:18 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/10 14:52:05 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/10 17:38:16 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./minishell.h"
 
-static void handler(int signo)
-{
-	if (signo == SIGINT)
-	{
-		printf("\n");
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}	
-}
 
 // static void	init(t_info *info)
 // {
@@ -82,6 +72,7 @@ int main(int argc, char **argv, char **envp)
 				print_err(line, 0); //syntax error 258
 				continue ;
 			}
+			print_tree(get_info()->tree->root);
 			if (chk_syntax(get_info()->tree->root) == FALSE)
 			{
 				print_err(line, 0); //syntax error 258
@@ -91,7 +82,6 @@ int main(int argc, char **argv, char **envp)
 			// printf("\n\n");
 			//환경변수 치환
 			replace_recur(get_info()->tree->root);
-			print_tree(get_info()->tree->root);
 			//실행 과정 (이후에 tok list 비우기)
 			read_tree(get_info()->tree->root);
 			ft_clear();
