@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+         #
+#    By: yson <yson@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/03 10:49:43 by hyojlee           #+#    #+#              #
-#    Updated: 2022/05/10 12:35:01 by hyojlee          ###   ########.fr        #
+#    Updated: 2022/05/10 14:29:57 by yson             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,10 +15,14 @@ CFLAGS = -g3 -fsanitize=address
 # CFLAGS = -fsanitize=thread -g
 # CFLAGS = -g
 # CFLAGS = -Wall -Wextra -Werror
-LDFLAGS = -lncurses -lreadline -L/Users/hyojlee/.brew/opt/readline/lib
-CPPFLAGS = -I/Users/hyojlee/.brew/opt/readline/include
+# LDFLAGS = -lncurses -lreadline -L/Users/hyojlee/.brew/opt/readline/lib
+# CPPFLAGS = -I/Users/hyojlee/.brew/opt/readline/include
 # LDFLAGS = -lncurses -lreadline -L/usr/local/opt/readline/lib
 # CPPFLAGS = -I/usr/local/opt/readline/include
+
+LDFLAGS = -lncurses -lreadline -L/Users/yson/.brew/opt/readline/lib
+CPPFLAGS = -I/Users/yson/.brew/opt/readline/include
+
 INC = ./includes
 NAME = minishell
 MAKE = make
@@ -37,6 +41,7 @@ SRCS = $(SRC_DIR)/main.c 					\
 		$(SRC_DIR)/exec/get_cmd_opt.c		\
 		$(SRC_DIR)/exec/heredoc.c			\
 		$(SRC_DIR)/exec/read_tree.c			\
+		$(SRC_DIR)/exec/pipe.c				\
 		$(SRC_DIR)/exec/redir.c				\
 		$(SRC_DIR)/gnl/gnl.c				\
 		$(SRC_DIR)/gnl/gnl_utils.c			\
