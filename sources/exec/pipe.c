@@ -6,7 +6,7 @@
 /*   By: yson <yson@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 11:35:22 by yson              #+#    #+#             */
-/*   Updated: 2022/05/10 14:39:31 by yson             ###   ########.fr       */
+/*   Updated: 2022/05/10 14:55:31 by yson             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,10 @@ int exec_pipe(t_info *info, t_node *node)
 	
 	if (pipe(pipe_fd) == -1)
 		printf("error\n");
-	pid_left = pipe_input(info, pipe_fd, node);
-	printf("start");
+	pid_left = pipe_input(info, pipe_fd, node->left);
 	waitpid(pid_left, NULL, 0);
 	close(pipe_fd[1]);
-	printf("mid");
-	pid_right = pipe_output(info, pipe_fd, node);
+	pid_right = pipe_output(info, pipe_fd, node->right);
 	close(pipe_fd[0]);
 	waitpid(pid_right, NULL, 0);
 	return (1);
