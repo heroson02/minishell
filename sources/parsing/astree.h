@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 11:39:54 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/04 21:11:59 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/11 11:53:25 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_tok_list
 {
 	t_tok	*head;
 	int		count;
+	int		h_count;
 }	t_tok_list;
 
 typedef struct s_node
@@ -77,5 +78,6 @@ void		insert_pipe_heredoc(t_astree *tree, t_node *node);
 void		insert_redir(t_astree *tree, t_node *node);
 void 		insert_path(t_astree *tree, t_node *node);
 void		insert_filename(t_astree *tree, t_node *node);
+void		insert_heredoc_redir(void);
 
 #endif

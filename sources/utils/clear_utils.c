@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 20:37:26 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/10 14:26:02 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/11 12:08:56 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,6 @@ void	ft_clear(void)
 	info = get_info();
 	list_clear(info->list);
 	tree_clear(info->tree);
+	free(info->heredoc->eof);
+	ft_bzero(info->heredoc, sizeof(t_heredoc));	
 }

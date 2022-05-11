@@ -6,13 +6,13 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/01 23:22:20 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/10 14:43:32 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/11 12:12:12 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static char	*get_cmd_path(t_info *info, char *cmd, int fd, int idx)
+static char	*get_cmd_path(char *cmd, int fd, int idx)
 {
 	char	*path;
 	char	**paths;
@@ -42,7 +42,7 @@ static char	*get_cmd_path(t_info *info, char *cmd, int fd, int idx)
 /*
 **	./ : PATH 외의 명령어, / : 루트 디렉토리에 있는 명령어, ~/ : 홈 디렉토리, 그 외에는 PATH에서 검색
 */
-static void	get_path(t_info *info, char *cmd, char **path)
+static void	get_path(char *cmd, char **path)
 {
 	if (!ft_memcmp("./", cmd, 2) || !ft_memcmp("/", cmd, 2))
 		*path = ft_strdup(cmd);
@@ -52,7 +52,7 @@ static void	get_path(t_info *info, char *cmd, char **path)
 		*path = ft_strdup(cmd);
 	}
 	else
-		*path = get_cmd_path(info, cmd, 0, 0);
+		*path = get_cmd_path(cmd, 0, 0);
 }
 
 static char	**list_to_array(t_list *head)
@@ -85,7 +85,7 @@ static int	ft_execve(t_info *info, t_node *cmd)
 	char	**opt;
 	int		num;	//옵션을 만드는 코드를 함수화해서 빼야 할 듯
 
-	get_path(info, cmd->data, &path);
+	get_path(cmd->data, &path);
 	//path에서 검사한 명령어의 경우에는 걸리지만, 현재 디렉토리나 홈 디렉토리에서 찾을 때 에러는 검출이 안될 듯
 	if (!path)
 	{
@@ -112,6 +112,7 @@ void	exec(t_node *node)
 	int		status;
 	t_info	*info;
 
+	status = 0;
 	info = get_info();
 	pid = fork();
 	if (pid < 0)

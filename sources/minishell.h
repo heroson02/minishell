@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:39:28 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/10 17:11:13 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/11 11:34:07 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_heredoc
 	int		fd;
 	int		row;
 	int		col;
+	int		h_idx;
 	char	line[BUFSIZ];
 	char	*eof;
 }	t_heredoc;

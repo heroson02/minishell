@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 11:49:46 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/10 14:28:16 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/11 11:56:32 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,4 +129,6 @@ void redir(int *idx)
 		insert_pipe_heredoc(info->tree, node);
 	(*idx)++;
 	filename(idx);
+	if (token->type == HEREDOC)
+		insert_heredoc_redir();
 }
