@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:39:28 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/12 12:28:34 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/12 13:14:14 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ typedef struct s_info
 	struct termios	new_term;
 	int				h_count;
 	int				h_idx;
-	t_heredoc		*heredoc;
+	t_list			*hdoc_list;
 }	t_info;
 
 typedef struct s_enode
@@ -233,9 +233,9 @@ void	exec_pipe(t_node *node);
 /*
 ** heredoc_utils.c
 */
-t_heredoc	*init_heredoc(t_node *eof);
-void	clear_heredoc(void);
-void	sig_heredoc_handler(int signo);
+t_heredoc	*new_heredoc(t_node *eof);
+// void	clear_heredoc(void);
+// void	sig_heredoc_handler(int signo);
 
 /*
 **	builtin

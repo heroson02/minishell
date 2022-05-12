@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 17:49:35 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/10 16:09:32 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/12 13:07:33 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	start_heredoc(t_node *eof)
 {
 	pid_t	pid;
 
-	init_heredoc(eof);
+	new_heredoc(eof);
 	pid = fork();
 	signal(SIGINT, SIG_IGN);
 	if (pid < 0)

@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:40:18 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/12 11:33:06 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/12 13:14:46 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ static void	init(void)
 
 	info = get_info();
 	ft_bzero(info, sizeof(t_info));
-	info->heredoc = (t_heredoc *)malloc(sizeof(t_heredoc));
-	ft_bzero(info->heredoc, sizeof(t_heredoc));
 	info->list = create_list();
 	info->tree = create_tree();
 	info->file = (t_file *)malloc(sizeof(t_file));
