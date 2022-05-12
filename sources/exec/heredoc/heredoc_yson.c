@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_yson.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: yson <yson@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 17:49:35 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/12 20:19:33 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/12 20:52:27 by yson             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*ft_strjoin_free(char *s1, char *s2)
 void	heredoc(t_list *lst)
 {
 	char		*input;
-	char		*result;
+	// char		*result;
 	t_heredoc	*content;
 
 	content = ((t_heredoc *)lst->content);
@@ -39,12 +39,13 @@ void	heredoc(t_list *lst)
 		}
 		if (!ft_strcmp(input, content->eof))
 			break ;
-		result = ft_strjoin_free(result, input);
-		result = ft_strjoin_free(result, "\n");
+		ft_putendl_fd(input, content->fd);
+		// result = ft_strjoin_free(result, input);
+		// result = ft_strjoin_free(result, "\n");
 		free(input);
 	}
-	ft_putstr_fd(result, content->fd);
-	free(result);
+	// ft_putstr_fd(result, content->fd);
+	// free(result);
 }
 
 void	start_heredoc_yson(t_node *hdoc_node)
