@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: yson <yson@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:39:23 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/12 13:16:23 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/12 13:51:38 by yson             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ t_heredoc	*new_heredoc(t_node *eof)
 {
 	t_heredoc	*heredoc;
 	int			flags;
-	t_info		*info;
 	char		*h_idx;
 	
 	heredoc = (t_heredoc *)malloc(sizeof(t_heredoc));
@@ -41,20 +40,17 @@ t_heredoc	*new_heredoc(t_node *eof)
 	return (heredoc);
 }
 
-// void	clear_heredoc(void)
-// {
-// 	t_info	*info;
+void	clear_heredoc(void *content)
+{
+	t_heredoc *target;
 
-// 	info = get_info();
-// 	if (info->heredoc->eof)
-// 	{
-// 		free(info->heredoc->eof);
-// 		info->heredoc->eof = 0;
-// 	}
-// 	close(info->heredoc->fd);
-// 	unlink(".minishell_heredoc");
-// 	ft_bzero(info->heredoc, sizeof(t_heredoc));
-// }
+	target = content;
+	close(target->fd);
+	unlink(target->h_name);
+	free(target->h_name);
+	free(target->eof);
+	ft_bzero(target, sizeof(t_heredoc));
+}
 
 // void	sig_heredoc_handler(int signo)
 // {

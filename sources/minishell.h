@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: yson <yson@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:39:28 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/12 13:14:14 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/12 14:04:09 by yson             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ typedef struct s_heredoc
 	char				*h_name;
 	char				line[BUFSIZ];
 	char				*eof;
-	struct s_heredoc	*next;
 }	t_heredoc;
 
 
@@ -93,6 +92,7 @@ void	free_enode(void *node);
 void	print_token(t_tok_list *list);
 void	print_tree(t_node* root);
 void	print_err(char *line, int err);
+void	ft_lstprint_heredoc(t_list *list);
 
 /*
 ** replace_utils.c
@@ -229,12 +229,12 @@ void	exec_pipe(t_node *node);
 /*
 ** heredoc.c
 */
-
+void	start_heredoc(t_node *node);
 /*
 ** heredoc_utils.c
 */
 t_heredoc	*new_heredoc(t_node *eof);
-// void	clear_heredoc(void);
+void		clear_heredoc(void *content);
 // void	sig_heredoc_handler(int signo);
 
 /*

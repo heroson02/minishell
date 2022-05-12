@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clear_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: yson <yson@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 20:37:26 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/12 12:33:41 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/12 14:10:28 by yson             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ void	ft_clear(void)
 	info = get_info();
 	list_clear(info->list);
 	tree_clear(info->tree);
-	free(info->heredoc->eof);
-	ft_bzero(info->heredoc, sizeof(t_heredoc));
+	ft_lstprint_heredoc(get_info()->hdoc_list);
+	ft_lstclear(&info->hdoc_list, clear_heredoc);
 	info->h_count = 0;
 	info->h_idx = 0;
 }

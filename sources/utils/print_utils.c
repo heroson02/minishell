@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: yson <yson@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 16:55:42 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/12 12:32:44 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/12 14:09:35 by yson             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,26 @@ void	print_token(t_tok_list *list)
 		idx++;
 		curr = curr->next;
 	}
+}
+
+void	ft_lstprint_heredoc(t_list *list)
+{
+	t_list *cur;
+
+	cur = list;
+	while (cur)
+	{
+		printf("/=================\\\n");
+		printf("fd : %d\n", ((t_heredoc *)cur->content)->fd);
+		printf("row : %d\n", ((t_heredoc *)cur->content)->row);
+		printf("col : %d\n", ((t_heredoc *)cur->content)->col);
+		printf("h_name : %s\n", ((t_heredoc *)cur->content)->h_name);
+		printf("line : %s\n", ((t_heredoc *)cur->content)->line);
+		printf("eof : %s\n", ((t_heredoc *)cur->content)->eof);
+		printf("\\=================/\n");
+		cur = cur->next;
+	}
+	
 }
 
 void	print_tree(t_node* root)
