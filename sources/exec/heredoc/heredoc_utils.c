@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yson <yson@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:39:23 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/12 13:51:38 by yson             ###   ########.fr       */
+/*   Updated: 2022/05/12 15:23:22 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,29 +52,29 @@ void	clear_heredoc(void *content)
 	ft_bzero(target, sizeof(t_heredoc));
 }
 
-// void	sig_heredoc_handler(int signo)
-// {
-// 	t_info	*info;
+void	sig_heredoc_handler(int signo)
+{
+	t_info	*info;
 
-// 	info = get_info();
-// 	if (signo == SIGINT)
-// 	{
-// 		clear_heredoc();
-// 		exit(1);
-// 	}
-// }
+	info = get_info();
+	if (signo == SIGINT)
+	{
+		ft_lstclear(&(info->hdoc_list), clear_heredoc);
+		exit(1);
+	}
+}
 
-// void	set_termcap(void)
-// {
-// 	char	*env;
-// 	char	*cm;
-// 	char	*ce;
+void	set_termcap(void)
+{
+	char	*env;
+	char	*cm;
+	char	*ce;
 	
-// 	env = getenv("TERM");
-// 	if (!env)
-// 		env = "xterm";
-// 	if (tgetent(NULL, env) < 1)
-// 		return ;
-// 	cm = tgetstr("cm", NULL);
-// 	ce = tgetstr("ce", NULL);
-// }
+	env = getenv("TERM");
+	if (!env)
+		env = "xterm";
+	if (tgetent(NULL, env) < 1)
+		return ;
+	cm = tgetstr("cm", NULL);
+	ce = tgetstr("ce", NULL);
+}

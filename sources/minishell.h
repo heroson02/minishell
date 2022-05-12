@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yson <yson@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:39:28 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/12 14:04:09 by yson             ###   ########.fr       */
+/*   Updated: 2022/05/12 18:59:14 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,7 +235,7 @@ void	start_heredoc(t_node *node);
 */
 t_heredoc	*new_heredoc(t_node *eof);
 void		clear_heredoc(void *content);
-// void	sig_heredoc_handler(int signo);
+void		sig_heredoc_handler(int signo);
 
 /*
 **	builtin

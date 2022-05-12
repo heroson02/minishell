@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yson <yson@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:40:18 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/12 13:40:55 by yson             ###   ########.fr       */
+/*   Updated: 2022/05/12 18:52:07 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ int main(int argc, char **argv, char **envp)
 	env_preprocess(envp);
 	while (1)
 	{
-		line = readline("minishell> ");
 		set_new_term(FALSE);
+		line = readline("minishell> ");
 		if (line)
 		{
 			if (line[0] == '\0')
@@ -91,7 +91,7 @@ int main(int argc, char **argv, char **envp)
 		}
 		else //ctrl + d
 		{
-			ft_putstr_fd("\x1b[1A", STDOUT);
+			ft_putstr_fd("\033[1A", STDOUT);
 			ft_putstr_fd("\033[12C", STDOUT);
 			printf("exit\n");
 			set_org_term();
