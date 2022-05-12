@@ -6,15 +6,15 @@
 #    By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/03 10:49:43 by hyojlee           #+#    #+#              #
-#    Updated: 2022/05/11 12:10:27 by hyojlee          ###   ########.fr        #
+#    Updated: 2022/05/12 20:10:29 by hyojlee          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
-# CFLAGS = -g3 -fsanitize=address
+CFLAGS = -g3 -fsanitize=address
 # CFLAGS = -fsanitize=thread -g
 # CFLAGS = -g
-CFLAGS = -Wall -Wextra -Werror
+# CFLAGS = -Wall -Wextra -Werror
 LDFLAGS = -lncurses -lreadline -L/Users/hyojlee/.brew/opt/readline/lib
 CPPFLAGS = -I/Users/hyojlee/.brew/opt/readline/include
 # LDFLAGS = -lncurses -lreadline -L/usr/local/opt/readline/lib
@@ -40,6 +40,7 @@ SRCS = $(SRC_DIR)/main.c 						\
 		$(SRC_DIR)/exec/ft_execve.c				\
 		$(SRC_DIR)/exec/get_cmd_opt.c			\
 		$(SRC_DIR)/exec/heredoc/heredoc.c		\
+		$(SRC_DIR)/exec/heredoc/heredoc_yson.c	\
 		$(SRC_DIR)/exec/heredoc/heredoc_utils.c	\
 		$(SRC_DIR)/exec/read_tree.c				\
 		$(SRC_DIR)/exec/pipe.c					\
@@ -58,7 +59,8 @@ SRCS = $(SRC_DIR)/main.c 						\
 		$(SRC_DIR)/utils/print_utils.c			\
 		$(SRC_DIR)/utils/replace_utils.c		\
 		$(SRC_DIR)/utils/termios_utils.c		\
-		$(SRC_DIR)/utils/utils.c
+		$(SRC_DIR)/utils/utils.c								
+		
 
 OBJS = $(SRCS:.c=.o)
 

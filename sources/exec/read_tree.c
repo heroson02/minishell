@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 20:41:29 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/12 19:42:53 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/12 19:52:42 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	execute_code(t_node *node)
 	if (!node)
 		return ;
 	if (node->type == HEREDOC)
-		start_heredoc(node);
+		start_heredoc_yson(node);
 	else if (node->type == PIPE)
 		exec_pipe(node);
 	else if (node->type == REDIR)

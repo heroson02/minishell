@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:39:28 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/12 18:59:14 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/12 19:52:57 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,6 +230,7 @@ void	exec_pipe(t_node *node);
 ** heredoc.c
 */
 void	start_heredoc(t_node *node);
+void	start_heredoc_yson(t_node *hdoc_node);
 /*
 ** heredoc_utils.c
 */

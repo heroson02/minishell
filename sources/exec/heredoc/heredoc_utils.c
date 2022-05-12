@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:39:23 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/12 19:27:11 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/12 20:11:23 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,17 @@ t_heredoc	*new_heredoc(t_node *eof)
 
 void	clear_heredoc(void *content)
 {
-	t_heredoc *target;
+	t_heredoc	*target;
 
-	target = content;
-	close(target->fd);
-	unlink(target->h_name);
-	free(target->h_name);
-	free(target->eof);
-	ft_bzero(target, sizeof(t_heredoc));
+	if (content)
+	{
+		target = (t_heredoc *)content;
+		unlink(target->h_name);
+		close(target->fd);
+		free(target->h_name);
+		free(target->eof);
+		ft_bzero(target, sizeof(t_heredoc));
+	}
 }
 
 void	sig_heredoc_handler(int signo)
