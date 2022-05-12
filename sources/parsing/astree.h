@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 11:39:54 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/11 11:53:25 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/12 11:32:02 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ typedef struct s_tok_list
 {
 	t_tok	*head;
 	int		count;
-	int		h_count;
 }	t_tok_list;
 
 typedef struct s_node
