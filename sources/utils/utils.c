@@ -6,7 +6,7 @@
 /*   By: yson <yson@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 20:48:28 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/12 21:02:42 by yson             ###   ########.fr       */
+/*   Updated: 2022/05/12 21:20:43 by yson             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	handler(int signo)
 		// rl_on_new_line();
 		// rl_replace_line("", 0);
 		// rl_redisplay();
+		get_info()->exitcode = 130;
 		ioctl(STDIN_FILENO, TIOCSTI, "\n");
 		rl_replace_line("", 0);
 		rl_on_new_line();

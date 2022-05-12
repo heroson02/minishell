@@ -6,7 +6,7 @@
 /*   By: yson <yson@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 17:49:35 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/12 21:05:51 by yson             ###   ########.fr       */
+/*   Updated: 2022/05/12 21:22:05 by yson             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	heredoc(t_list *lst)
 	t_heredoc	*content;
 
 	content = ((t_heredoc *)lst->content);
-	while (1)
+	while (get_info()->exitcode != 130)
 	{
 		input = readline("> ");
 		if (!input)
@@ -53,9 +53,12 @@ void	start_heredoc_yson(t_node *hdoc_node)
 	// pid_t	pid;
 	t_node	*eof;
 
+	get_info()->exitcode = 0;
 	eof = hdoc_node->right;
 	ft_lstadd_back(&get_info()->hdoc_list, ft_lstnew(new_heredoc(eof)));
 	heredoc(ft_lstlast(get_info()->hdoc_list));
+	if (get_info()->exitcode == 130)
+		return ;
 	// pid = fork();
 	// signal(SIGINT, SIG_IGN);
 	// if (pid < 0)
