@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 21:07:48 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/11 12:14:34 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/12 12:31:54 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,6 @@ void	insert_heredoc_redir(void)
 {
 	t_tok	*new_tok;
 	t_node	*new_node;
-	t_info	*info;
 	char	*itoa;
 
 	new_tok = (t_tok *)malloc(sizeof(t_tok));
@@ -130,15 +129,14 @@ void	insert_heredoc_redir(void)
 	new_tok->data = ft_strdup("<");
 	new_tok->next = 0;
 	new_node = create_node(new_tok);
-	info = get_info();
-	insert_redir(info->tree, new_node);
+	insert_redir(get_info()->tree, new_node);
 	new_tok->type = TOKEN;
 	free(new_tok->data);
-	itoa = ft_itoa(info->heredoc->h_idx++);
+	itoa = ft_itoa(get_info()->h_count++);
 	new_tok->data = ft_strjoin(".heredoc_", itoa);
 	free(itoa);
 	itoa = 0;
-	insert_filename(info->tree, create_node(new_tok));
+	insert_filename(get_info()->tree, create_node(new_tok));
 	free(new_tok->data);
 	new_tok->data = 0;
 	free(new_tok);

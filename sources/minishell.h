@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:39:28 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/12 11:40:53 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/12 12:28:34 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,13 @@ typedef struct s_file
 
 typedef struct s_heredoc
 {
-	int		fd;
-	int		row;
-	int		col;
-	int		h_count;
-	int		h_idx;
-	char	line[BUFSIZ];
-	char	*eof;
+	int					fd;
+	int					row;
+	int					col;
+	char				*h_name;
+	char				line[BUFSIZ];
+	char				*eof;
+	struct s_heredoc	*next;
 }	t_heredoc;
 
 
@@ -60,6 +60,8 @@ typedef struct s_info
 	int				exitcode;
 	struct termios	org_term;
 	struct termios	new_term;
+	int				h_count;
+	int				h_idx;
 	t_heredoc		*heredoc;
 }	t_info;
 
@@ -231,7 +233,7 @@ void	exec_pipe(t_node *node);
 /*
 ** heredoc_utils.c
 */
-void	init_heredoc(t_node *eof);
+t_heredoc	*init_heredoc(t_node *eof);
 void	clear_heredoc(void);
 void	sig_heredoc_handler(int signo);
 

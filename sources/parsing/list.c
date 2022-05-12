@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 17:48:44 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/12 11:32:43 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/12 12:22:21 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ void	add_token(t_tok_list **list, t_tok *new_tok)
 		last->next = new_tok;
 	}
 	(*list)->count++;
-	if (new_tok->type == HEREDOC)
-		get_info()->heredoc->h_count++;
 }
 
 t_tok	*get_token(t_tok_list *list, int pos)

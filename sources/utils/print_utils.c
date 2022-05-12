@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 16:55:42 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/12 11:32:32 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/12 12:32:44 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ void	print_token(t_tok_list *list)
 		idx++;
 		curr = curr->next;
 	}
-	printf("\033[36mHeredoc count: %d\033[0m\n", get_info()->heredoc->h_count);
 }
 
 void	print_tree(t_node* root)
@@ -85,6 +84,7 @@ void	print_tree(t_node* root)
 	{
 		print_tree_node(root->left, false, "");
 	}
+	printf("\033[36mHeredoc count: %d\033[0m\n", get_info()->h_count);
 }
 
 void	print_err(char *line, int err)

@@ -6,24 +6,33 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:39:23 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/10 16:24:59 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/12 12:30:19 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	init_heredoc(t_node *eof)
+t_heredoc	*init_heredoc(t_node *eof)
 {
-	int		flags;
-	t_info	*info;
+	t_heredoc	*heredoc;
+	int			flags;
+	t_info		*info;
+	char		*h_idx;
 	
+	heredoc = (t_heredoc *)malloc(sizeof(t_heredoc));
+	if (!heredoc)
+		return (0);
+	ft_bzero(heredoc, sizeof(t_heredoc));
 	info = get_info();
 	flags = O_CREAT | O_TRUNC | O_RDWR;
+	h_idx = ft_itoa(info->h_idx++);
+
 	info->heredoc->fd = open(".minishell_heredoc", flags, 0644);
 	if (info->heredoc->fd < 0)
-		return ;
+		return (0);
 	info->heredoc->eof = ft_strdup(eof->data);
 	set_new_term(TRUE);
+	return (heredoc);
 }
 
 void	clear_heredoc(void)
