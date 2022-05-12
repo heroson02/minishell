@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:39:23 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/12 15:23:22 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/12 19:27:11 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ t_heredoc	*new_heredoc(t_node *eof)
 		return (0);
 	}
 	heredoc->eof = ft_strdup(eof->data);
-	set_new_term(TRUE);
 	return (heredoc);
 }
 

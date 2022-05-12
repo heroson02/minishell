@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:40:18 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/12 18:52:07 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/12 19:44:52 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int main(int argc, char **argv, char **envp)
 			ft_putstr_fd("\033[1A", STDOUT);
 			ft_putstr_fd("\033[12C", STDOUT);
 			printf("exit\n");
-			set_org_term();
+			// set_org_term();
 			exit(0); //마지막 종료 상태 값 exit 인자로 넣기
 		}
 	}
