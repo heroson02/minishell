@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 17:49:35 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/12 19:46:42 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/12 21:18:42 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,14 @@ void	start_heredoc(t_node *hdoc_node)
 		child_routine();
 	waitpid(pid, &(get_info()->exitcode), 0);
 	signal(SIGINT, handler);
-	read_tree(hdoc_node->left);
+	printf("\033[36mexitcode: %d\033[0m\n", get_info()->exitcode);
+	if (get_info()->exitcode != 256)
+		read_tree(hdoc_node->left);
+	else
+	{
+		// 처음 readline으로 돌아가야함.
+		// 더이상 트리 순회하지 않아야함.
+		read_tree(NULL);
+		ft_clear();
+	}
 }

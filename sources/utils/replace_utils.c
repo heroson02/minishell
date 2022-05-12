@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:37:13 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/10 14:24:22 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/12 20:48:25 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,9 @@ void	find_end_pos(char *data, int *end)
 char	*get_env_or_status(char *env)
 {
 	char	*ret;
-	t_info	*info;
-
-	info = get_info();
+	
 	if (!ft_strcmp(env, "?"))
-		ret = ft_itoa(info->exitcode);
+		ret = ft_itoa(get_info()->exitcode);
 	else
 		ret = get_env(env);
 	if (!ret)

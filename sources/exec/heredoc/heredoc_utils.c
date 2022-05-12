@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:39:23 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/12 19:27:11 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/12 21:02:31 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	sig_heredoc_handler(int signo)
 	if (signo == SIGINT)
 	{
 		ft_lstclear(&(info->hdoc_list), clear_heredoc);
+		printf("\n");
 		exit(1);
 	}
 }
