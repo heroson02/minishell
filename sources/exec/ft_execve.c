@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/01 23:22:20 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/13 16:47:20 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/13 17:41:39 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,9 @@ static int	ft_execve(t_info *info, t_node *cmd)
 	//path에서 검사한 명령어의 경우에는 걸리지만, 현재 디렉토리나 홈 디렉토리에서 찾을 때 에러는 검출이 안될 듯
 	if (!path)
 	{
-		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd(cmd->data, 2);
-		ft_putendl_fd(": command not found", 2);
+		ft_putstr_fd("minishell: ", STDERR);
+		ft_putstr_fd(cmd->data, STDERR);
+		ft_putendl_fd(": command not found", STDERR);
 		info->exitcode = 127;
 		return (info->exitcode);
 	}

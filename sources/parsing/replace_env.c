@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:37:13 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/10 14:33:38 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/13 17:46:44 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ void	replace_recur(t_node *node)
 		tmp = node->data;
 		node->data = ft_strdup("");
 		replace_token(&(node->data), tmp);
-		printf("\033[31m%s\033[0m\n", node->data);
 		free(tmp);
 		tmp = 0;
 	}
