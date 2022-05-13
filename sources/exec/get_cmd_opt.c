@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 21:26:58 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/04 21:29:57 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/13 18:05:55 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	num_of_opt(t_node *node)
 {
-	int	ret;
+	int		ret;
 	t_node	*tmp;
 
 	ret = 1;

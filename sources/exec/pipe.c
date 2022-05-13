@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 11:35:22 by yson              #+#    #+#             */
-/*   Updated: 2022/05/13 16:31:57 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/13 18:05:54 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,13 @@ void	exec_pipe(t_node *node)
 	int		pipe_fd[2];
 	int		pid_left;
 	int		pid_right;
-	
+
 	if (pipe(pipe_fd) == -1)
 		printf("error\n");
 	pid_left = pipe_input(pipe_fd, node->left);
 	waitpid(pid_left, &(get_info()->exitcode), 0);
-	// waitpid(pid_left, NULL, 0);
 	close(pipe_fd[1]);
 	pid_right = pipe_output(pipe_fd, node->right);
 	close(pipe_fd[0]);
-	// waitpid(pid_right, NULL, 0);
 	waitpid(pid_right, &(get_info()->exitcode), 0);
 }

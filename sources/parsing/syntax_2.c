@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 11:49:46 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/10 14:29:48 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/13 18:08:13 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,13 @@
 
 // 명령어의 인자(또는 옵션)
 // 명령어의 자식에 붙임
-void args(int *idx)
+void	args(int *idx)
 {
 	t_tok	*token;
 	t_node	*node;
 	t_info	*info;
 
-	info = get_info();
+	info = get_info(); //
 	token = get_token(info->list, *idx);
 	if (!token)
 		return ;
@@ -62,7 +62,7 @@ void args(int *idx)
 // 명령어, 실행파일 이름
 // 파이프 뒤에 나오면 오른쪽에,
 // 리다이렉션 뒤에 나오면 왼쪽에 붙어야함.
-void path(int *idx)
+void	path(int *idx)
 {
 	t_tok	*token;
 	t_node	*node;
@@ -79,7 +79,7 @@ void path(int *idx)
 
 // 진짜 파일 이름
 // 항상 리다이렉션 뒤에 나오므로 마지막 리다이렉션을 찾아서 리다이렉션 노드 오른쪽에 붙임.
-void filename(int *idx)
+void	filename(int *idx)
 {
 	t_tok	*token;
 	t_node	*node;
@@ -96,7 +96,7 @@ void filename(int *idx)
 
 int	syntax(void)
 {
-	int	idx;
+	int		idx;
 	t_info	*info;
 
 	info = get_info();

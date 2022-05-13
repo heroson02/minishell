@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 20:37:26 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/13 16:01:31 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/13 18:06:28 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,19 @@
 static void	delete_node(t_node	*node)
 {
 	if (!node)
-		return;
+		return ;
 	delete_node(node->left);
 	delete_node(node->right);
 	free(node->data);
-	node->data = 0; //ft_bzero(node->data, sizeof(char));
+	node->data = 0;
 	free(node);
-	node = 0; //ft_bzero(node, sizeof(t_node));
+	node = 0;
 }
 
 static void	tree_clear(t_astree *tree)
 {
 	if (!tree)
-		return;
+		return ;
 	delete_node(tree->root);
 	ft_bzero(tree, sizeof(t_astree));
 }
@@ -59,7 +59,6 @@ void	ft_clear(void)
 	info = get_info();
 	list_clear(info->list);
 	tree_clear(info->tree);
-	// ft_lstprint_heredoc(get_info()->hdoc_list);
 	ft_lstclear(&info->hdoc_list, clear_heredoc);
 	ft_bzero(info->file, sizeof(t_file));
 	info->h_count = 0;

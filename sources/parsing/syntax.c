@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 11:49:46 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/11 11:56:32 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/13 18:09:28 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 **	<FILENAME> := WORD
 */
 
-void pipeline(int *idx)
+void	pipeline(int *idx)
 {	
 	t_tok	*token;
 	t_node	*node;
@@ -51,19 +51,13 @@ void pipeline(int *idx)
 	{
 		node = create_node(token);
 		insert_pipe_heredoc(info->tree, node);
-		// if (token->next && token->next->type == PIPE)
-		// {
-		// 	printf("error\n");
-		// 	exit(258);
-		// 	//error();
-		// }
 		pipeline(idx);
 	}
 	else if (token)
 		pipeline(idx);
 }
 
-void cmd(int *idx)
+void	cmd(int *idx)
 {
 	t_tok	*token;
 	t_info	*info;
@@ -75,14 +69,15 @@ void cmd(int *idx)
 		redirs(idx);
 }
 
-void simple_cmd(int *idx)
+void	simple_cmd(int *idx)
 {
 	t_tok	*token;
 	t_info	*info;
 
 	info = get_info();
 	token = get_token(info->list, *idx);
-	if (!token || token->type == REDIR || token->type == PIPE || token->type == HEREDOC)
+	if (!token || token->type == REDIR
+		|| token->type == PIPE || token->type == HEREDOC)
 		return ;
 	path(idx);
 	token = get_token(info->list, *idx);
@@ -106,7 +101,7 @@ void	redirs(int *idx)
 	}
 }
 
-void redir(int *idx)
+void	redir(int *idx)
 {
 	t_tok	*token;
 	t_node	*node;
@@ -116,12 +111,6 @@ void redir(int *idx)
 	token = get_token(info->list, *idx);
 	if (!token)
 		return ;
-	// if (token->next && (token->next->type == REDIR || token->next->type == HEREDOC))
-	// { 
-	// 	printf("error\n"); 
-	// 	exit(1);
-	// }
-	// error();
 	node = create_node(token);
 	if (token->type == REDIR)
 		insert_redir(info->tree, node);

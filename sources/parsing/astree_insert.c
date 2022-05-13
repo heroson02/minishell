@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 21:07:48 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/12 12:31:54 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/13 18:05:55 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	insert_pipe_heredoc(t_astree *tree, t_node *node)
 	node->left = cur;
 }
 
-
 void	insert_redir(t_astree *tree, t_node *node)
 {
 	t_node	*cur;
@@ -52,7 +51,7 @@ void	insert_redir(t_astree *tree, t_node *node)
 	if (!pre || pre == cur)
 		tree->root = node;
 	else if (pre->type == PIPE)
-		pre->right = node; //파이프일 떄
+		pre->right = node;
 	else
 		pre->left = node;
 	node->left = cur;
@@ -66,7 +65,7 @@ void	insert_redir(t_astree *tree, t_node *node)
 ** 2. pipe인데 오른쪽이 채워져있으면 이때 리다이렉션인지 검사하고 마지막 리다이렉션을 찾아 왼쪽으로 이동
 **	  -> 마지막 리다이렉션까지 이동 후 왼쪽이 비워져 있으면 거기에 insert, 채워져 있으면 왼쪽 끝까지 이동 후 insert
 ** 3. heredoc인 경우, pipe와 마찬가지
- */ 
+*/
 void	insert_path(t_astree *tree, t_node *node)	//path와 args에 들어갈 insert 함수
 {
 	t_node	*cur;

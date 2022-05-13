@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 20:48:28 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/13 16:00:14 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/13 18:05:54 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_info	*get_info(void)
 {
-	static	t_info info;
+	static t_info	info;
 
 	return (&info);
 }
@@ -23,10 +23,6 @@ void	handler(int signo)
 {
 	if (signo == SIGINT)
 	{
-		// printf("\n");
-		// rl_on_new_line();
-		// rl_replace_line("", 0);
-		// rl_redisplay();
 		get_info()->exitcode = 1;
 		get_info()->is_hdoc = FALSE;
 		ioctl(STDIN_FILENO, TIOCSTI, "\n");

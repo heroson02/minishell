@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:37:13 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/10 14:24:22 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/13 18:05:54 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,9 @@ char	*get_env_or_status(char *env)
 
 void	replace_home_dir(char **cmd)
 {
-	char *home;
-	char *result;
-	char *target;
+	char	*home;
+	char	*result;
+	char	*target;
 
 	target = *cmd;
 	home = getenv("HOME");
