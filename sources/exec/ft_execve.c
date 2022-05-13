@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/01 23:22:20 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/13 20:38:51 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/13 21:02:17 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,25 +84,29 @@ static void	ft_execve(t_node *cmd)
 	char	**opt;
 
 	get_path(cmd->data, &path);
-	// path에서 검사한 명령어의 경우에는 걸리지만, 현재 디렉토리나 홈 디렉토리에서 찾을 때 에러는 검출이 안될 듯
-	if (!path)
-	{
-		ft_putstr_fd("minishell: ", STDERR);
-		ft_putstr_fd(cmd->data, STDERR);
-		ft_putendl_fd(": command not found", STDERR);
-		get_info()->exitcode = 127;
-		exit(get_info()->exitcode);
-	}
 	opt = get_cmd_opt(cmd);
 	execve(path, opt, list_to_array(get_info()->env_list));
+	//path를 free 해야하는지 여부 + opt
 }
 
 void	exec(t_node *node)
 {
 	pid_t	pid;
 	int		status;
+	char	*path;
 
 	status = 0;
+	get_path(node->data, &path);
+	if (!path)
+	{
+		ft_putstr_fd("minishell: ", STDERR);
+		ft_putstr_fd(node->data, STDERR);
+		ft_putendl_fd(": command not found", STDERR);
+		get_info()->exitcode = 127;
+		return ;
+	}
+	free(path);
+	path = 0;
 	pid = fork();
 	if (pid < 0)
 		printf("fork error\n");
