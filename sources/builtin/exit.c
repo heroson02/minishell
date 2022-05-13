@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 14:50:30 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/13 18:05:55 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/13 20:35:59 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,21 +40,25 @@ static int	ft_atoi_(const char *str)
 
 void	builtin_exit(t_node *cmd)
 {
-	t_info	*info;
 
-	info = get_info();
-	info->exitcode = 0;
-	printf("exit\n");
+	get_info()->exitcode = 0;
+	ft_putendl_fd("exit", STDOUT);
 	if (cmd->left)
 	{
-		info->exitcode = ft_atoi_(cmd->left->data);
-		if (info->exitcode < 0)
+		get_info()->exitcode = ft_atoi_(cmd->left->data);
+		if (get_info()->exitcode < 0)
 		{
 			ft_putstr_fd("minishell: exit: ", STDERR);
 			ft_putstr_fd(cmd->left->data, STDERR);
 			ft_putendl_fd(": numeric argument required", STDERR);
-			info->exitcode = 256 + info->exitcode;
+			get_info()->exitcode += 256;
+		}
+		else if (cmd->left->left)
+		{
+			ft_putendl_fd("minishell: exit: too many arguments", STDERR);
+			get_info()->exitcode = 1;
+			return ;
 		}
 	}
-	exit(info->exitcode);
+	exit(get_info()->exitcode);
 }

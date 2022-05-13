@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 15:11:53 by yson              #+#    #+#             */
-/*   Updated: 2022/05/13 20:24:49 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/13 20:32:09 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	ft_export(t_info *info, char *data)
 	t_enode	*node;
 	t_list	*cur;
 
-	if (data[0] == '=')
+	if (data[0] == '=' || ft_isdigit(data[0]))
 	{
 		ft_putstr_fd("minishell: export: \'", STDERR);
 		ft_putstr_fd(data, STDERR);
