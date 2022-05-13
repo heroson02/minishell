@@ -6,77 +6,43 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 17:49:35 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/12 19:46:42 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/13 16:01:03 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-t_heredoc	*get_eof(void)
+static void	heredoc(t_list *lst)
 {
-	t_list	*cur;
+	char		*input;
+	t_heredoc	*content;
 
-	cur = get_info()->hdoc_list;
-	while (cur->next)
-		cur = cur->next;
-	return (((t_heredoc	*)cur->content));
-}
-
-void	child_routine(void)
-{
-	char	*line;
-	char	*tmp;
-	char	*data;
-	t_heredoc	*cur;
-	
-	signal(SIGINT, sig_heredoc_handler);
-	cur = get_eof();
-	data = ft_strdup("");
-	while (1)
+	content = ((t_heredoc *)lst->content);
+	while (get_info()->is_hdoc == TRUE)
 	{
-		line = readline("> ");
-		if (line && ft_strcmp(line, cur->eof))
+		input = readline("> ");
+		if (!input)
 		{
-			tmp = line;
-			line = ft_strjoin(line, "\n");
-			free(tmp);
-			tmp = data;
-			data = ft_strjoin(data, line);
-			free(tmp);
-			free(line);
-			line = 0;
+			ft_putstr_fd("\x1b[1A", STDOUT_FILENO);
+			ft_putstr_fd("\033[2C", STDOUT_FILENO);
+			break ;	
 		}
-		else
-		{
-			if (ft_strcmp(line, cur->eof))
-			{
-				ft_putstr_fd("\033[1A", STDOUT);
-				ft_putstr_fd("\033[2C", STDOUT);
-			}
+		if (!ft_strcmp(input, content->eof))
 			break ;
-		}
+		ft_putendl_fd(input, content->fd);
+		free(input);
 	}
-	ft_putstr_fd(data, cur->fd);
-	close(cur->fd);
-	free(data);
-	data = 0;
-	// set_org_term();
 }
 
 void	start_heredoc(t_node *hdoc_node)
 {
-	pid_t	pid;
 	t_node	*eof;
 
+	get_info()->is_hdoc = TRUE;
 	eof = hdoc_node->right;
 	ft_lstadd_back(&get_info()->hdoc_list, ft_lstnew(new_heredoc(eof)));
-	pid = fork();
-	signal(SIGINT, SIG_IGN);
-	if (pid < 0)
-		printf("fork error\n");
-	else if (pid == 0) //child process
-		child_routine();
-	waitpid(pid, &(get_info()->exitcode), 0);
-	signal(SIGINT, handler);
+	heredoc(ft_lstlast(get_info()->hdoc_list));
+	if (get_info()->is_hdoc == FALSE)
+		return ;
 	read_tree(hdoc_node->left);
 }

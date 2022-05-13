@@ -6,7 +6,7 @@
 #    By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/03 10:49:43 by hyojlee           #+#    #+#              #
-#    Updated: 2022/05/12 20:10:29 by hyojlee          ###   ########.fr        #
+#    Updated: 2022/05/13 15:52:50 by hyojlee          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,6 @@ SRCS = $(SRC_DIR)/main.c 						\
 		$(SRC_DIR)/exec/ft_execve.c				\
 		$(SRC_DIR)/exec/get_cmd_opt.c			\
 		$(SRC_DIR)/exec/heredoc/heredoc.c		\
-		$(SRC_DIR)/exec/heredoc/heredoc_yson.c	\
 		$(SRC_DIR)/exec/heredoc/heredoc_utils.c	\
 		$(SRC_DIR)/exec/read_tree.c				\
 		$(SRC_DIR)/exec/pipe.c					\

@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:39:23 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/12 20:11:23 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/13 15:53:22 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,31 +52,4 @@ void	clear_heredoc(void *content)
 		free(target->eof);
 		ft_bzero(target, sizeof(t_heredoc));
 	}
-}
-
-void	sig_heredoc_handler(int signo)
-{
-	t_info	*info;
-
-	info = get_info();
-	if (signo == SIGINT)
-	{
-		ft_lstclear(&(info->hdoc_list), clear_heredoc);
-		exit(1);
-	}
-}
-
-void	set_termcap(void)
-{
-	char	*env;
-	char	*cm;
-	char	*ce;
-	
-	env = getenv("TERM");
-	if (!env)
-		env = "xterm";
-	if (tgetent(NULL, env) < 1)
-		return ;
-	cm = tgetstr("cm", NULL);
-	ce = tgetstr("ce", NULL);
 }

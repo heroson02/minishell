@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:40:18 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/12 19:44:52 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/13 16:04:34 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int main(int argc, char **argv, char **envp)
 	env_preprocess(envp);
 	while (1)
 	{
-		set_new_term(FALSE);
+		set_new_term();
 		line = readline("minishell> ");
 		if (line)
 		{

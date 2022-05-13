@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yson <yson@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:39:28 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/12 21:05:06 by yson             ###   ########.fr       */
+/*   Updated: 2022/05/13 16:04:21 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef struct s_info
 	int				exitcode;
 	struct termios	org_term;
 	struct termios	new_term;
+	int				is_hdoc;
 	int				h_count;
 	int				h_idx;
 	t_list			*hdoc_list;
@@ -109,7 +110,7 @@ void	replace_home_dir(char **cmd);
 */
 void	get_org_term(void);
 void	set_org_term(void);
-void	set_new_term(int is_heredoc);
+void	set_new_term(void);
 
 /*
 ** utils.c
@@ -230,14 +231,12 @@ void	exec_pipe(t_node *node);
 /*
 ** heredoc.c
 */
-void	start_heredoc(t_node *node);
-void	start_heredoc_yson(t_node *hdoc_node);
+void	start_heredoc(t_node *hdoc_node);
 /*
 ** heredoc_utils.c
 */
 t_heredoc	*new_heredoc(t_node *eof);
 void		clear_heredoc(void *content);
-void		sig_heredoc_handler(int signo);
 
 /*
 **	builtin

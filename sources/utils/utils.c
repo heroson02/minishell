@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yson <yson@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 20:48:28 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/12 21:20:43 by yson             ###   ########.fr       */
+/*   Updated: 2022/05/13 16:00:14 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ void	handler(int signo)
 		// rl_on_new_line();
 		// rl_replace_line("", 0);
 		// rl_redisplay();
-		get_info()->exitcode = 130;
+		get_info()->exitcode = 1;
+		get_info()->is_hdoc = FALSE;
 		ioctl(STDIN_FILENO, TIOCSTI, "\n");
 		rl_replace_line("", 0);
 		rl_on_new_line();

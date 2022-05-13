@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 20:37:26 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/12 19:36:22 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/13 16:01:31 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,5 @@ void	ft_clear(void)
 	ft_bzero(info->file, sizeof(t_file));
 	info->h_count = 0;
 	info->h_idx = 0;
+	info->is_hdoc = 0;
 }
