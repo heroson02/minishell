@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 15:11:53 by yson              #+#    #+#             */
-/*   Updated: 2022/05/13 18:21:45 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/13 20:24:49 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ static void	ft_export(t_info *info, char *data)
 
 	if (data[0] == '=')
 	{
-		ft_putstr_fd("minishell: export: ", STDERR);
+		ft_putstr_fd("minishell: export: \'", STDERR);
 		ft_putstr_fd(data, STDERR);
-		ft_putendl_fd(": not a valid identifier", STDERR);
+		ft_putendl_fd("\': not a valid identifier", STDERR);
 		info->exitcode = 1;
 		return ;
 	}

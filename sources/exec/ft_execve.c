@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/01 23:22:20 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/13 18:05:54 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/13 20:15:48 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static char	*get_cmd_path(char *cmd, int fd, int idx)
 */
 static void	get_path(char *cmd, char **path)
 {
-	if (!ft_memcmp("./", cmd, 2) || !ft_memcmp("/", cmd, 2))
+	if (!ft_memcmp("./", cmd, 2) || !ft_memcmp("/", cmd, 1))
 		*path = ft_strdup(cmd);
 	else if (!ft_memcmp("~/", cmd, 2))
 	{

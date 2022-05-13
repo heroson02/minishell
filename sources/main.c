@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:40:18 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/13 18:41:26 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/13 20:11:32 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,13 @@ static int	chk_continue(char *line)
 	add_history(line);
 	if (check_quote(line) == FALSE)
 	{
-		print_err(line, 0); //syntax error 258
+		print_err(line);
 		return (TRUE);
 	}
 	tokenize(&(get_info()->list), line);
 	if (syntax() == FALSE || chk_syntax(get_info()->tree->root) == FALSE)
 	{
-		print_err(line, 0); //syntax error 258
+		print_err(line);
 		return (TRUE);
 	}
 	return (FALSE);

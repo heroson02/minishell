@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:37:13 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/13 18:09:17 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/13 20:21:47 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,13 @@ void	replace_recur(t_node *node)
 		tmp = node->data;
 		node->data = ft_strdup("");
 		replace_token(&(node->data), tmp);
+		free(tmp);
+		tmp = 0;
+	}
+	if (!ft_strcmp(node->data, "~"))
+	{
+		tmp = node->data;
+		node->data = ft_strdup(getenv("HOME"));
 		free(tmp);
 		tmp = 0;
 	}
