@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/01 23:22:20 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/11 12:12:12 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/13 16:47:20 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,13 +83,13 @@ static int	ft_execve(t_info *info, t_node *cmd)
 {
 	char	*path;
 	char	**opt;
-	int		num;	//옵션을 만드는 코드를 함수화해서 빼야 할 듯
+	// int		num;	//옵션을 만드는 코드를 함수화해서 빼야 할 듯
 
 	get_path(cmd->data, &path);
 	//path에서 검사한 명령어의 경우에는 걸리지만, 현재 디렉토리나 홈 디렉토리에서 찾을 때 에러는 검출이 안될 듯
 	if (!path)
 	{
-		ft_putstr_fd("bash: ", 2);
+		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(cmd->data, 2);
 		ft_putendl_fd(": command not found", 2);
 		info->exitcode = 127;
@@ -101,28 +101,29 @@ static int	ft_execve(t_info *info, t_node *cmd)
 	// 	printf("opt[%d] : %s\n", i, opt[i]);
 	// }
 	
-	num = execve(path, opt, list_to_array(info->env_list)); //exec의 결과값이 필요할까?
-	free_split(opt);
-	return (num);
+	execve(path, opt, list_to_array(info->env_list)); //exec의 결과값이 필요할까?
+	// num = execve(path, opt, list_to_array(info->env_list)); //exec의 결과값이 필요할까?
+	// free_split(opt);
+	// return (num);
 }
 
 void	exec(t_node *node)
 {
 	pid_t	pid;
 	int		status;
-	t_info	*info;
 
 	status = 0;
-	info = get_info();
 	pid = fork();
 	if (pid < 0)
 		printf("fork error\n");
 	else if (pid == 0)
 	{
-		status = ft_execve(info, node);
-		exit(status);
+		ft_execve(get_info(), node);
+		// status = ft_execve(info, node);
+		// exit(status);
 	}
-	waitpid(pid, 0, 0);
-	info->exitcode = status;
+	waitpid(pid, &(get_info()->exitcode), 0);
+	if (get_info()->exitcode > 255)
+		get_info()->exitcode -= 255;
 	//pipe나 redir이 있을 경우에는 또 달라질 듯. 
 }

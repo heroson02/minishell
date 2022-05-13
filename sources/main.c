@@ -6,24 +6,11 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:40:18 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/13 16:04:34 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/13 16:41:18 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./minishell.h"
-
-
-// static void	init(t_info *info)
-// {
-// 	ft_bzero(info, sizeof(t_info));
-// 	info->list = create_list();
-// 	info->tree = create_tree();
-// 	info->file = (t_file *)malloc(sizeof(t_file));
-// 	ft_bzero(info->file, sizeof(t_file));
-// 	info->heredoc = (t_heredoc *)malloc(sizeof(t_heredoc));
-// 	ft_bzero(info->heredoc, sizeof(t_heredoc));
-// 	get_org_term(info);
-// }
 
 static void	init(void)
 {
@@ -63,14 +50,14 @@ int main(int argc, char **argv, char **envp)
 				continue ; // 다시 명령줄 출력해야하므로
 			}
 			tokenize(&(get_info()->list), line);	// 토큰화
-			print_token(get_info()->list);
+			// print_token(get_info()->list);
 			//구문 분석 및 파싱 과정 (AST TREE)
 			if (syntax() == FALSE)
 			{
 				print_err(line, 0); //syntax error 258
 				continue ;
 			}
-			print_tree(get_info()->tree->root);
+			// print_tree(get_info()->tree->root);
 			if (chk_syntax(get_info()->tree->root) == FALSE)
 			{
 				print_err(line, 0); //syntax error 258
@@ -83,7 +70,6 @@ int main(int argc, char **argv, char **envp)
 			//실행 과정 (이후에 tok list 비우기)
 			read_tree(get_info()->tree->root);
 			ft_clear();
-			// add_history(line); 위치 변경 73번째로 - 77번째때문에 add_history()가 안됨
 			free(line);
 			line = NULL;
 			// system("leaks minishell");

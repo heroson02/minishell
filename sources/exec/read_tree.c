@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 20:41:29 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/13 15:58:23 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/13 17:01:06 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	chk_command(t_node *node)
 	else if (!ft_strcmp(node->data, "echo"))
 		builtin_echo(node);
 	else if (!ft_strcmp(node->data, "env"))
-		builtin_env();
+		builtin_env(node);
 	else if (!ft_strcmp(node->data, "exit"))
 		builtin_exit(node);
 	else if (!ft_strcmp(node->data, "export"))

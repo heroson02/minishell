@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:39:28 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/13 16:04:21 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/13 16:48:46 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,7 +244,7 @@ void		clear_heredoc(void *content);
 */
 void	builtin_cd(t_node *cmd);
 void	builtin_echo(t_node *cmd);
-void	builtin_env(void);
+void	builtin_env(t_node *cmd);
 void	builtin_exit(t_node *cmd);
 void	builtin_export(t_node *cmd);
 void	builtin_pwd(t_node *cmd);

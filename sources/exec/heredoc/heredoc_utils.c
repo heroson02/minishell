@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:39:23 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/13 15:53:22 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/13 17:05:42 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_heredoc	*new_heredoc(t_node *eof)
 	t_heredoc	*heredoc;
 	int			flags;
 	char		*h_idx;
-	
+
 	heredoc = (t_heredoc *)malloc(sizeof(t_heredoc));
 	if (!heredoc)
 		return (0);

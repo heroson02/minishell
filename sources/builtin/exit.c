@@ -6,13 +6,13 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 14:50:30 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/10 14:38:37 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/13 17:04:04 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int ft_atoi_(const char *str)
+static int	ft_atoi_(const char *str)
 {
 	char		*s;
 	long long	ret;
@@ -50,7 +50,7 @@ void	builtin_exit(t_node *cmd)
 		info->exitcode = ft_atoi_(cmd->left->data);
 		if (info->exitcode < 0)
 		{
-			ft_putstr_fd("bash: exit: ", STDERR);
+			ft_putstr_fd("minishell: exit: ", STDERR);
 			ft_putstr_fd(cmd->left->data, STDERR);
 			ft_putendl_fd(": numeric argument required", STDERR);
 			info->exitcode = 256 + info->exitcode;

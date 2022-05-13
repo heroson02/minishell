@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/01 14:50:14 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/10 14:50:29 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/13 17:17:37 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,25 +73,23 @@ void	redirection(t_node *node)
 {
 	char	*path;
 	int		is_stdin;
-	t_info	*info;
+	t_file	**file;
 
-	info = get_info();
+	file = &(get_info()->file);
 	path = node->right->data;
 	is_stdin = TRUE;
 	if (node->data[0] == '>')
 		is_stdin = FALSE;
 	init_redir(is_stdin);
 	if (!ft_strcmp(node->data, ">"))
-		info->file->open_stdout = open(path, O_WRONLY
-				| O_CREAT | O_TRUNC, 0644);
+		(*file)->open_stdout = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else if (!ft_strcmp(node->data, ">>"))
-		info->file->open_stdout = open(path, O_WRONLY
-				| O_CREAT | O_APPEND, 0644);
+		(*file)->open_stdout = open(path, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	else if (!ft_strcmp(node->data, "<"))
-		info->file->open_stdin = open(path, O_RDONLY, 0644);
+		(*file)->open_stdin = open(path, O_RDONLY, 0644);
 	else if (!ft_strcmp(node->data, "<<"))
-		printf("heredoc\n"); //heredoc
-	if (info->file->open_stdout < 0 || info->file->open_stdin < 0)
+		printf("heredoc\n");
+	if ((*file)->open_stdout < 0 || (*file)->open_stdin < 0)
 	{
 		printf("\033[34mminishell: %s: %s\033[0m\n", path, strerror(errno));
 		return ;

@@ -6,20 +6,18 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 15:37:30 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/10 14:37:03 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/13 16:57:29 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	builtin_cd(t_node *cmd)
+static char	*ft_cd(t_node *cmd)
 {
 	char	*path;
 	char	*origin;
 	char	*home;
-	t_info	*info;
 
-	info = get_info();
 	home = getenv("HOME");
 	if (cmd->left && cmd->left->data[0] == '~')
 	{
@@ -31,12 +29,20 @@ void	builtin_cd(t_node *cmd)
 		free(origin);
 		origin = 0;
 		cmd->left->data = path;
-	}	
+	}
+	return (home);
+}
+
+void	builtin_cd(t_node *cmd)
+{
+	char	*home;
+
+	home = ft_cd(cmd);
 	if (!cmd->left)
 		chdir(home);
 	else if (chdir(cmd->left->data) < 0)
 	{
-		ft_putstr_fd("bash: cd: ", STDERR);
+		ft_putstr_fd("minishell: cd: ", STDERR);
 		ft_putstr_fd(cmd->left->data, STDERR);
 		if (cmd->left->data[0] == '-')
 		{
@@ -45,6 +51,8 @@ void	builtin_cd(t_node *cmd)
 		}
 		else
 			ft_putendl_fd(": No such file or directory", STDERR);
-		info->exitcode = 1;
+		get_info()->exitcode = 1;
+		return ;
 	}
+	get_info()->exitcode = 0;
 }

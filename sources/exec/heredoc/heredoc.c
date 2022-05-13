@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 17:49:35 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/13 16:01:03 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/13 17:06:03 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	heredoc(t_list *lst)
 		{
 			ft_putstr_fd("\x1b[1A", STDOUT_FILENO);
 			ft_putstr_fd("\033[2C", STDOUT_FILENO);
-			break ;	
+			break ;
 		}
 		if (!ft_strcmp(input, content->eof))
 			break ;
