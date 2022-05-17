@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:40:18 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/17 16:45:28 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/17 17:21:23 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,25 @@ static int	chk_continue(char *line)
 	return (FALSE);
 }
 
+static void	update_shlvl(void)
+{
+	t_node	cmd_node;
+	t_node	new_node;
+	char	*new_lvl;
+
+	ft_bzero(&cmd_node, sizeof(t_node));
+	ft_bzero(&new_node, sizeof(t_node));
+	cmd_node.data = "export";
+	cmd_node.type = TOKEN;
+	new_lvl = ft_itoa(ft_atoi(getenv("SHLVL")) + 1);
+	new_node.data = ft_strjoin("SHLVL=", new_lvl);
+	new_node.type = TOKEN;
+	cmd_node.left = &new_node;
+	builtin_export(&cmd_node);
+	free(new_lvl);
+	free(new_node.data);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
@@ -66,6 +85,7 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		set_new_term();
+		update_shlvl();
 		line = readline("minishell> ");
 		if (line)
 		{

@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 16:55:42 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/17 16:42:46 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/17 16:57:25 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,6 @@ void	print_err(char *line)
 
 void	print_strerr(int err)
 {
-	print_strerr(errno);
+	ft_putendl_fd(strerror(err), STDERR);
 	exit(EXIT_FAILURE);
 }
