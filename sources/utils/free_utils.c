@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 20:39:35 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/13 18:02:46 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/17 19:32:12 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	free_split(char **split)
 	split = 0;
 }
 
-//환경변수를 이름과 값을 구분해서 t_enode 구조체에 저장
 void	free_enode(void *node)
 {
 	t_enode	*enode;

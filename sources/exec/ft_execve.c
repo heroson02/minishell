@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/01 23:22:20 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/17 18:05:09 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/17 19:24:47 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,9 @@ static char	*get_cmd_path(char *cmd, int fd, int idx)
 }
 
 /*
-**	./ : PATH 외의 명령어, / : 루트 디렉토리에 있는 명령어, ~/ : 홈 디렉토리, 그 외에는 PATH에서 검색
+**	./ : Commands other than PATH,
+**	/ : Commands in the root directory
+**	~/ : Home directory, Otherwise search in PATH
 */
 static void	get_path(char *cmd, char **path)
 {
