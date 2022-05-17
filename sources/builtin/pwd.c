@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 15:01:08 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/17 16:45:46 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/17 16:52:57 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	builtin_pwd(t_node *cmd)
 	else
 	{
 		getcwd(pwd, BUFSIZ);
-		printf("%s\n", pwd);
+		ft_putendl_fd(pwd, STDOUT);
 	}
 	free(pwd);
 	pwd = 0;

@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 14:55:18 by yson              #+#    #+#             */
-/*   Updated: 2022/05/13 18:05:55 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/17 16:54:26 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	unset_no_args(void)
 {
-	ft_putendl_fd("unset: usage: unset with no option", 1);
+	ft_putendl_fd("unset: usage: unset with no option", STDERR);
 	get_info()->exitcode = 2;
 }
 
