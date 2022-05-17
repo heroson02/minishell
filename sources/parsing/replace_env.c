@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:37:13 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/17 19:30:49 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/17 20:07:28 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static char	*replace_env(char *data, int start, int end)
 
 	idx = 0;
 	if (end - start < 1)
-		return (0);
+		return (ft_strdup("$"));
 	str = ft_substr(data, start, end - start);
 	while (str[idx] && !ft_isblank(str[idx]))
 		idx++;
@@ -84,24 +84,24 @@ static void	replace_token(char **res, char *data)
 
 void	replace_recur(t_node *node)
 {
-	char	*tmp;
+	char	*org_data;
 
 	if (!node)
 		return ;
-	if (ft_strchr(node->data, '$'))
+	if (ft_strcmp(node->data, "$") && ft_strchr(node->data, '$'))
 	{
-		tmp = node->data;
+		org_data = node->data;
 		node->data = ft_strdup("");
-		replace_token(&(node->data), tmp);
-		free(tmp);
-		tmp = 0;
+		replace_token(&(node->data), org_data);
+		free(org_data);
+		org_data = 0;
 	}
 	if (!ft_strcmp(node->data, "~"))
 	{
-		tmp = node->data;
+		org_data = node->data;
 		node->data = ft_strdup(getenv("HOME"));
-		free(tmp);
-		tmp = 0;
+		free(org_data);
+		org_data = 0;
 	}
 	replace_recur(node->left);
 	replace_recur(node->right);
