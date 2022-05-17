@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 11:35:39 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/04 21:11:35 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/10 14:34:30 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,13 @@ t_enode	*new_enode(char *env)
 	return (result);
 }
 
-void	env_preprocess(t_info *info, char **envp)
+void	env_preprocess(char **envp)
 {
 	t_list	*head;
 	int		i;
+	t_info	*info;
 
+	info = get_info();
 	i = 1;
 	head = ft_lstnew(new_enode(envp[0]));
 	info->env_list = head;

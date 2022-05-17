@@ -6,13 +6,13 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 15:37:30 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/04 22:04:06 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/13 18:05:54 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	builtin_cd(t_info *info, t_node *cmd)
+static char	*ft_cd(t_node *cmd)
 {
 	char	*path;
 	char	*origin;
@@ -29,12 +29,20 @@ void	builtin_cd(t_info *info, t_node *cmd)
 		free(origin);
 		origin = 0;
 		cmd->left->data = path;
-	}	
+	}
+	return (home);
+}
+
+void	builtin_cd(t_node *cmd)
+{
+	char	*home;
+
+	home = ft_cd(cmd);
 	if (!cmd->left)
 		chdir(home);
 	else if (chdir(cmd->left->data) < 0)
 	{
-		ft_putstr_fd("bash: cd: ", STDERR);
+		ft_putstr_fd("minishell: cd: ", STDERR);
 		ft_putstr_fd(cmd->left->data, STDERR);
 		if (cmd->left->data[0] == '-')
 		{
@@ -43,6 +51,8 @@ void	builtin_cd(t_info *info, t_node *cmd)
 		}
 		else
 			ft_putendl_fd(": No such file or directory", STDERR);
-		info->exitcode = 1;
+		get_info()->exitcode = 1;
+		return ;
 	}
+	get_info()->exitcode = 0;
 }

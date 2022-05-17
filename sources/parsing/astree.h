@@ -6,21 +6,21 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 11:39:54 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/04 21:11:59 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/13 18:05:55 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ASTREE_H
 # define ASTREE_H
 
-typedef enum	e_std
+typedef enum e_std
 {
 	STDIN = 0,
 	STDOUT,
 	STDERR
 }	t_std;
 
-typedef enum	e_type
+typedef enum e_type
 {
 	TOKEN = -1,
 	BLANK = -2,
@@ -40,9 +40,9 @@ typedef char	*t_data;
 
 typedef struct s_tok
 {
-	t_data	data;
-	t_type	type;
-	struct s_tok *next;
+	t_data			data;
+	t_type			type;
+	struct s_tok	*next;
 }	t_tok;
 
 typedef struct s_tok_list
@@ -53,8 +53,8 @@ typedef struct s_tok_list
 
 typedef struct s_node
 {
-	t_data	data;
-	t_type	type;
+	t_data			data;
+	t_type			type;
 	struct s_node	*left;
 	struct s_node	*right;
 }	t_node;
@@ -62,7 +62,7 @@ typedef struct s_node
 typedef struct s_astree
 {
 	t_node	*root;
-} t_astree;
+}	t_astree;
 
 /*
 ** astree.c
@@ -75,7 +75,8 @@ t_astree	*create_tree(void);
 */
 void		insert_pipe_heredoc(t_astree *tree, t_node *node);
 void		insert_redir(t_astree *tree, t_node *node);
-void 		insert_path(t_astree *tree, t_node *node);
+void		insert_path(t_astree *tree, t_node *node);
 void		insert_filename(t_astree *tree, t_node *node);
+void		insert_heredoc_redir(void);
 
 #endif

@@ -6,11 +6,17 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 14:55:18 by yson              #+#    #+#             */
-/*   Updated: 2022/05/04 21:31:41 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/13 18:05:55 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void	unset_no_args(void)
+{
+	ft_putendl_fd("unset: usage: unset with no option", 1);
+	get_info()->exitcode = 2;
+}
 
 static void	ft_unset(t_info *info, char *target)
 {
@@ -19,6 +25,11 @@ static void	ft_unset(t_info *info, char *target)
 
 	pre = info->env_list;
 	cur = pre;
+	if (target[0] == '-')
+	{
+		unset_no_args();
+		return ;
+	}
 	while (cur)
 	{
 		if (!ft_strcmp(target, ((t_enode *)cur->content)->key))
@@ -35,10 +46,12 @@ static void	ft_unset(t_info *info, char *target)
 	ft_lstdelone(cur, free_enode);
 }
 
-void	builtin_unset(t_info *info, t_node *cmd)
+void	builtin_unset(t_node *cmd)
 {
 	t_node	*node;
+	t_info	*info;
 
+	info = get_info();
 	node = cmd->left;
 	while (node)
 	{

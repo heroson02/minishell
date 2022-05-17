@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 16:32:20 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/04 21:17:57 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/13 18:07:36 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ static char	*init_token(t_tok_list **list, char *start, char *end)
 	new_tok = (t_tok *)malloc(sizeof(t_tok));
 	if (!new_tok)
 	{
-		// print_err(errno);
 		if (errno > 0)
 			printf("\033[31m%s\033[0m\n", strerror(errno));
 		else
@@ -56,7 +55,7 @@ static char	*init_token(t_tok_list **list, char *start, char *end)
 
 void	tokenize(t_tok_list **list, char *str)
 {
-	char *end;
+	char	*end;
 
 	while (*str)
 	{

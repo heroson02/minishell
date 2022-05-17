@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 16:32:08 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/04 21:19:33 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/13 18:07:11 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ int	chk_syntax(t_node *node)
 	{
 		if (!node->left || !node->right)
 			return (FALSE);
-		else if (node->left->type == REDIR &&
-				ft_strlen(node->left->data) == 1 && node->left->data[0] == '>')
+		else if (node->left->type == REDIR
+			&& ft_strlen(node->left->data) == 1 && node->left->data[0] == '>')
 			return (TRUE);
 	}
 	else if (node->type == REDIR || node->type == HEREDOC)

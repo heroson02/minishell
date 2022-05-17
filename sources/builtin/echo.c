@@ -6,13 +6,13 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 16:51:05 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/04 15:25:56 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/13 18:05:54 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	builtin_echo(t_info *info, t_node *cmd)
+void	builtin_echo(t_node *cmd)
 {
 	t_node	*cur;
 	int		nflag;
@@ -33,11 +33,10 @@ void	builtin_echo(t_info *info, t_node *cmd)
 	{
 		ft_putstr_fd(cur->data, STDOUT);
 		if (ft_strcmp(cur->data, "") && cur->left)
-			ft_putchar_fd(' ', STDOUT); // printf(" ");
+			ft_putchar_fd(' ', STDOUT);
 		cur = cur->left;
 	}
 	if (nflag == FALSE)
 		ft_putchar_fd('\n', STDOUT);
-		// printf("\n");
-	info->exitcode = 0;
+	get_info()->exitcode = 0;
 }

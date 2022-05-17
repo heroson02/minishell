@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yson <yson@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:39:28 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/10 14:27:24 by yson             ###   ########.fr       */
+/*   Updated: 2022/05/13 20:11:39 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,27 +21,48 @@
 # include <signal.h>
 # include <string.h>
 # include <sys/errno.h>
+# include <sys/wait.h>
+# include <sys/types.h>
 # include <fcntl.h>
+# include <sys/ioctl.h>
+# include <termios.h>
+# include <termcap.h>
 # include "./parsing/astree.h"
-# include "./gnl/gnl.h"
+# include "../libft/libft.h"
 
 # define REPLACE 1
 
 typedef struct s_file
 {
 	int	open_stdin;
-	int open_stdout;
-	int origin_stdin;
-	int origin_stdout;
+	int	open_stdout;
+	int	origin_stdin;
+	int	origin_stdout;
 }	t_file;
+
+typedef struct s_heredoc
+{
+	int					fd;
+	int					row;
+	int					col;
+	char				*h_name;
+	char				line[BUFSIZ];
+	char				*eof;
+}	t_heredoc;
 
 typedef struct s_info
 {
-	t_tok_list	*list;
-	t_astree	*tree;
-	t_list		*env_list;
-	t_file		*file;
-	int			exitcode;
+	t_tok_list		*list;
+	t_astree		*tree;
+	t_list			*env_list;
+	t_file			*file;
+	int				exitcode;
+	struct termios	org_term;
+	struct termios	new_term;
+	int				is_hdoc;
+	int				h_count;
+	int				h_idx;
+	t_list			*hdoc_list;
 }	t_info;
 
 typedef struct s_enode
@@ -58,36 +79,46 @@ typedef struct s_enode
 /*
 ** clear_utils.c
 */
-void	ft_clear(t_info *info);
+void		ft_clear(void);
 
 /*
 ** free_utils.c
 */
-void	free_split(char **split);
-void	free_enode(void *node);
+void		free_split(char **split);
+void		free_enode(void *node);
 
 /*
 ** print_utils.c
 */
-void	print_token(t_tok_list *list);
-void	print_tree(t_node* root);
-void	print_err(t_info *info, char *line, int err);
+void		print_token(t_tok_list *list);
+void		print_tree(t_node *root);
+void		print_err(char *line);
+void		ft_lstprint_heredoc(t_list *list);
 
 /*
 ** replace_utils.c
 */
-void	join_str(char **before, char *data, int *start, int end);
-void	join_envp(char **before, char *env, int *start, int *end);
-void	find_end_pos(char *data, int *end);
-char	*get_env_or_status(t_info *info, char *env);
-void	replace_home_dir(char **cmd);
+void		join_str(char **before, char *data, int *start, int end);
+void		join_envp(char **before, char *env, int *start, int *end);
+void		find_end_pos(char *data, int *end);
+char		*get_env_or_status(char *env);
+void		replace_home_dir(char **cmd);
+
+/*
+** termios_utils.c
+*/
+void		get_org_term(void);
+void		set_org_term(void);
+void		set_new_term(void);
 
 /*
 ** utils.c
 */
-int		ft_strcmp(char *s1, char *s2);
-int		ft_isblank(char c);
-char	*get_env(t_info *info, char *name);
+t_info		*get_info(void);
+void		handler(int signo);
+int			ft_strcmp(char *s1, char *s2);
+int			ft_isblank(char c);
+char		*get_env(char *name);
 
 /*
 **	parsing
@@ -97,8 +128,8 @@ char	*get_env(t_info *info, char *name);
 /*
 ** env_list.c
 */
-t_enode	*new_enode(char *env);
-void	env_preprocess(t_info *info, char **envp);
+t_enode		*new_enode(char *env);
+void		env_preprocess(char **envp);
 
 /*
 ** list.c
@@ -110,31 +141,31 @@ t_tok		*get_token(t_tok_list *list, int pos);
 /*
 ** syntax.c
 */
-void	pipeline(t_info *info, int *idx);
-void	cmd(t_info *info, int *idx);
-void	simple_cmd(t_info *info, int *idx);
-void	redirs(t_info *info, int *idx);
-void	redir(t_info *info, int *idx);
-void	args(t_info *info, int *idx);
-void	path(t_info *info, int *idx);
-void	filename(t_info *info, int *idx);
-int		syntax(t_info *info);
+void		pipeline(int *idx);
+void		cmd(int *idx);
+void		simple_cmd(int *idx);
+void		redirs(int *idx);
+void		redir(int *idx);
+void		args(int *idx);
+void		path(int *idx);
+void		filename(int *idx);
+int			syntax(void);
 
 /*
 ** tokenize.c
 */
-void	tokenize(t_tok_list **list, char *str);
+void		tokenize(t_tok_list **list, char *str);
 
 /*
 ** semantic.c
 */
-int		check_quote(char *str);
-int		chk_syntax(t_node *node);
+int			check_quote(char *str);
+int			chk_syntax(t_node *node);
 
 /*
 **	replace_env.c
 */
-void	replace_recur(t_info *info, t_node *node);
+void		replace_recur(t_node *node);
 
 /*
 **	list.c
@@ -144,25 +175,18 @@ void		add_token(t_tok_list **list, t_tok *new_tok);
 t_tok		*get_token(t_tok_list *list, int pos);
 
 /*
-**	list.c
-*/
-t_enode		*new_enode(char *env);
-void		env_preprocess(t_info *info, char **envp);
-
-/*
 **	astree.c
 */
-t_node	*create_node(t_tok	*token);
+t_node		*create_node(t_tok	*token);
 t_astree	*create_tree(void);
 
 /*
 **	astree_insert.c
 */
-void	insert_pipe_heredoc(t_astree *tree, t_node *node);
-void	insert_redir(t_astree *tree, t_node *node);
-void	insert_path(t_astree *tree, t_node *node);
-void	insert_filename(t_astree *tree, t_node *node);
-
+void		insert_pipe_heredoc(t_astree *tree, t_node *node);
+void		insert_redir(t_astree *tree, t_node *node);
+void		insert_path(t_astree *tree, t_node *node);
+void		insert_filename(t_astree *tree, t_node *node);
 
 /*
 **	exec
@@ -172,43 +196,56 @@ void	insert_filename(t_astree *tree, t_node *node);
 /*
 ** read_tree.c
 */
-void	read_tree(t_info *info, t_node *node);
+void		read_tree(t_node *node);
 
 /*
 ** ft_execve.c
 */
-void	exec(t_info *info, t_node *node);
+void		exec(t_node *node);
 
 /*
 ** get_cmd_opt.c
 */
-char	**get_cmd_opt(t_node *node);
+char		**get_cmd_opt(t_node *node);
 
 /*
 ** redir.c
 */
-int		connect_redir(t_info *info);
-int		disconnect_redir(t_info *info);
-void	redirection(t_info *info, t_node *node);
-
-/*
-** heredoc.c
-*/
+int			connect_redir(void);
+int			disconnect_redir(void);
+void		redirection(t_node *node);
 
 /*
 ** pipe.c
 */
-int exec_pipe(t_info *info, t_node *node);
+void		exec_pipe(t_node *node);
+
+/*
+** exec/heredoc
+** - the functions used by heredoc
+*/
+
+/*
+** heredoc.c
+*/
+void		start_heredoc(t_node *hdoc_node);
+
+/*
+** heredoc_utils.c
+*/
+t_heredoc	*new_heredoc(t_node *eof);
+void		clear_heredoc(void *content);
+
 /*
 **	builtin
 **	- builtin commands in minishell
 */
-void	builtin_cd(t_info *info, t_node *cmd);
-void	builtin_echo(t_info *info, t_node *cmd);
-void	builtin_env(t_info *info);
-void	builtin_exit(t_info *info, t_node *cmd);
-void	builtin_export(t_info *info, t_node *cmd);
-void	builtin_pwd(t_info *info, t_node *cmd);
-void	builtin_unset(t_info *info, t_node *cmd);
+void		builtin_cd(t_node *cmd);
+void		builtin_echo(t_node *cmd);
+void		builtin_env(t_node *cmd);
+void		builtin_exit(t_node *cmd);
+void		builtin_export(t_node *cmd);
+void		builtin_pwd(t_node *cmd);
+void		builtin_unset(t_node *cmd);
 
 #endif
