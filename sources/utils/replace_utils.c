@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:37:13 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/17 20:42:29 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/17 21:24:20 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	find_end_pos(char *data, int *end, int *is_replace)
 	if (data[new_end - 2])
 		*is_replace = FALSE;
 	while (cur && cur != '\'' && cur != '\"' && !ft_isblank(cur)
-		&& cur != '$')
+		&& cur != '$' && cur != '=')
 		cur = data[(++new_end)];
 	*end = new_end;
 }

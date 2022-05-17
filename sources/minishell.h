@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:39:28 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/17 20:34:06 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/17 21:19:30 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,12 @@ void		join_envp(char **before, char *env, int *start, int *end);
 void		find_end_pos(char *data, int *end, int *is_replace);
 char		*get_env_or_status(char *env);
 void		replace_home_dir(char **cmd);
+
+/*
+** sort_utils.c
+*/
+void		env_sort(t_list **lst);
+t_list		*ft_lstdup(t_list *lst);
 
 /*
 ** termios_utils.c
