@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 21:26:58 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/13 18:05:55 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/17 16:47:31 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ char	**get_cmd_opt(t_node *node)
 	idx = 0;
 	cur = node;
 	opt = (char **)malloc(sizeof(char *) * (num_of_opt(node) + 1));
+	if (!opt)
+		print_strerr(errno);
 	while (cur)
 	{
 		opt[idx] = ft_strdup(cur->data);

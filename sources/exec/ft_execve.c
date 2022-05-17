@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/01 23:22:20 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/17 14:11:26 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/17 16:46:00 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static char	**list_to_array(t_list *head)
 	i = 0;
 	result = malloc(sizeof(char *) * (ft_lstsize(head) + 1));
 	if (!result)
-		return (0);
+		print_strerr(errno);
 	curr = head;
 	while (curr)
 	{
@@ -108,7 +108,7 @@ void	exec(t_node *node)
 	path = 0;
 	pid = fork();
 	if (pid < 0)
-		printf("fork error\n");
+		print_strerr(errno);
 	else if (pid == 0)
 		ft_execve(node);
 	waitpid(pid, &(get_info()->exitcode), 0);

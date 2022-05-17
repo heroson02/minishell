@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:40:18 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/13 20:11:32 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/17 16:45:28 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ static void	init(int argc, char **argv, char **envp)
 	info->list = create_list();
 	info->tree = create_tree();
 	info->file = (t_file *)malloc(sizeof(t_file));
+	if (!(info->file))
+		print_strerr(errno);
 	ft_bzero(info->file, sizeof(t_file));
 	env_preprocess(envp);
 	get_org_term();

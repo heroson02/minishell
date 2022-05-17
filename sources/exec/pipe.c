@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 11:35:22 by yson              #+#    #+#             */
-/*   Updated: 2022/05/13 18:05:54 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/17 16:42:56 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static pid_t	pipe_input(int *fd, t_node *node)
 
 	pid = fork();
 	if (pid < 0)
-		printf("error\n");
+		print_strerr(errno);
 	else if (pid == 0)
 	{
 		close(fd[0]);
@@ -36,7 +36,7 @@ static pid_t	pipe_output(int *fd, t_node *node)
 
 	pid = fork();
 	if (pid < 0)
-		printf("error\n");
+		print_strerr(errno);
 	else if (pid == 0)
 	{
 		close(fd[1]);
@@ -55,7 +55,7 @@ void	exec_pipe(t_node *node)
 	int		pid_right;
 
 	if (pipe(pipe_fd) == -1)
-		printf("error\n");
+		print_strerr(errno);
 	pid_left = pipe_input(pipe_fd, node->left);
 	waitpid(pid_left, &(get_info()->exitcode), 0);
 	close(pipe_fd[1]);

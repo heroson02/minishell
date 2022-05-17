@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 21:07:48 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/13 18:05:55 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/17 16:46:49 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,8 @@ void	insert_heredoc_redir(void)
 	char	*itoa;
 
 	new_tok = (t_tok *)malloc(sizeof(t_tok));
+	if (!new_tok)
+		print_strerr(errno);
 	new_tok->type = REDIR;
 	new_tok->data = ft_strdup("<");
 	new_tok->next = 0;

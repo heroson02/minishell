@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 15:01:08 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/13 18:05:55 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/17 16:45:46 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	builtin_pwd(t_node *cmd)
 
 	pwd = (char *)malloc(sizeof(char) * (BUFSIZ + 1));
 	if (!pwd)
-		return ;
+		print_strerr(errno);
 	if (cmd->left && cmd->left->data[0] == '-')
 	{
 		ft_putstr_fd("minishell: pwd: ", STDERR);

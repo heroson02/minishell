@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:39:23 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/17 15:56:06 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/17 16:46:37 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_heredoc	*new_heredoc(t_node *eof)
 
 	heredoc = (t_heredoc *)malloc(sizeof(t_heredoc));
 	if (!heredoc)
-		return (0);
+		print_strerr(errno);
 	ft_bzero(heredoc, sizeof(t_heredoc));
 	h_idx = ft_itoa(get_info()->h_idx++);
 	heredoc->h_name = ft_strjoin(".heredoc_", h_idx);

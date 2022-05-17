@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:39:28 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/17 15:14:55 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/17 16:41:55 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,8 @@ void		free_enode(void *node);
 /*
 ** print_utils.c
 */
-void		print_token(t_tok_list *list);
-void		print_tree(t_node *root);
 void		print_err(char *line);
-void		ft_lstprint_heredoc(t_list *list);
+void		print_strerr(int err);
 
 /*
 ** replace_utils.c

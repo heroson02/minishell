@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 16:32:20 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/13 18:07:36 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/17 16:44:49 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,7 @@ static char	*init_token(t_tok_list **list, char *start, char *end)
 	len = end - start + 1;
 	new_tok = (t_tok *)malloc(sizeof(t_tok));
 	if (!new_tok)
-	{
-		if (errno > 0)
-			printf("\033[31m%s\033[0m\n", strerror(errno));
-		else
-			printf("\033[31mSyntax Error in tokenize.c\033[0m\n");
-		exit(1);
-	}
+		print_strerr(errno);
 	ft_bzero(new_tok, sizeof(t_tok));
 	new_tok->data = ft_substr(start, 0, len);
 	new_tok->type = get_type(start, len);
