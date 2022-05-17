@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:37:13 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/13 20:21:47 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/17 14:36:45 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,14 @@ static char	*replace_env(char *data, int start, int end)
 		idx++;
 	env = ft_substr(str, 0, idx);
 	rpl = get_env_or_status(env);
+	free(env);
+	env = 0;
 	if (!str[idx])
 		ret = ft_strdup(rpl);
 	else
 		ret = ft_strjoin(rpl, str + idx);
-	free(env);
-	env = 0;
+	free(rpl);
+	rpl = 0;
 	free(str);
 	str = 0;
 	return (ret);

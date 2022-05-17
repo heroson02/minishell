@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 17:49:35 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/13 18:05:54 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/17 14:55:09 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,10 @@ static void	heredoc(t_list *lst)
 			break ;
 		}
 		if (!ft_strcmp(input, content->eof))
+		{
+			free(input);
 			break ;
+		}
 		ft_putendl_fd(input, content->fd);
 		free(input);
 	}

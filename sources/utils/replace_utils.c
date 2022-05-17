@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:37:13 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/13 18:05:54 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/17 14:36:32 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,7 @@ char	*get_env_or_status(char *env)
 	if (!ft_strcmp(env, "?"))
 		ret = ft_itoa(info->exitcode);
 	else
-		ret = get_env(env);
-	if (!ret)
-		ret = ft_strdup("");
+		ret = ft_strdup(get_env(env));
 	return (ret);
 }
 

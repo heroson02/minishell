@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/01 23:22:20 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/13 21:02:17 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/17 14:11:26 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@ static char	*get_cmd_path(char *cmd, int fd, int idx)
 		temp = ft_strjoin(paths[idx++], "/");
 		path = ft_strjoin(temp, cmd);
 		fd = open(path, O_RDONLY, 0644);
+		free(temp);
 		if (fd > 0)
 		{
 			close(fd);
 			break ;
 		}
-		free(temp);
 		free(path);
 		path = 0;
 	}
@@ -86,7 +86,6 @@ static void	ft_execve(t_node *cmd)
 	get_path(cmd->data, &path);
 	opt = get_cmd_opt(cmd);
 	execve(path, opt, list_to_array(get_info()->env_list));
-	//path를 free 해야하는지 여부 + opt
 }
 
 void	exec(t_node *node)
