@@ -6,13 +6,13 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:37:13 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/17 20:07:28 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/17 20:42:32 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static char	*replace_env(char *data, int start, int end)
+static char	*replace_env(char *data, int start, int end, int flag)
 {
 	int		idx;
 	char	*env;
@@ -21,15 +21,15 @@ static char	*replace_env(char *data, int start, int end)
 	char	*str;
 
 	idx = 0;
-	if (end - start < 1)
+	if (end - start < 1 && flag == FALSE)
 		return (ft_strdup("$"));
+	else if (end - start < 1 && flag == TRUE)
+		return (ft_strdup(""));
 	str = ft_substr(data, start, end - start);
 	while (str[idx] && !ft_isblank(str[idx]))
 		idx++;
 	env = ft_substr(str, 0, idx);
 	rpl = get_env_or_status(env);
-	free(env);
-	env = 0;
 	if (!str[idx])
 		ret = ft_strdup(rpl);
 	else
@@ -57,9 +57,10 @@ static void	join_squote(char **res, char *data, int *front, int *end)
 
 static void	replace_token(char **res, char *data)
 {
-	int		dquote;
-	int		front;
-	int		end;
+	int	dquote;
+	int	front;
+	int	end;
+	int	flag;
 
 	init_variable(&dquote, &front, &end);
 	while (data[++end])
@@ -74,8 +75,8 @@ static void	replace_token(char **res, char *data)
 		else if (data[end] == '$')
 		{
 			join_str(res, data, &front, end++);
-			find_end_pos(data, &end);
-			join_envp(res, replace_env(data, front, end), &front, &end);
+			find_end_pos(data, &end, &flag);
+			join_envp(res, replace_env(data, front, end, flag), &front, &end);
 		}
 		else if (!data[end + 1])
 			join_str(res, data, &front, end + 1);

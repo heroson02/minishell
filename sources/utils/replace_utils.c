@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:37:13 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/17 20:08:36 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/17 20:42:29 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,16 @@ void	join_envp(char **new_data, char *env, int *start, int *end)
 	*end -= 1;
 }
 
-void	find_end_pos(char *data, int *end)
+void	find_end_pos(char *data, int *end, int *is_replace)
 {
 	char	cur;
 	int		new_end;
 
 	new_end = *end;
 	cur = data[new_end];
+	*is_replace = TRUE;
+	if (data[new_end - 2])
+		*is_replace = FALSE;
 	while (cur && cur != '\'' && cur != '\"' && !ft_isblank(cur)
 		&& cur != '$')
 		cur = data[(++new_end)];
@@ -65,6 +68,8 @@ char	*get_env_or_status(char *env)
 		ret = ft_itoa(get_info()->exitcode);
 	else
 		ret = ft_strdup(get_env(env));
+	free(env);
+	env = 0;
 	return (ret);
 }
 

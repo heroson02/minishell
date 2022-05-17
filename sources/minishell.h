@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:39:28 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/17 19:40:01 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/17 20:34:06 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void		print_strerr(int err);
 */
 void		join_str(char **before, char *data, int *start, int end);
 void		join_envp(char **before, char *env, int *start, int *end);
-void		find_end_pos(char *data, int *end);
+void		find_end_pos(char *data, int *end, int *is_replace);
 char		*get_env_or_status(char *env);
 void		replace_home_dir(char **cmd);
 

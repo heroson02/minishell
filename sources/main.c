@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:40:18 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/17 17:21:23 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/17 20:56:57 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	init(int argc, char **argv, char **envp)
 static void	ctrl_d(void)
 {
 	ft_putstr_fd("\033[1A", STDOUT);
-	ft_putstr_fd("\033[12C", STDOUT);
+	ft_putstr_fd("\033[11C", STDOUT);
 	ft_putendl_fd("exit", STDOUT);
 	set_org_term();
 	exit(get_info()->exitcode);
