@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/01 23:22:20 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/17 16:46:00 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/17 18:05:09 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static char	**list_to_array(t_list *head)
 	int		i;
 
 	i = 0;
-	result = malloc(sizeof(char *) * (ft_lstsize(head) + 1));
+	result = (char **)malloc(sizeof(char *) * (ft_lstsize(head) + 1));
 	if (!result)
 		print_strerr(errno);
 	curr = head;
@@ -85,7 +85,14 @@ static void	ft_execve(t_node *cmd)
 
 	get_path(cmd->data, &path);
 	opt = get_cmd_opt(cmd);
-	execve(path, opt, list_to_array(get_info()->env_list));
+	if (execve(path, opt, list_to_array(get_info()->env_list)) < 0)
+	{
+		ft_putstr_fd("minishell: ", STDERR);
+		ft_putstr_fd(cmd->data, STDERR);
+		ft_putstr_fd(": ", STDERR);
+		ft_putendl_fd(strerror(errno), STDERR);
+		exit(127);
+	}
 }
 
 void	exec(t_node *node)
@@ -96,6 +103,7 @@ void	exec(t_node *node)
 
 	status = 0;
 	get_path(node->data, &path);
+	printf("path : %s\nnode->data : %s\n", path, node->data);
 	if (!path)
 	{
 		ft_putstr_fd("minishell: ", STDERR);
@@ -113,5 +121,5 @@ void	exec(t_node *node)
 		ft_execve(node);
 	waitpid(pid, &(get_info()->exitcode), 0);
 	if (get_info()->exitcode > 255)
-		get_info()->exitcode -= 255;
+		get_info()->exitcode = 127;
 }

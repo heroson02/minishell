@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/01 14:50:14 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/17 16:52:14 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/17 16:56:24 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	redirection(t_node *node)
 	if ((*file)->open_stdout < 0 || (*file)->open_stdin < 0)
 	{
 		ft_putstr_fd("minishell: ", STDERR);
-		ft_putstrfd(path, STDERR);
+		ft_putstr_fd(path, STDERR);
 		ft_putstr_fd(": ", STDERR);
 		ft_putendl_fd(strerror(errno), STDERR);
 		return ;
