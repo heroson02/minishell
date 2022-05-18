@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/01 23:22:20 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/18 11:44:42 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/18 12:49:10 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,5 +122,5 @@ void	exec(t_node *node)
 		ft_execve(node);
 	waitpid(pid, &(get_info()->exitcode), 0);
 	if (get_info()->exitcode > 255)
-		get_info()->exitcode = 127;
+		get_info()->exitcode /= 256;
 }

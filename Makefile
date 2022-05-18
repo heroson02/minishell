@@ -6,15 +6,15 @@
 #    By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/03 10:49:43 by hyojlee           #+#    #+#              #
-#    Updated: 2022/05/17 21:15:29 by hyojlee          ###   ########.fr        #
+#    Updated: 2022/05/18 11:42:17 by hyojlee          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
-# CFLAGS = -g3 -fsanitize=address
+CFLAGS = -g3 -fsanitize=address
 # CFLAGS = -fsanitize=thread -g
 # CFLAGS = -g
-CFLAGS = -Wall -Wextra -Werror
+# CFLAGS = -Wall -Wextra -Werror
 LDFLAGS = -lncurses -lreadline -L/Users/hyojlee/.brew/opt/readline/lib
 CPPFLAGS = -I/Users/hyojlee/.brew/opt/readline/include
 # LDFLAGS = -lncurses -lreadline -L/usr/local/opt/readline/lib

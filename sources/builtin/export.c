@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 15:11:53 by yson              #+#    #+#             */
-/*   Updated: 2022/05/17 21:26:10 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/18 12:33:33 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	key_validation(char *key)
 	i = 0;
 	if (key[0] == '=' || ft_isdigit(key[0]))
 		return (0);
-	while (key[i] != '=')
+	while (key[i] && key[i] != '=')
 	{
 		if (ft_isdigit(key[i]) || ft_isalpha(key[i]) || key[i] == '_')
 			i++;
@@ -88,15 +88,20 @@ static void	ft_export(t_info *info, char *data, int *arg_check)
 void	builtin_export(t_node *cmd)
 {
 	t_node	*node;
-	t_info	*info;
 	int		arg_check;
 
 	arg_check = 0;
-	info = get_info();
 	node = cmd->left;
+	get_info()->exitcode = 0;
+	if (node && node->data[0] == '-')
+	{
+		ft_putendl_fd("export : usage: export with no options", STDERR);
+		get_info()->exitcode = 2;
+		return ;
+	}
 	while (node)
 	{
-		ft_export(info, node->data, &arg_check);
+		ft_export(get_info(), node->data, &arg_check);
 		node = node->left;
 	}
 	if (!arg_check)
