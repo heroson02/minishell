@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 14:45:16 by yson              #+#    #+#             */
-/*   Updated: 2022/05/18 13:32:15 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/18 13:58:41 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	check_file(t_node *node)
 	char	*data;
 
 	data = node->data;
-	if (data[0] == '-')
+	if (data[0] == '-' && data[1])
 	{
 		ft_putstr_fd("minishell: env: ", STDERR);
 		ft_putchar_fd(data[0], STDERR);

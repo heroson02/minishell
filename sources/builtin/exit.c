@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 14:50:30 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/18 12:25:15 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/18 13:49:06 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,12 @@ void	builtin_exit(t_node *cmd)
 	if (cmd->left)
 	{
 		get_info()->exitcode = ft_atoi_(cmd->left->data);
-		if (get_info()->exitcode < 0)
+		if (get_info()->exitcode < 0 || !ft_strcmp(cmd->left->data, "-"))
 		{
 			ft_putstr_fd("minishell: exit: ", STDERR);
 			ft_putstr_fd(cmd->left->data, STDERR);
 			ft_putendl_fd(": numeric argument required", STDERR);
-			get_info()->exitcode += 256;
+			get_info()->exitcode = 255;
 		}
 		else if (cmd->left->left)
 		{

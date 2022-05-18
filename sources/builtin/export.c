@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 15:11:53 by yson              #+#    #+#             */
-/*   Updated: 2022/05/18 13:32:27 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/18 13:58:39 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	builtin_export(t_node *cmd)
 	arg_check = 0;
 	node = cmd->left;
 	get_info()->exitcode = 0;
-	if (node && node->data[0] == '-')
+	if (node && node->data[0] == '-' && node->data[1])
 	{
 		ft_putstr_fd("minishell: export: ", STDERR);
 		ft_putchar_fd(node->data[0], STDERR);
