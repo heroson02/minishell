@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:39:28 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/17 21:19:30 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/18 11:33:50 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_info
 	int				is_hdoc;
 	int				h_count;
 	int				h_idx;
+	int				is_pipe;
 	t_list			*hdoc_list;
 }	t_info;
 

@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:40:18 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/17 21:21:02 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/18 12:25:57 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ static void	update_shlvl(void)
 	t_node	cmd_node;
 	t_node	new_node;
 	char	*new_lvl;
+	int		org_exitcode;
 
 	ft_bzero(&cmd_node, sizeof(t_node));
 	ft_bzero(&new_node, sizeof(t_node));
@@ -72,7 +73,9 @@ static void	update_shlvl(void)
 	new_node.data = ft_strjoin("SHLVL=", new_lvl);
 	new_node.type = TOKEN;
 	cmd_node.left = &new_node;
+	org_exitcode = get_info()->exitcode;
 	builtin_export(&cmd_node);
+	get_info()->exitcode = org_exitcode;
 	free(new_lvl);
 	free(new_node.data);
 }

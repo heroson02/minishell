@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 14:45:16 by yson              #+#    #+#             */
-/*   Updated: 2022/05/13 18:05:55 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/18 11:52:47 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,8 @@ static void	check_file(t_node *node)
 void	builtin_env(t_node *cmd)
 {
 	t_list	*curr;
-	t_info	*info;
 
-	info = get_info();
-	curr = info->env_list;
+	curr = get_info()->env_list;
 	if (cmd->left)
 	{
 		check_file(cmd->left);
@@ -48,4 +46,5 @@ void	builtin_env(t_node *cmd)
 		ft_putendl_fd(((t_enode *)curr->content)->value, STDOUT);
 		curr = curr->next;
 	}
+	get_info()->exitcode = 0;
 }

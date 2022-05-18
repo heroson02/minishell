@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/01 23:22:20 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/17 19:24:47 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/18 11:44:42 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,6 @@ void	exec(t_node *node)
 
 	status = 0;
 	get_path(node->data, &path);
-	printf("path : %s\nnode->data : %s\n", path, node->data);
 	if (!path)
 	{
 		ft_putstr_fd("minishell: ", STDERR);

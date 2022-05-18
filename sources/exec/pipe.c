@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 11:35:22 by yson              #+#    #+#             */
-/*   Updated: 2022/05/17 16:42:56 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/18 11:35:15 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,9 @@ static pid_t	pipe_output(int *fd, t_node *node)
 		close(fd[1]);
 		dup2(fd[0], STDIN);
 		close(fd[0]);
+		get_info()->is_pipe = TRUE;
 		read_tree(node);
+		get_info()->is_pipe = FALSE;
 		exit(0);
 	}
 	return (pid);
