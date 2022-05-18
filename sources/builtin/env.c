@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 14:45:16 by yson              #+#    #+#             */
-/*   Updated: 2022/05/18 11:52:47 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/18 13:32:15 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@ static void	check_file(t_node *node)
 	data = node->data;
 	if (data[0] == '-')
 	{
+		ft_putstr_fd("minishell: env: ", STDERR);
+		ft_putchar_fd(data[0], STDERR);
+		ft_putchar_fd(data[1], STDERR);
+		ft_putendl_fd(": invalid option", STDERR);
 		ft_putstr_fd("env: usage: env with no options\n", STDERR);
 		get_info()->exitcode = 1;
 	}

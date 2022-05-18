@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 15:11:53 by yson              #+#    #+#             */
-/*   Updated: 2022/05/18 13:21:57 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/18 13:32:27 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,8 @@ void	builtin_export(t_node *cmd)
 	if (node && node->data[0] == '-')
 	{
 		ft_putstr_fd("minishell: export: ", STDERR);
-		ft_putstr_fd(node->data, STDERR);
+		ft_putchar_fd(node->data[0], STDERR);
+		ft_putchar_fd(node->data[1], STDERR);
 		ft_putendl_fd(": invalid option", STDERR);
 		ft_putendl_fd("export : usage: export with no options", STDERR);
 		get_info()->exitcode = 2;

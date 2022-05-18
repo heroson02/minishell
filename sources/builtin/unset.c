@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 14:55:18 by yson              #+#    #+#             */
-/*   Updated: 2022/05/18 13:23:42 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/18 13:32:40 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,10 @@ void	builtin_unset(t_node *cmd)
 	get_info()->exitcode = 0;
 	if (node && node->data[0] == '-')
 	{
+		ft_putstr_fd("minishell: unset: ", STDERR);
+		ft_putchar_fd(node->data[0], STDERR);
+		ft_putchar_fd(node->data[1], STDERR);
+		ft_putendl_fd(": invalid option", STDERR);
 		ft_putendl_fd("unset: usage: unset with no option", STDERR);
 		get_info()->exitcode = 2;
 		return ;
