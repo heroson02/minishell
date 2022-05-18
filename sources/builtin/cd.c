@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 15:37:30 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/18 13:31:46 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/18 18:20:17 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	builtin_cd(t_node *cmd)
 	else if (chdir(cmd->left->data) < 0)
 	{
 		ft_putstr_fd("minishell: cd: ", STDERR);
-		if (cmd->left->data[0] == '-')
+		if (cmd->left->data[0] == '-' && cmd->left->data[1])
 		{
 			ft_putchar_fd(cmd->left->data[0], STDERR);
 			ft_putchar_fd(cmd->left->data[1], STDERR);
@@ -53,7 +53,8 @@ void	builtin_cd(t_node *cmd)
 		else
 		{
 			ft_putstr_fd(cmd->left->data, STDERR);
-			ft_putendl_fd(": No such file or directory", STDERR);
+			ft_putstr_fd(": ", STDERR);
+			ft_putendl_fd(strerror(errno), STDERR);
 		}
 		get_info()->exitcode = 1;
 		return ;

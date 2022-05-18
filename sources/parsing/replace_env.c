@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:37:13 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/17 20:42:32 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/18 18:35:51 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	replace_recur(t_node *node)
 
 	if (!node)
 		return ;
-	if (ft_strcmp(node->data, "$") && ft_strchr(node->data, '$'))
+	if (ft_strcmp(node->data, "$"))
 	{
 		org_data = node->data;
 		node->data = ft_strdup("");
