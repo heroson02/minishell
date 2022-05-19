@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:39:28 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/19 17:21:55 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/19 18:13:23 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void		print_strerr(int err);
 /*
 ** replace_utils.c
 */
-char		*replace_home(t_node *data);
+void		replace_home(t_node *data);
 void		join_str(char **before, char *data, int *start, int end);
 void		join_envp(char **before, char *env, int *start, int *end);
 void		find_end_pos(char *data, int *end, int *is_replace);
@@ -189,7 +189,7 @@ void		tokenize(t_tok_list **list, char *str);
 /*
 ** ft_execve.c
 */
-void		exec(t_node *node);
+void		exec(t_node *node, int status);
 
 /*
 ** get_cmd_opt.c

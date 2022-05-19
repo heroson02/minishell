@@ -6,13 +6,13 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:37:13 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/19 17:21:46 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/19 18:12:35 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*replace_home(t_node *data)
+void	replace_home(t_node *data)
 {
 	char	*home;
 	char	*org;
@@ -21,17 +21,17 @@ char	*replace_home(t_node *data)
 	home = get_env("HOME");
 	if (!home || !home[0])
 		home = getenv("HOME");
-	if (data && data->data[0] == '~')
+	if (data && data->data[0] == '~'
+		&& (!data->data[1] || (data->data[1] && data->data[1] == '/')))
 	{
 		org = ft_substr(data->data, 1, ft_strlen(data->data) - 1);
 		path = ft_strjoin(home, org);
 		free(org);
 		org = data->data;
+		data->data = path;
 		free(org);
 		org = 0;
-		data->data = path;
 	}
-	return (home);
 }
 
 void	join_str(char **new_data, char *org_data, int *start, int end)

@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 14:50:30 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/18 13:49:06 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/19 17:34:29 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ static int	ft_atoi_(const char *str)
 
 void	builtin_exit(t_node *cmd)
 {
-	get_info()->exitcode = 0;
 	if (get_info()->is_pipe == FALSE)
 		ft_putendl_fd("exit", get_info()->file->origin_stdout);
 	if (cmd->left)

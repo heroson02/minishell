@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/01 23:22:20 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/19 17:22:40 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/19 18:13:10 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static char	**list_to_array(t_list *head)
 	return (result);
 }
 
-static void	ft_execve(t_node *cmd)
+static void	ft_execve(t_node *cmd, char **env)
 {
 	char	*path;
 	char	**opt;
@@ -93,7 +93,7 @@ static void	ft_execve(t_node *cmd)
 	opt = get_cmd_opt(cmd);
 	get_path(cmd, &path);
 	echoctl_on();
-	if (execve(path, opt, list_to_array(get_info()->env_list)) < 0)
+	if (execve(path, opt, env) < 0)
 	{
 		ft_putstr_fd("minishell: ", STDERR);
 		ft_putstr_fd(cmd->data, STDERR);
@@ -103,13 +103,12 @@ static void	ft_execve(t_node *cmd)
 	}
 }
 
-void	exec(t_node *node)
+void	exec(t_node *node, int status)
 {
 	pid_t	pid;
-	int		status;
 	char	*path;
+	char	**env;
 
-	status = 0;
 	get_path(node, &path);
 	if (!path)
 	{
@@ -122,11 +121,13 @@ void	exec(t_node *node)
 	free(path);
 	path = 0;
 	signal(SIGINT, SIG_IGN);
+	env = list_to_array(get_info()->env_list);
 	pid = fork();
 	if (pid < 0)
 		print_strerr(errno);
 	else if (pid == 0)
-		ft_execve(node);
+		ft_execve(node, env);
 	waitpid(pid, &(status), 0);
 	exec_signal(status);
+	free_split(env);
 }

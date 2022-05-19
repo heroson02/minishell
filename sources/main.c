@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:40:18 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/19 15:49:50 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/19 18:13:52 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,6 @@ int	main(int argc, char **argv, char **envp)
 			ft_clear();
 			free(line);
 			line = NULL;
-			// system("leaks minishell");
 			set_org_term();
 		}
 		else
