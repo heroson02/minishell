@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/01 23:22:20 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/19 15:42:58 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/19 17:22:40 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,16 @@ static char	*get_cmd_path(char *cmd, int fd, int idx)
 **	/ : Commands in the root directory
 **	~/ : Home directory, Otherwise search in PATH
 */
-static void	get_path(char *cmd, char **path)
+static void	get_path(t_node *data, char **path)
 {
+	char	*cmd;
+
+	cmd = data->data;
 	if (!ft_memcmp("./", cmd, 2) || !ft_memcmp("/", cmd, 1))
 		*path = ft_strdup(cmd);
 	else if (!ft_memcmp("~/", cmd, 2))
 	{
-		replace_home_dir(&cmd);
+		replace_home(data);
 		*path = ft_strdup(cmd);
 	}
 	else
@@ -88,7 +91,7 @@ static void	ft_execve(t_node *cmd)
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 	opt = get_cmd_opt(cmd);
-	get_path(cmd->data, &path);
+	get_path(cmd, &path);
 	echoctl_on();
 	if (execve(path, opt, list_to_array(get_info()->env_list)) < 0)
 	{
@@ -107,7 +110,7 @@ void	exec(t_node *node)
 	char	*path;
 
 	status = 0;
-	get_path(node->data, &path);
+	get_path(node, &path);
 	if (!path)
 	{
 		ft_putstr_fd("minishell: ", STDERR);
