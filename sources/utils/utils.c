@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 20:48:28 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/17 19:32:36 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/19 15:28:06 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,6 @@ t_info	*get_info(void)
 	static t_info	info;
 
 	return (&info);
-}
-
-void	handler(int signo)
-{
-	if (signo == SIGINT)
-	{
-		get_info()->exitcode = 1;
-		get_info()->is_hdoc = FALSE;
-		ioctl(STDIN_FILENO, TIOCSTI, "\n");
-		rl_replace_line("", 0);
-		rl_on_new_line();
-	}	
 }
 
 int	ft_strcmp(char *s1, char *s2)

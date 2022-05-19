@@ -6,7 +6,7 @@
 #    By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/03 10:49:43 by hyojlee           #+#    #+#              #
-#    Updated: 2022/05/18 11:42:17 by hyojlee          ###   ########.fr        #
+#    Updated: 2022/05/19 15:50:11 by hyojlee          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,8 +57,10 @@ SRCS = $(SRC_DIR)/main.c 						\
 		$(SRC_DIR)/utils/free_utils.c			\
 		$(SRC_DIR)/utils/print_utils.c			\
 		$(SRC_DIR)/utils/replace_utils.c		\
+		$(SRC_DIR)/utils/signal_utils.c			\
 		$(SRC_DIR)/utils/sort_utils.c			\
 		$(SRC_DIR)/utils/termios_utils.c		\
+		$(SRC_DIR)/utils/ascii_art.c			\
 		$(SRC_DIR)/utils/utils.c
 		
 

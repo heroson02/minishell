@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/01 23:22:20 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/18 12:49:10 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/19 15:42:58 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,11 @@ static void	ft_execve(t_node *cmd)
 	char	*path;
 	char	**opt;
 
-	get_path(cmd->data, &path);
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	opt = get_cmd_opt(cmd);
+	get_path(cmd->data, &path);
+	echoctl_on();
 	if (execve(path, opt, list_to_array(get_info()->env_list)) < 0)
 	{
 		ft_putstr_fd("minishell: ", STDERR);
@@ -115,12 +118,12 @@ void	exec(t_node *node)
 	}
 	free(path);
 	path = 0;
+	signal(SIGINT, SIG_IGN);
 	pid = fork();
 	if (pid < 0)
 		print_strerr(errno);
 	else if (pid == 0)
 		ft_execve(node);
-	waitpid(pid, &(get_info()->exitcode), 0);
-	if (get_info()->exitcode > 255)
-		get_info()->exitcode /= 256;
+	waitpid(pid, &(status), 0);
+	exec_signal(status);
 }

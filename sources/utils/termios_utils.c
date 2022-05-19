@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 12:20:02 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/13 18:05:54 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/19 13:57:22 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,22 @@ void	set_org_term(void)
 	tcsetattr(STDIN, TCSANOW, &(info->org_term));
 }
 
-void	set_new_term(void)
+void	echoctl_off(void)
 {
 	t_info	*info;
 
 	info = get_info();
 	tcgetattr(STDIN, &(info->new_term));
 	info->new_term.c_lflag &= ~ECHOCTL;
+	tcsetattr(STDIN, TCSANOW, &(info->new_term));
+}
+
+void	echoctl_on(void)
+{
+	t_info	*info;
+
+	info = get_info();
+	tcgetattr(STDIN, &(info->new_term));
+	info->new_term.c_lflag |= ECHOCTL;
 	tcsetattr(STDIN, TCSANOW, &(info->new_term));
 }

@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:39:28 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/18 12:42:18 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/19 15:49:37 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,13 @@ void		find_end_pos(char *data, int *end, int *is_replace);
 char		*get_env_or_status(char *env);
 void		replace_home_dir(char **cmd);
 
+
+/*
+** signal_utils.c
+*/
+void		handler(int signo);
+void		exec_signal(int status);
+
 /*
 ** sort_utils.c
 */
@@ -111,16 +118,22 @@ t_list		*ft_lstdup(t_list *lst);
 */
 void		get_org_term(void);
 void		set_org_term(void);
-void		set_new_term(void);
+void		echoctl_off(void);
+void		echoctl_on(void);
 
 /*
 ** utils.c
 */
 t_info		*get_info(void);
-void		handler(int signo);
 int			ft_strcmp(char *s1, char *s2);
 int			ft_isblank(char c);
 char		*get_env(char *name);
+
+/*
+** ascii_art.c
+*/
+
+void	print_ascii_art(void);
 
 /*
 **	parsing

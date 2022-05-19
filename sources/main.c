@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:40:18 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/18 12:51:29 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/19 15:49:50 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static void	init(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
+	print_ascii_art();
 	info = get_info();
 	signal(SIGINT, handler);
 	signal(SIGQUIT, SIG_IGN);
@@ -87,7 +88,7 @@ int	main(int argc, char **argv, char **envp)
 	init(argc, argv, envp);
 	while (1)
 	{
-		set_new_term();
+		echoctl_off();
 		update_shlvl();
 		line = readline("minishell> ");
 		if (line)
