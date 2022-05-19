@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 15:37:30 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/18 18:20:17 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/19 12:12:06 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static char	*ft_cd(t_node *cmd)
 	char	*origin;
 	char	*home;
 
-	home = getenv("HOME");
+	home = get_env("HOME");
 	if (cmd->left && cmd->left->data[0] == '~')
 	{
 		origin = ft_substr(cmd->left->data, 1, ft_strlen(cmd->left->data) - 1);
@@ -33,13 +33,31 @@ static char	*ft_cd(t_node *cmd)
 	return (home);
 }
 
+static void	chdir_home(char *home)
+{
+	get_info()->exitcode = 0;
+	if (!home[0])
+	{
+		ft_putendl_fd("minishell: cd: HOME not set", STDERR);
+		get_info()->exitcode = 1;
+	}
+	else if (chdir(home) < 0)
+	{
+		ft_putstr_fd("minishell: cd: ", STDERR);
+		ft_putstr_fd(home, STDERR);
+		ft_putstr_fd(": ", STDERR);
+		ft_putendl_fd(strerror(errno), STDERR);
+		get_info()->exitcode = 1;
+	}
+}
+
 void	builtin_cd(t_node *cmd)
 {
 	char	*home;
 
 	home = ft_cd(cmd);
 	if (!cmd->left)
-		chdir(home);
+		chdir_home(home);
 	else if (chdir(cmd->left->data) < 0)
 	{
 		ft_putstr_fd("minishell: cd: ", STDERR);
@@ -57,7 +75,5 @@ void	builtin_cd(t_node *cmd)
 			ft_putendl_fd(strerror(errno), STDERR);
 		}
 		get_info()->exitcode = 1;
-		return ;
 	}
-	get_info()->exitcode = 0;
 }
