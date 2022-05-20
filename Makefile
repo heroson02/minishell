@@ -6,15 +6,15 @@
 #    By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/03 10:49:43 by hyojlee           #+#    #+#              #
-#    Updated: 2022/05/13 15:52:50 by hyojlee          ###   ########.fr        #
+#    Updated: 2022/05/19 17:42:03 by hyojlee          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
-CFLAGS = -g3 -fsanitize=address
+# CFLAGS = -g3 -fsanitize=address
 # CFLAGS = -fsanitize=thread -g
 # CFLAGS = -g
-# CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 LDFLAGS = -lncurses -lreadline -L/Users/hyojlee/.brew/opt/readline/lib
 CPPFLAGS = -I/Users/hyojlee/.brew/opt/readline/include
 # LDFLAGS = -lncurses -lreadline -L/usr/local/opt/readline/lib
@@ -57,8 +57,11 @@ SRCS = $(SRC_DIR)/main.c 						\
 		$(SRC_DIR)/utils/free_utils.c			\
 		$(SRC_DIR)/utils/print_utils.c			\
 		$(SRC_DIR)/utils/replace_utils.c		\
+		$(SRC_DIR)/utils/signal_utils.c			\
+		$(SRC_DIR)/utils/sort_utils.c			\
 		$(SRC_DIR)/utils/termios_utils.c		\
-		$(SRC_DIR)/utils/utils.c								
+		$(SRC_DIR)/utils/ascii_art.c			\
+		$(SRC_DIR)/utils/utils.c
 		
 
 OBJS = $(SRCS:.c=.o)

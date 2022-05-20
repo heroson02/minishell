@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 17:48:44 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/12 12:22:21 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/17 16:47:29 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ t_tok_list	*create_list(void)
 	t_tok_list	*list;
 
 	list = (t_tok_list *)malloc(sizeof(t_tok_list));
-	if (list == 0)
-		return (0);
+	if (!list)
+		print_strerr(errno);
 	ft_bzero(list, sizeof(t_tok_list));
 	return (list);
 }

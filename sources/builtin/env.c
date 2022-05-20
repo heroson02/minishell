@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 14:45:16 by yson              #+#    #+#             */
-/*   Updated: 2022/05/13 18:05:55 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/18 13:58:41 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,12 @@ static void	check_file(t_node *node)
 	char	*data;
 
 	data = node->data;
-	if (data[0] == '-')
+	if (data[0] == '-' && data[1])
 	{
+		ft_putstr_fd("minishell: env: ", STDERR);
+		ft_putchar_fd(data[0], STDERR);
+		ft_putchar_fd(data[1], STDERR);
+		ft_putendl_fd(": invalid option", STDERR);
 		ft_putstr_fd("env: usage: env with no options\n", STDERR);
 		get_info()->exitcode = 1;
 	}
@@ -32,10 +36,8 @@ static void	check_file(t_node *node)
 void	builtin_env(t_node *cmd)
 {
 	t_list	*curr;
-	t_info	*info;
 
-	info = get_info();
-	curr = info->env_list;
+	curr = get_info()->env_list;
 	if (cmd->left)
 	{
 		check_file(cmd->left);
@@ -48,4 +50,5 @@ void	builtin_env(t_node *cmd)
 		ft_putendl_fd(((t_enode *)curr->content)->value, STDOUT);
 		curr = curr->next;
 	}
+	get_info()->exitcode = 0;
 }

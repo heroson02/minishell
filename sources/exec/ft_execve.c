@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/01 23:22:20 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/13 21:02:17 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/19 18:13:10 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@ static char	*get_cmd_path(char *cmd, int fd, int idx)
 		temp = ft_strjoin(paths[idx++], "/");
 		path = ft_strjoin(temp, cmd);
 		fd = open(path, O_RDONLY, 0644);
+		free(temp);
 		if (fd > 0)
 		{
 			close(fd);
 			break ;
 		}
-		free(temp);
 		free(path);
 		path = 0;
 	}
@@ -39,15 +39,20 @@ static char	*get_cmd_path(char *cmd, int fd, int idx)
 }
 
 /*
-**	./ : PATH 외의 명령어, / : 루트 디렉토리에 있는 명령어, ~/ : 홈 디렉토리, 그 외에는 PATH에서 검색
+**	./ : Commands other than PATH,
+**	/ : Commands in the root directory
+**	~/ : Home directory, Otherwise search in PATH
 */
-static void	get_path(char *cmd, char **path)
+static void	get_path(t_node *data, char **path)
 {
+	char	*cmd;
+
+	cmd = data->data;
 	if (!ft_memcmp("./", cmd, 2) || !ft_memcmp("/", cmd, 1))
 		*path = ft_strdup(cmd);
 	else if (!ft_memcmp("~/", cmd, 2))
 	{
-		replace_home_dir(&cmd);
+		replace_home(data);
 		*path = ft_strdup(cmd);
 	}
 	else
@@ -62,9 +67,9 @@ static char	**list_to_array(t_list *head)
 	int		i;
 
 	i = 0;
-	result = malloc(sizeof(char *) * (ft_lstsize(head) + 1));
+	result = (char **)malloc(sizeof(char *) * (ft_lstsize(head) + 1));
 	if (!result)
-		return (0);
+		print_strerr(errno);
 	curr = head;
 	while (curr)
 	{
@@ -78,25 +83,33 @@ static char	**list_to_array(t_list *head)
 	return (result);
 }
 
-static void	ft_execve(t_node *cmd)
+static void	ft_execve(t_node *cmd, char **env)
 {
 	char	*path;
 	char	**opt;
 
-	get_path(cmd->data, &path);
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	opt = get_cmd_opt(cmd);
-	execve(path, opt, list_to_array(get_info()->env_list));
-	//path를 free 해야하는지 여부 + opt
+	get_path(cmd, &path);
+	echoctl_on();
+	if (execve(path, opt, env) < 0)
+	{
+		ft_putstr_fd("minishell: ", STDERR);
+		ft_putstr_fd(cmd->data, STDERR);
+		ft_putstr_fd(": ", STDERR);
+		ft_putendl_fd(strerror(errno), STDERR);
+		exit(127);
+	}
 }
 
-void	exec(t_node *node)
+void	exec(t_node *node, int status)
 {
 	pid_t	pid;
-	int		status;
 	char	*path;
+	char	**env;
 
-	status = 0;
-	get_path(node->data, &path);
+	get_path(node, &path);
 	if (!path)
 	{
 		ft_putstr_fd("minishell: ", STDERR);
@@ -107,12 +120,14 @@ void	exec(t_node *node)
 	}
 	free(path);
 	path = 0;
+	signal(SIGINT, SIG_IGN);
+	env = list_to_array(get_info()->env_list);
 	pid = fork();
 	if (pid < 0)
-		printf("fork error\n");
+		print_strerr(errno);
 	else if (pid == 0)
-		ft_execve(node);
-	waitpid(pid, &(get_info()->exitcode), 0);
-	if (get_info()->exitcode > 255)
-		get_info()->exitcode -= 255;
+		ft_execve(node, env);
+	waitpid(pid, &(status), 0);
+	exec_signal(status);
+	free_split(env);
 }

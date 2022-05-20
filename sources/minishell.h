@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 15:39:28 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/13 20:11:39 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/19 18:13:23 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,7 @@ typedef struct s_file
 typedef struct s_heredoc
 {
 	int					fd;
-	int					row;
-	int					col;
 	char				*h_name;
-	char				line[BUFSIZ];
 	char				*eof;
 }	t_heredoc;
 
@@ -62,6 +59,7 @@ typedef struct s_info
 	int				is_hdoc;
 	int				h_count;
 	int				h_idx;
+	int				is_pipe;
 	t_list			*hdoc_list;
 }	t_info;
 
@@ -90,35 +88,51 @@ void		free_enode(void *node);
 /*
 ** print_utils.c
 */
-void		print_token(t_tok_list *list);
-void		print_tree(t_node *root);
 void		print_err(char *line);
-void		ft_lstprint_heredoc(t_list *list);
+void		print_strerr(int err);
 
 /*
 ** replace_utils.c
 */
+void		replace_home(t_node *data);
 void		join_str(char **before, char *data, int *start, int end);
 void		join_envp(char **before, char *env, int *start, int *end);
-void		find_end_pos(char *data, int *end);
+void		find_end_pos(char *data, int *end, int *is_replace);
 char		*get_env_or_status(char *env);
-void		replace_home_dir(char **cmd);
+
+/*
+** signal_utils.c
+*/
+void		handler(int signo);
+void		exec_signal(int status);
+
+/*
+** sort_utils.c
+*/
+void		env_sort(t_list **lst);
+t_list		*ft_lstdup(t_list *lst);
 
 /*
 ** termios_utils.c
 */
 void		get_org_term(void);
 void		set_org_term(void);
-void		set_new_term(void);
+void		echoctl_off(void);
+void		echoctl_on(void);
 
 /*
 ** utils.c
 */
 t_info		*get_info(void);
-void		handler(int signo);
 int			ft_strcmp(char *s1, char *s2);
 int			ft_isblank(char c);
 char		*get_env(char *name);
+
+/*
+** ascii_art.c
+*/
+
+void		print_ascii_art(void);
 
 /*
 **	parsing
@@ -139,6 +153,17 @@ void		add_token(t_tok_list **list, t_tok *new_tok);
 t_tok		*get_token(t_tok_list *list, int pos);
 
 /*
+**	replace_env.c
+*/
+void		replace_recur(t_node *node);
+
+/*
+** semantic.c
+*/
+int			check_quote(char *str);
+int			chk_syntax(t_node *node);
+
+/*
 ** syntax.c
 */
 void		pipeline(int *idx);
@@ -157,51 +182,14 @@ int			syntax(void);
 void		tokenize(t_tok_list **list, char *str);
 
 /*
-** semantic.c
-*/
-int			check_quote(char *str);
-int			chk_syntax(t_node *node);
-
-/*
-**	replace_env.c
-*/
-void		replace_recur(t_node *node);
-
-/*
-**	list.c
-*/
-t_tok_list	*create_list(void);
-void		add_token(t_tok_list **list, t_tok *new_tok);
-t_tok		*get_token(t_tok_list *list, int pos);
-
-/*
-**	astree.c
-*/
-t_node		*create_node(t_tok	*token);
-t_astree	*create_tree(void);
-
-/*
-**	astree_insert.c
-*/
-void		insert_pipe_heredoc(t_astree *tree, t_node *node);
-void		insert_redir(t_astree *tree, t_node *node);
-void		insert_path(t_astree *tree, t_node *node);
-void		insert_filename(t_astree *tree, t_node *node);
-
-/*
 **	exec
 **	- executing commands from AST
 */
 
 /*
-** read_tree.c
-*/
-void		read_tree(t_node *node);
-
-/*
 ** ft_execve.c
 */
-void		exec(t_node *node);
+void		exec(t_node *node, int status);
 
 /*
 ** get_cmd_opt.c
@@ -209,16 +197,21 @@ void		exec(t_node *node);
 char		**get_cmd_opt(t_node *node);
 
 /*
+** pipe.c
+*/
+void		exec_pipe(t_node *node);
+
+/*
+** read_tree.c
+*/
+void		read_tree(t_node *node);
+
+/*
 ** redir.c
 */
 int			connect_redir(void);
 int			disconnect_redir(void);
 void		redirection(t_node *node);
-
-/*
-** pipe.c
-*/
-void		exec_pipe(t_node *node);
 
 /*
 ** exec/heredoc

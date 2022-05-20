@@ -6,17 +6,28 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 15:11:53 by yson              #+#    #+#             */
-/*   Updated: 2022/05/13 20:32:09 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/18 13:58:39 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+static void	export_error(char *data)
+{
+	ft_putstr_fd("minishell: export: \'", STDERR);
+	ft_putstr_fd(data, STDERR);
+	ft_putendl_fd("\': not a valid identifier", STDERR);
+	get_info()->exitcode = 1;
+}
+
 static void	export_no_args(void)
 {
 	t_list	*lst;
+	t_list	*head;
 
-	lst = get_info()->env_list;
+	lst = ft_lstdup(get_info()->env_list);
+	head = lst;
+	env_sort(&lst);
 	while (lst)
 	{
 		ft_putstr_fd("declare -x ", STDOUT);
@@ -26,19 +37,37 @@ static void	export_no_args(void)
 		ft_putendl_fd("\"", STDOUT);
 		lst = lst->next;
 	}
+	ft_lstclear(&head, free_enode);
 }
 
-static void	ft_export(t_info *info, char *data)
+static int	key_validation(char *key)
+{
+	int	i;
+
+	i = 0;
+	if (key[0] == '=' || ft_isdigit(key[0]))
+		return (0);
+	while (key[i] && key[i] != '=')
+	{
+		if (ft_isdigit(key[i]) || ft_isalpha(key[i]) || key[i] == '_')
+			i++;
+		else
+			return (0);
+	}
+	return (1);
+}
+
+static void	ft_export(t_info *info, char *data, int *arg_check)
 {
 	t_enode	*node;
 	t_list	*cur;
 
-	if (data[0] == '=' || ft_isdigit(data[0]))
+	if (!ft_strcmp(data, ""))
+		return ;
+	*arg_check = 1;
+	if (!key_validation(data))
 	{
-		ft_putstr_fd("minishell: export: \'", STDERR);
-		ft_putstr_fd(data, STDERR);
-		ft_putendl_fd("\': not a valid identifier", STDERR);
-		info->exitcode = 1;
+		export_error(data);
 		return ;
 	}
 	if (!ft_strchr(data, '='))
@@ -59,18 +88,28 @@ static void	ft_export(t_info *info, char *data)
 void	builtin_export(t_node *cmd)
 {
 	t_node	*node;
-	t_info	*info;
+	int		arg_check;
 
-	info = get_info();
+	arg_check = 0;
 	node = cmd->left;
-	if (!node)
+	get_info()->exitcode = 0;
+	if (node && node->data[0] == '-' && node->data[1])
 	{
-		export_no_args();
+		ft_putstr_fd("minishell: export: ", STDERR);
+		ft_putchar_fd(node->data[0], STDERR);
+		ft_putchar_fd(node->data[1], STDERR);
+		ft_putendl_fd(": invalid option", STDERR);
+		ft_putendl_fd("export : usage: export with no options", STDERR);
+		get_info()->exitcode = 2;
 		return ;
 	}
 	while (node)
 	{
-		ft_export(info, node->data);
+		ft_export(get_info(), node->data, &arg_check);
 		node = node->left;
 	}
+	if (!arg_check)
+		export_no_args();
+	else
+		return ;
 }

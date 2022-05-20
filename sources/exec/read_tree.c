@@ -6,7 +6,7 @@
 /*   By: hyojlee <hyojlee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 20:41:29 by hyojlee           #+#    #+#             */
-/*   Updated: 2022/05/13 18:05:54 by hyojlee          ###   ########.fr       */
+/*   Updated: 2022/05/19 18:12:35 by hyojlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	chk_command(t_node *node)
 	else if (!ft_strcmp(node->data, "unset"))
 		builtin_unset(node);
 	else
-		exec(node);
+		exec(node, 0);
 	disconnect_redir();
 }
 
@@ -57,7 +57,7 @@ void	read_tree(t_node *node)
 	info->file->origin_stdin = dup(STDIN);
 	info->file->origin_stdout = dup(STDOUT);
 	if (info->file->origin_stdin < 0 || info->file->origin_stdout < 0)
-		printf("dup error\n");
+		print_strerr(errno);
 	if (!node)
 		return ;
 	execute_code(node);
